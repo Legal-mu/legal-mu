@@ -2,13 +2,16 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import prisma from './db/prisma';
+import authRoutes from './routes/authRoutes';
+import protectedRoutes from './routes/index';
+import { errorHandler } from './middleware/errorHandler';
 
 // Load environment variables
 dotenv.config();
 
 // Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors());
@@ -52,6 +55,13 @@ app.get('/health', async (req, res) => {
     });
   }
 });
+
+// API Routes
+app.use('/api/auth', authRoutes);
+app.use('/api', protectedRoutes);
+
+// Error handling middleware (must be last)
+app.use(errorHandler);
 
 // Start server
 async function startServer() {
