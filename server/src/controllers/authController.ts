@@ -69,6 +69,15 @@ export async function register(
       role: user.role,
     });
 
+    // Set httpOnly cookie
+    res.cookie('auth_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      path: '/',
+    });
+
     res.status(201).json({
       success: true,
       message: 'User registered successfully',
@@ -81,7 +90,7 @@ export async function register(
           role: user.role,
           dateOfBirth: user.dateOfBirth,
         },
-        token,
+        token, // Return token for Server Actions to set cookie
       },
     });
   } catch (error) {
@@ -128,6 +137,15 @@ export async function login(
       role: user.role,
     });
 
+    // Set httpOnly cookie
+    res.cookie('auth_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      path: '/',
+    });
+
     res.json({
       success: true,
       message: 'Login successful',
@@ -140,7 +158,7 @@ export async function login(
           role: user.role,
           dateOfBirth: user.dateOfBirth,
         },
-        token,
+        token, // Return token for Server Actions to set cookie
       },
     });
   } catch (error) {
@@ -249,6 +267,32 @@ export async function resetPassword(
     res.json({
       success: true,
       message: 'Password reset successfully',
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Logout user - Clear auth cookie
+ */
+export async function logout(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    // Clear httpOnly cookie
+    res.clearCookie('auth_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    });
+
+    res.json({
+      success: true,
+      message: 'Logged out successfully',
     });
   } catch (error) {
     next(error);

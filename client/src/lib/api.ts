@@ -15,69 +15,44 @@ import type {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
 
-const AUTH_TOKEN_KEY = 'auth_token';
-const AUTH_USER_KEY = 'auth_user';
-
 /**
- * Get stored auth token
+ * Note: Authentication is now handled via httpOnly cookies
+ * No need to manually manage tokens in localStorage
  */
-export function getAuthToken(): string | null {
-  if (typeof window === 'undefined') return null;
-  return localStorage.getItem(AUTH_TOKEN_KEY);
-}
-
-/**
- * Get stored user data
- */
-export function getAuthUser(): any | null {
-  if (typeof window === 'undefined') return null;
-  const userStr = localStorage.getItem(AUTH_USER_KEY);
-  return userStr ? JSON.parse(userStr) : null;
-}
-
-/**
- * Store auth token and user data
- */
-export function setAuthData(token: string, user: any): void {
-  if (typeof window === 'undefined') return;
-  localStorage.setItem(AUTH_TOKEN_KEY, token);
-  localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user));
-}
-
-/**
- * Remove auth token and user data
- */
-export function removeAuthToken(): void {
-  if (typeof window === 'undefined') return;
-  localStorage.removeItem(AUTH_TOKEN_KEY);
-  localStorage.removeItem(AUTH_USER_KEY);
-}
 
 /**
  * Generic API fetch function with error handling
+ * Cookies are automatically sent by the browser
  */
 async function fetchAPI<T>(
   endpoint: string,
   options?: RequestInit
 ): Promise<T> {
   const url = `${API_URL}${endpoint}`;
-  const token = getAuthToken();
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...(options?.headers as Record<string, string>),
   };
 
-  // Add auth token if available
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
+  // Cookies are automatically included by the browser
+  // No need to manually add Authorization header for cookie-based auth
 
   try {
     const response = await fetch(url, {
       ...options,
       headers,
+      credentials: 'include', // Include cookies in requests
     });
+
+    // Handle non-JSON responses
+    const contentType = response.headers.get('content-type');
+    if (!contentType?.includes('application/json')) {
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status} ${response.statusText}`);
+      }
+      return {} as T; // Return empty object for non-JSON responses
+    }
 
     const data = await response.json();
 
@@ -94,8 +69,18 @@ async function fetchAPI<T>(
 
     return data;
   } catch (error) {
-    console.error('API request failed:', error);
-    throw error;
+    // Re-throw if it's already an Error
+    if (error instanceof Error) {
+      console.error('API request failed:', {
+        url,
+        error: error.message,
+        stack: error.stack,
+      });
+      throw error;
+    }
+    // Handle unexpected errors
+    console.error('Unexpected API error:', error);
+    throw new Error('An unexpected error occurred');
   }
 }
 

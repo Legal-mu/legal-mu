@@ -2,38 +2,42 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuthStore } from '../store/authStore';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requiredRole?: 'ADMIN' | 'VISITOR';
 }
 
+/**
+ * ProtectedRoute component (legacy - middleware handles route protection now)
+ * This is kept for backward compatibility and role-based access
+ * Note: Routes are protected by middleware, this is just for role checks
+ */
 export default function ProtectedRoute({
   children,
   requiredRole,
 }: ProtectedRouteProps) {
-  const { isAuthenticated, isLoading, user } = useAuth();
+  const { isAuthenticated, user } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (!isAuthenticated) {
       router.push('/login');
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, router]);
 
   useEffect(() => {
     if (
-      !isLoading &&
       isAuthenticated &&
       requiredRole &&
       user?.role !== requiredRole
     ) {
       router.push('/dashboard'); // Redirect to dashboard if role doesn't match
     }
-  }, [isAuthenticated, isLoading, requiredRole, user, router]);
+  }, [isAuthenticated, requiredRole, user, router]);
 
-  if (isLoading) {
+  if (!isAuthenticated) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
@@ -42,10 +46,6 @@ export default function ProtectedRoute({
         </div>
       </div>
     );
-  }
-
-  if (!isAuthenticated) {
-    return null;
   }
 
   if (requiredRole && user?.role !== requiredRole) {
@@ -63,4 +63,3 @@ export default function ProtectedRoute({
 
   return <>{children}</>;
 }
-

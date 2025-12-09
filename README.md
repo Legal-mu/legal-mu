@@ -47,6 +47,8 @@ Frontend runs on `http://localhost:3000`
 - TypeScript
 - Tailwind CSS 4
 - React 19
+- Zustand (State Management)
+- TanStack React Query (Server State)
 
 ### Backend
 - Express.js
@@ -54,6 +56,7 @@ Frontend runs on `http://localhost:3000`
 - TypeScript
 - PostgreSQL
 - Prisma 7
+- JWT Authentication
 
 ## 📝 Development
 
@@ -68,6 +71,8 @@ Frontend runs on `http://localhost:3000`
 PORT=5001
 NODE_ENV=development
 DATABASE_URL="postgresql://username@localhost:5432/legal_mu?schema=public"
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production-min-32-chars
+JWT_EXPIRES_IN=7d
 ```
 
 ### Frontend (client/.env.local)
@@ -75,10 +80,17 @@ DATABASE_URL="postgresql://username@localhost:5432/legal_mu?schema=public"
 NEXT_PUBLIC_API_URL=http://localhost:5001
 ```
 
-## 🎯 Features (Planned)
+## 🎯 Features
 
-- [ ] Landing page
-- [ ] JWT Authentication
+### ✅ Completed
+- [x] Landing page
+- [x] JWT Authentication (Login, Register, Forgot Password)
+- [x] Protected routes with role-based access
+- [x] Session persistence
+- [x] State management (Zustand)
+- [x] API integration (React Query)
+
+### 🚧 Planned
 - [ ] CRUD operations
 - [ ] AI integration (RAG, LangChain)
 
