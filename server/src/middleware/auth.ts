@@ -17,19 +17,27 @@ declare global {
 
 /**
  * Middleware to verify JWT token
+ * Supports both httpOnly cookies and Authorization header
  */
 export function authenticate(req: Request, res: Response, next: NextFunction) {
   try {
-    const authHeader = req.headers.authorization;
+    // Try to get token from cookie first (httpOnly cookie)
+    let token = req.cookies?.auth_token;
 
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({
-        success: false,
-        message: 'No token provided or invalid format',
-      });
+    // Fallback to Authorization header (for API clients)
+    if (!token) {
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        token = authHeader.substring(7); // Remove 'Bearer ' prefix
+      }
     }
 
-    const token = authHeader.substring(7); // Remove 'Bearer ' prefix
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'No token provided',
+      });
+    }
 
     try {
       const decoded = verifyToken(token);

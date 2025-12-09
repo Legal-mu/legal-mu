@@ -1,56 +1,56 @@
 'use client';
 
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, useTransition, Suspense } from 'react';
 import Link from 'next/link';
-import { useAuth } from '../../contexts/AuthContext';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { loginAction } from '../actions/auth';
+import { useAuthStore } from '../../store/authStore';
 
-export default function LoginPage() {
+function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const { login, isAuthenticated, isLoading: authLoading } = useAuth();
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const { isAuthenticated } = useAuthStore();
 
   // Redirect if already authenticated
   useEffect(() => {
-    if (!authLoading && isAuthenticated) {
-      router.push('/dashboard');
+    if (isAuthenticated) {
+      const redirect = searchParams.get('redirect') || '/dashboard';
+      router.push(redirect);
     }
-  }, [isAuthenticated, authLoading, router]);
+  }, [isAuthenticated, router, searchParams]);
 
-  // Show loading state while checking authentication
-  if (authLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-600 border-r-transparent"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError('');
 
-  // Don't render form if authenticated (will redirect)
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('password', password);
+
+      const result = await loginAction(formData);
+
+      if (!result.success) {
+        setError(result.message || 'Login failed. Please try again.');
+      } else {
+        // Update Zustand store with user data
+        if (result.data && typeof result.data === 'object' && 'id' in result.data) {
+          useAuthStore.getState().setAuth(result.data as any);
+        }
+        // Redirect to dashboard on success
+        const redirectPath = searchParams.get('redirect') || '/dashboard';
+        router.push(redirectPath);
+      }
+    });
+  };
+
   if (isAuthenticated) {
     return null;
   }
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError('');
-    setIsLoading(true);
-
-    try {
-      await login(email, password);
-      // Navigation handled in login function
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-12 sm:px-6 lg:px-8">
@@ -128,10 +128,10 @@ export default function LoginPage() {
           <div>
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isPending}
               className="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Signing in...' : 'Sign in'}
+              {isPending ? 'Signing in...' : 'Sign in'}
             </button>
           </div>
         </form>
@@ -140,3 +140,17 @@ export default function LoginPage() {
   );
 }
 
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-600 border-r-transparent"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <LoginForm />
+    </Suspense>
+  );
+}

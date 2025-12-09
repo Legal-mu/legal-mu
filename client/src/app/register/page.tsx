@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import Link from 'next/link';
-import { useAuth } from '../../contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { registerAction } from '../actions/auth';
+import { useAuthStore } from '../../store/authStore';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -15,33 +16,16 @@ export default function RegisterPage() {
     dateOfBirth: '',
   });
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const { register, isAuthenticated, isLoading: authLoading } = useAuth();
+  const [isPending, startTransition] = useTransition();
+  const { isAuthenticated } = useAuthStore();
   const router = useRouter();
 
   // Redirect if already authenticated
   useEffect(() => {
-    if (!authLoading && isAuthenticated) {
+    if (isAuthenticated) {
       router.push('/dashboard');
     }
-  }, [isAuthenticated, authLoading, router]);
-
-  // Show loading state while checking authentication
-  if (authLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-600 border-r-transparent"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Don't render form if authenticated (will redirect)
-  if (isAuthenticated) {
-    return null;
-  }
+  }, [isAuthenticated, router]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -50,7 +34,7 @@ export default function RegisterPage() {
     });
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
 
@@ -65,23 +49,38 @@ export default function RegisterPage() {
       return;
     }
 
-    setIsLoading(true);
+    startTransition(async () => {
+      const formDataObj = new FormData();
+      formDataObj.append('firstName', formData.firstName);
+      formDataObj.append('lastName', formData.lastName);
+      formDataObj.append('email', formData.email);
+      formDataObj.append('password', formData.password);
+      if (formData.dateOfBirth) {
+        formDataObj.append('dateOfBirth', formData.dateOfBirth);
+      }
 
-    try {
-      await register({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        password: formData.password,
-        dateOfBirth: formData.dateOfBirth || undefined,
-      });
-      // Navigation handled in register function
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Registration failed. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
+      const result = await registerAction(formDataObj);
+
+      if (!result.success) {
+        setError(result.message || 'Registration failed. Please try again.');
+        if (result.errors) {
+          const errorMessages = result.errors.map((e) => e.message).join(', ');
+          setError(errorMessages);
+        }
+      } else {
+        // Update Zustand store with user data
+        if (result.data && typeof result.data === 'object' && 'id' in result.data) {
+          useAuthStore.getState().setAuth(result.data as any);
+        }
+        // Redirect to dashboard on success
+        router.push('/dashboard');
+      }
+    });
   };
+
+  if (isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-12 sm:px-6 lg:px-8">
@@ -205,10 +204,10 @@ export default function RegisterPage() {
           <div>
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isPending}
               className="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Creating account...' : 'Create account'}
+              {isPending ? 'Creating account...' : 'Create account'}
             </button>
           </div>
         </form>
@@ -216,4 +215,3 @@ export default function RegisterPage() {
     </div>
   );
 }
-

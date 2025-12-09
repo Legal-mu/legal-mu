@@ -1,29 +1,17 @@
-'use client';
-
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '../contexts/AuthContext';
+import { getServerUser } from '../lib/auth';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
-  const { isAuthenticated, isLoading } = useAuth();
-  const router = useRouter();
+// Mark this page as dynamic (uses cookies)
+export const dynamic = 'force-dynamic';
 
-  useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      router.push('/dashboard');
-    }
-  }, [isAuthenticated, isLoading, router]);
+export default async function Home() {
+  // Server Component - check auth on server
+  const user = await getServerUser();
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-indigo-600 border-r-transparent"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
+  // Redirect to dashboard if authenticated
+  if (user) {
+    redirect('/dashboard');
   }
 
   return (

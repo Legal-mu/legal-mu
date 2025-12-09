@@ -1,37 +1,25 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { api } from '@/lib/api';
-import type { HealthCheckResponse, ServerStatusResponse } from '@/types';
+import { useHealthCheck, useServerStatus } from '@/hooks/useApi';
+import { getErrorMessage } from '@/lib/api-error';
 
 export default function ApiTestPage() {
-  const [healthStatus, setHealthStatus] = useState<HealthCheckResponse | null>(null);
-  const [serverStatus, setServerStatus] = useState<ServerStatusResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Use React Query hooks for data fetching
+  const {
+    data: healthStatus,
+    isLoading: healthLoading,
+    error: healthError,
+  } = useHealthCheck();
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setLoading(true);
-        const [health, status] = await Promise.all([
-          api.healthCheck(),
-          api.getStatus(),
-        ]);
-        setHealthStatus(health);
-        setServerStatus(status);
-        setError(null);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to connect to API');
-        console.error('API Error:', err);
-      } finally {
-        setLoading(false);
-      }
-    }
+  const {
+    data: serverStatus,
+    isLoading: statusLoading,
+    error: statusError,
+  } = useServerStatus();
 
-    fetchData();
-  }, []);
+  const loading = healthLoading || statusLoading;
+  const error = healthError || statusError;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-8">
@@ -58,7 +46,9 @@ export default function ApiTestPage() {
             <h2 className="text-xl font-semibold text-red-800 dark:text-red-400 mb-2">
               Connection Error
             </h2>
-            <p className="text-red-600 dark:text-red-300">{error}</p>
+            <p className="text-red-600 dark:text-red-300">
+              {getErrorMessage(error)}
+            </p>
             <p className="text-sm text-red-500 dark:text-red-400 mt-2">
               Make sure your backend server is running on http://localhost:5001
             </p>

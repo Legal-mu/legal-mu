@@ -10,15 +10,43 @@ const router = Router();
 
 /**
  * @route   GET /api/protected
- * @desc    Example protected route (requires authentication)
+ * @desc    Get current authenticated user
  * @access  Private
  */
-router.get('/protected', authenticate, (req, res) => {
-  res.json({
-    success: true,
-    message: 'This is a protected route',
-    user: req.user,
-  });
+router.get('/protected', authenticate, async (req, res) => {
+  try {
+    const prisma = (await import('../db/prisma')).default;
+    const user = await prisma.user.findUnique({
+      where: { id: req.user!.userId },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        role: true,
+        dateOfBirth: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    res.json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching user',
+    });
+  }
 });
 
 /**

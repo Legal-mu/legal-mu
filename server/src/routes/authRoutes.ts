@@ -8,6 +8,7 @@ import {
   login,
   forgotPassword,
   resetPassword,
+  logout,
 } from '../controllers/authController';
 import { validate } from '../middleware/validate';
 import {
@@ -46,6 +47,13 @@ router.post('/forgot-password', validate(forgotPasswordSchema), forgotPassword);
  * @access  Public
  */
 router.post('/reset-password', validate(resetPasswordSchema), resetPassword);
+
+/**
+ * @route   POST /api/auth/logout
+ * @desc    Logout user (clear cookie)
+ * @access  Private
+ */
+router.post('/logout', logout);
 
 export default router;
 
