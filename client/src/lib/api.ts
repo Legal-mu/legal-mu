@@ -150,6 +150,15 @@ export const api = {
       '/api/protected'
     );
   },
+
+  /**
+   * Get all lawyers (admin only)
+   */
+  async getLawyers() {
+    return fetchAPI<ApiResponse<{ lawyers: import('../types').User[]; total: number }>>(
+      '/api/admin/lawyers'
+    );
+  },
 };
 
 export default api;

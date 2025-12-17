@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import prisma from './db/prisma';
 import authRoutes from './routes/authRoutes';
 import protectedRoutes from './routes/index';
+import adminRoutes from './routes/adminRoutes';
 import { errorHandler } from './middleware/errorHandler';
 
 // Load environment variables
@@ -36,7 +37,7 @@ async function testDatabaseConnection() {
 
 // Basic route
 app.get('/', (req, res) => {
-  res.json({ 
+  res.json({
     message: 'Legal-MU API Server is running!',
     status: 'ok'
   });
@@ -47,13 +48,13 @@ app.get('/health', async (req, res) => {
   try {
     // Test database connection
     await prisma.$queryRaw`SELECT 1`;
-    res.json({ 
+    res.json({
       status: 'healthy',
       database: 'connected',
       timestamp: new Date().toISOString()
     });
   } catch (error) {
-    res.status(503).json({ 
+    res.status(503).json({
       status: 'unhealthy',
       database: 'disconnected',
       error: error instanceof Error ? error.message : 'Unknown error'
@@ -64,6 +65,7 @@ app.get('/health', async (req, res) => {
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api', protectedRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);
@@ -73,7 +75,7 @@ async function startServer() {
   try {
     // Test database connection first
     await testDatabaseConnection();
-    
+
     // Start listening
     app.listen(PORT, () => {
       console.log(`🚀 Server is running on http://localhost:${PORT}`);
