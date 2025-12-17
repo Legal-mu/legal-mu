@@ -4,11 +4,11 @@ import LogoutButton from '../../../components/LogoutButton';
 import { Suspense } from 'react';
 import { cookies } from 'next/headers';
 import type { User } from '../../../types';
+import { api } from '../../../lib/api';
+import { formatDate } from '../../../lib/utils';
 
 // Mark this page as dynamic (uses cookies)
 export const dynamic = 'force-dynamic';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
 
 // Fetch lawyers from API
 async function fetchLawyers(): Promise<{ lawyers: User[]; total: number }> {
@@ -16,19 +16,15 @@ async function fetchLawyers(): Promise<{ lawyers: User[]; total: number }> {
         const cookieStore = await cookies();
         const cookieHeader = cookieStore.toString();
 
-        const response = await fetch(`${API_URL}/api/admin/lawyers`, {
+        const response = await api.getLawyers({
             headers: {
                 Cookie: cookieHeader,
             },
             cache: 'no-store',
         });
 
-        if (!response.ok) {
-            return { lawyers: [], total: 0 };
-        }
+        return response.data || { lawyers: [], total: 0 };
 
-        const data = await response.json();
-        return data.data || { lawyers: [], total: 0 };
     } catch (error) {
         console.error('Error fetching lawyers:', error);
         return { lawyers: [], total: 0 };
@@ -65,16 +61,7 @@ function StatusBadge({ isActive }: { isActive: boolean }) {
     );
 }
 
-// Format date helper
-function formatDate(dateString?: string | Date | null): string {
-    if (!dateString) return '—';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-    });
-}
+
 
 // Lawyers table component
 function LawyersTable({ lawyers }: { lawyers: User[] }) {

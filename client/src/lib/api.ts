@@ -154,9 +154,10 @@ export const api = {
   /**
    * Get all lawyers (admin only)
    */
-  async getLawyers() {
+  async getLawyers(options?: RequestInit) {
     return fetchAPI<ApiResponse<{ lawyers: import('../types').User[]; total: number }>>(
-      '/api/admin/lawyers'
+      '/api/admin/lawyers',
+      options
     );
   },
 };
