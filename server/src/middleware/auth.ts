@@ -7,11 +7,11 @@ import { verifyToken } from '../utils/jwt';
 import type { JwtPayload } from '../types/auth';
 
 // Extend Express Request to include user
+// Extend Express User interface (used by Passport and our custom auth)
 declare global {
   namespace Express {
-    interface Request {
-      user?: JwtPayload;
-    }
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface User extends JwtPayload { }
   }
 }
 

@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import prisma from './db/prisma';
 import authRoutes from './routes/authRoutes';
+import googleAuthRoutes from './routes/googleAuthRoutes';
 import protectedRoutes from './routes/index';
 import adminRoutes from './routes/adminRoutes';
 import { errorHandler } from './middleware/errorHandler';
@@ -63,6 +64,7 @@ app.get('/health', async (req, res) => {
 });
 
 // API Routes
+app.use('/api/auth/google', googleAuthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', protectedRoutes);
 app.use('/api/admin', adminRoutes);
