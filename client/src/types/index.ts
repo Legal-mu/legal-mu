@@ -36,6 +36,8 @@ export interface User {
   email: string;
   role: UserRole;
   dateOfBirth?: Date | null;
+  isActive?: boolean;
+  createdAt?: string;
 }
 
 // Auth types
