@@ -38,6 +38,8 @@ export interface User {
   dateOfBirth?: Date | null;
   isActive?: boolean;
   createdAt?: string;
+  areaOfLaw?: string | null;
+  category?: string | null;
 }
 
 // Auth types
@@ -47,6 +49,8 @@ export interface RegisterRequest {
   email: string;
   password: string;
   dateOfBirth?: string;
+  areaOfLaw?: string;
+  category?: string;
 }
 
 export interface LoginRequest {

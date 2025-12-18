@@ -26,6 +26,8 @@ model User {
   dateOfBirth   DateTime? @map("date_of_birth") @db.Date
   role          UserRole  @default(VISITOR)
   isActive      Boolean   @default(true) @map("is_active")
+  areaOfLaw     String?   @map("area_of_law")
+  category      String?
   resetToken    String?   @map("reset_token")
   resetTokenExp DateTime? @map("reset_token_exp")
   createdAt     DateTime  @default(now()) @map("created_at")

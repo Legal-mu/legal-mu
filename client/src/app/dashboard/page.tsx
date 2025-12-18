@@ -72,7 +72,7 @@ async function DashboardContent() {
                 <p>
                   <span className="font-medium">Role:</span>{' '}
                   <span className="inline-flex items-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-800">
-                    {user.role}
+                    {user.role === 'VISITOR' ? 'LAWYER' : user.role}
                   </span>
                 </p>
                 {user.dateOfBirth && (

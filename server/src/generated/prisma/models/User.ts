@@ -33,6 +33,8 @@ export type UserMinAggregateOutputType = {
   dateOfBirth: Date | null
   role: $Enums.UserRole | null
   isActive: boolean | null
+  areaOfLaw: string | null
+  category: string | null
   resetToken: string | null
   resetTokenExp: Date | null
   createdAt: Date | null
@@ -48,6 +50,8 @@ export type UserMaxAggregateOutputType = {
   dateOfBirth: Date | null
   role: $Enums.UserRole | null
   isActive: boolean | null
+  areaOfLaw: string | null
+  category: string | null
   resetToken: string | null
   resetTokenExp: Date | null
   createdAt: Date | null
@@ -63,6 +67,8 @@ export type UserCountAggregateOutputType = {
   dateOfBirth: number
   role: number
   isActive: number
+  areaOfLaw: number
+  category: number
   resetToken: number
   resetTokenExp: number
   createdAt: number
@@ -80,6 +86,8 @@ export type UserMinAggregateInputType = {
   dateOfBirth?: true
   role?: true
   isActive?: true
+  areaOfLaw?: true
+  category?: true
   resetToken?: true
   resetTokenExp?: true
   createdAt?: true
@@ -95,6 +103,8 @@ export type UserMaxAggregateInputType = {
   dateOfBirth?: true
   role?: true
   isActive?: true
+  areaOfLaw?: true
+  category?: true
   resetToken?: true
   resetTokenExp?: true
   createdAt?: true
@@ -110,6 +120,8 @@ export type UserCountAggregateInputType = {
   dateOfBirth?: true
   role?: true
   isActive?: true
+  areaOfLaw?: true
+  category?: true
   resetToken?: true
   resetTokenExp?: true
   createdAt?: true
@@ -198,6 +210,8 @@ export type UserGroupByOutputType = {
   dateOfBirth: Date | null
   role: $Enums.UserRole
   isActive: boolean
+  areaOfLaw: string | null
+  category: string | null
   resetToken: string | null
   resetTokenExp: Date | null
   createdAt: Date
@@ -234,6 +248,8 @@ export type UserWhereInput = {
   dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  areaOfLaw?: Prisma.StringNullableFilter<"User"> | string | null
+  category?: Prisma.StringNullableFilter<"User"> | string | null
   resetToken?: Prisma.StringNullableFilter<"User"> | string | null
   resetTokenExp?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -249,6 +265,8 @@ export type UserOrderByWithRelationInput = {
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  areaOfLaw?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
   resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   resetTokenExp?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -267,6 +285,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  areaOfLaw?: Prisma.StringNullableFilter<"User"> | string | null
+  category?: Prisma.StringNullableFilter<"User"> | string | null
   resetToken?: Prisma.StringNullableFilter<"User"> | string | null
   resetTokenExp?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -282,6 +302,8 @@ export type UserOrderByWithAggregationInput = {
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  areaOfLaw?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
   resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   resetTokenExp?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -303,6 +325,8 @@ export type UserScalarWhereWithAggregatesInput = {
   dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  areaOfLaw?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  category?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   resetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   resetTokenExp?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -318,6 +342,8 @@ export type UserCreateInput = {
   dateOfBirth?: Date | string | null
   role?: $Enums.UserRole
   isActive?: boolean
+  areaOfLaw?: string | null
+  category?: string | null
   resetToken?: string | null
   resetTokenExp?: Date | string | null
   createdAt?: Date | string
@@ -333,6 +359,8 @@ export type UserUncheckedCreateInput = {
   dateOfBirth?: Date | string | null
   role?: $Enums.UserRole
   isActive?: boolean
+  areaOfLaw?: string | null
+  category?: string | null
   resetToken?: string | null
   resetTokenExp?: Date | string | null
   createdAt?: Date | string
@@ -348,6 +376,8 @@ export type UserUpdateInput = {
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -363,6 +393,8 @@ export type UserUncheckedUpdateInput = {
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -378,6 +410,8 @@ export type UserCreateManyInput = {
   dateOfBirth?: Date | string | null
   role?: $Enums.UserRole
   isActive?: boolean
+  areaOfLaw?: string | null
+  category?: string | null
   resetToken?: string | null
   resetTokenExp?: Date | string | null
   createdAt?: Date | string
@@ -393,6 +427,8 @@ export type UserUpdateManyMutationInput = {
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -408,6 +444,8 @@ export type UserUncheckedUpdateManyInput = {
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -423,6 +461,8 @@ export type UserCountOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  areaOfLaw?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
   resetTokenExp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -438,6 +478,8 @@ export type UserMaxOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  areaOfLaw?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
   resetTokenExp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -453,6 +495,8 @@ export type UserMinOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  areaOfLaw?: Prisma.SortOrder
+  category?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
   resetTokenExp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -494,6 +538,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   dateOfBirth?: boolean
   role?: boolean
   isActive?: boolean
+  areaOfLaw?: boolean
+  category?: boolean
   resetToken?: boolean
   resetTokenExp?: boolean
   createdAt?: boolean
@@ -509,6 +555,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   dateOfBirth?: boolean
   role?: boolean
   isActive?: boolean
+  areaOfLaw?: boolean
+  category?: boolean
   resetToken?: boolean
   resetTokenExp?: boolean
   createdAt?: boolean
@@ -524,6 +572,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   dateOfBirth?: boolean
   role?: boolean
   isActive?: boolean
+  areaOfLaw?: boolean
+  category?: boolean
   resetToken?: boolean
   resetTokenExp?: boolean
   createdAt?: boolean
@@ -539,13 +589,15 @@ export type UserSelectScalar = {
   dateOfBirth?: boolean
   role?: boolean
   isActive?: boolean
+  areaOfLaw?: boolean
+  category?: boolean
   resetToken?: boolean
   resetTokenExp?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "password" | "dateOfBirth" | "role" | "isActive" | "resetToken" | "resetTokenExp" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "password" | "dateOfBirth" | "role" | "isActive" | "areaOfLaw" | "category" | "resetToken" | "resetTokenExp" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
@@ -559,6 +611,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     dateOfBirth: Date | null
     role: $Enums.UserRole
     isActive: boolean
+    areaOfLaw: string | null
+    category: string | null
     resetToken: string | null
     resetTokenExp: Date | null
     createdAt: Date
@@ -994,6 +1048,8 @@ export interface UserFieldRefs {
   readonly dateOfBirth: Prisma.FieldRef<"User", 'DateTime'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
+  readonly areaOfLaw: Prisma.FieldRef<"User", 'String'>
+  readonly category: Prisma.FieldRef<"User", 'String'>
   readonly resetToken: Prisma.FieldRef<"User", 'String'>
   readonly resetTokenExp: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>

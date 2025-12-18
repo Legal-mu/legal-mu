@@ -29,6 +29,8 @@ router.get(
                     email: true,
                     dateOfBirth: true,
                     isActive: true,
+                    areaOfLaw: true,
+                    category: true,
                     createdAt: true,
                     updatedAt: true,
                 },

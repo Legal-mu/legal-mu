@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { registerAction } from '../actions/auth';
 import { useAuthStore } from '../../store/authStore';
+import { AREA_OF_LAW_OPTIONS, LAWYER_CATEGORY_OPTIONS } from '../../lib/constants';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -14,6 +15,8 @@ export default function RegisterPage() {
     password: '',
     confirmPassword: '',
     dateOfBirth: '',
+    areaOfLaw: '',
+    category: '',
   });
   const [error, setError] = useState('');
   const [isPending, startTransition] = useTransition();
@@ -27,7 +30,7 @@ export default function RegisterPage() {
     }
   }, [isAuthenticated, router]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -57,6 +60,12 @@ export default function RegisterPage() {
       formDataObj.append('password', formData.password);
       if (formData.dateOfBirth) {
         formDataObj.append('dateOfBirth', formData.dateOfBirth);
+      }
+      if (formData.areaOfLaw) {
+        formDataObj.append('areaOfLaw', formData.areaOfLaw);
+      }
+      if (formData.category) {
+        formDataObj.append('category', formData.category);
       }
 
       const result = await registerAction(formDataObj);
@@ -167,6 +176,46 @@ export default function RegisterPage() {
                 onChange={handleChange}
                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="areaOfLaw" className="block text-sm font-medium text-gray-700">
+                  Area of Law
+                </label>
+                <select
+                  id="areaOfLaw"
+                  name="areaOfLaw"
+                  value={formData.areaOfLaw}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                >
+                  <option value="">Select Area</option>
+                  {AREA_OF_LAW_OPTIONS.map((area) => (
+                    <option key={area} value={area}>
+                      {area}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                  Category
+                </label>
+                <select
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                >
+                  <option value="">Select Category</option>
+                  {LAWYER_CATEGORY_OPTIONS.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">

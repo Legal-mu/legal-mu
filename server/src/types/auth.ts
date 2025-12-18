@@ -12,6 +12,8 @@ export interface RegisterRequest {
   email: string;
   password: string;
   dateOfBirth?: string;
+  areaOfLaw?: string;
+  category?: string;
 }
 
 export interface LoginRequest {
@@ -36,6 +38,8 @@ export interface AuthResponse {
     email: string;
     role: UserRole;
     dateOfBirth?: Date | null;
+    areaOfLaw?: string | null;
+    category?: string | null;
   };
   token: string;
 }

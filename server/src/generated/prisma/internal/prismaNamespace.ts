@@ -526,6 +526,8 @@ export const UserScalarFieldEnum = {
   dateOfBirth: 'dateOfBirth',
   role: 'role',
   isActive: 'isActive',
+  areaOfLaw: 'areaOfLaw',
+  category: 'category',
   resetToken: 'resetToken',
   resetTokenExp: 'resetTokenExp',
   createdAt: 'createdAt',

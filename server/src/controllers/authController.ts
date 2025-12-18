@@ -23,7 +23,7 @@ export async function register(
   next: NextFunction
 ) {
   try {
-    const { firstName, lastName, email, password, dateOfBirth } = req.body;
+    const { firstName, lastName, email, password, dateOfBirth, areaOfLaw, category } = req.body;
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
@@ -49,6 +49,8 @@ export async function register(
         password: hashedPassword,
         dateOfBirth: dob,
         role: 'VISITOR', // Default role
+        areaOfLaw,
+        category,
       },
       select: {
         id: true,
@@ -57,6 +59,8 @@ export async function register(
         email: true,
         role: true,
         dateOfBirth: true,
+        areaOfLaw: true,
+        category: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -89,6 +93,8 @@ export async function register(
           email: user.email,
           role: user.role,
           dateOfBirth: user.dateOfBirth,
+          areaOfLaw: user.areaOfLaw,
+          category: user.category,
         },
         token, // Return token for Server Actions to set cookie
       },

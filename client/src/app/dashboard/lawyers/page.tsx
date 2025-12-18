@@ -104,6 +104,12 @@ function LawyersTable({ lawyers }: { lawyers: User[] }) {
                             Date of Birth
                         </th>
                         <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                            Category
+                        </th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                            Area of Law
+                        </th>
+                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">
                             Registered
                         </th>
                         <th className="px-6 py-4 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">
@@ -152,6 +158,12 @@ function LawyersTable({ lawyers }: { lawyers: User[] }) {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-slate-300">
                                 {formatDate(lawyer.dateOfBirth)}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-slate-300">
+                                {lawyer.category || '—'}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-slate-300">
+                                {lawyer.areaOfLaw || '—'}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-slate-300">
                                 {formatDate(lawyer.createdAt)}
