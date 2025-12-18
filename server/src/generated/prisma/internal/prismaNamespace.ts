@@ -526,12 +526,12 @@ export const UserScalarFieldEnum = {
   dateOfBirth: 'dateOfBirth',
   role: 'role',
   isActive: 'isActive',
-  areaOfLaw: 'areaOfLaw',
-  category: 'category',
   resetToken: 'resetToken',
   resetTokenExp: 'resetTokenExp',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  areaOfLaw: 'areaOfLaw',
+  category: 'category'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]

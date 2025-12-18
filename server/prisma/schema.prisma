@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -10,28 +7,26 @@ datasource db {
   provider = "postgresql"
 }
 
-// User roles enum
-enum UserRole {
-  ADMIN
-  VISITOR
-}
-
-// User model
 model User {
   id            String    @id @default(uuid())
   firstName     String    @map("first_name")
   lastName      String    @map("last_name")
   email         String    @unique
-  password      String    // Hashed password
+  password      String
   dateOfBirth   DateTime? @map("date_of_birth") @db.Date
   role          UserRole  @default(VISITOR)
   isActive      Boolean   @default(true) @map("is_active")
-  areaOfLaw     String?   @map("area_of_law")
-  category      String?
   resetToken    String?   @map("reset_token")
   resetTokenExp DateTime? @map("reset_token_exp")
   createdAt     DateTime  @default(now()) @map("created_at")
   updatedAt     DateTime  @updatedAt @map("updated_at")
+  areaOfLaw     String?   @map("area_of_law")
+  category      String?
 
   @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  VISITOR
 }

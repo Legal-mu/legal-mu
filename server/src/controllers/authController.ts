@@ -163,6 +163,8 @@ export async function login(
           email: user.email,
           role: user.role,
           dateOfBirth: user.dateOfBirth,
+          areaOfLaw: user.areaOfLaw,
+          category: user.category,
         },
         token, // Return token for Server Actions to set cookie
       },

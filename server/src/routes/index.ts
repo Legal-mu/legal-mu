@@ -25,6 +25,8 @@ router.get('/protected', authenticate, async (req, res) => {
         email: true,
         role: true,
         dateOfBirth: true,
+        areaOfLaw: true,
+        category: true,
         createdAt: true,
         updatedAt: true,
       },

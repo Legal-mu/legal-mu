@@ -33,12 +33,12 @@ export type UserMinAggregateOutputType = {
   dateOfBirth: Date | null
   role: $Enums.UserRole | null
   isActive: boolean | null
-  areaOfLaw: string | null
-  category: string | null
   resetToken: string | null
   resetTokenExp: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  areaOfLaw: string | null
+  category: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -50,12 +50,12 @@ export type UserMaxAggregateOutputType = {
   dateOfBirth: Date | null
   role: $Enums.UserRole | null
   isActive: boolean | null
-  areaOfLaw: string | null
-  category: string | null
   resetToken: string | null
   resetTokenExp: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  areaOfLaw: string | null
+  category: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -67,12 +67,12 @@ export type UserCountAggregateOutputType = {
   dateOfBirth: number
   role: number
   isActive: number
-  areaOfLaw: number
-  category: number
   resetToken: number
   resetTokenExp: number
   createdAt: number
   updatedAt: number
+  areaOfLaw: number
+  category: number
   _all: number
 }
 
@@ -86,12 +86,12 @@ export type UserMinAggregateInputType = {
   dateOfBirth?: true
   role?: true
   isActive?: true
-  areaOfLaw?: true
-  category?: true
   resetToken?: true
   resetTokenExp?: true
   createdAt?: true
   updatedAt?: true
+  areaOfLaw?: true
+  category?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -103,12 +103,12 @@ export type UserMaxAggregateInputType = {
   dateOfBirth?: true
   role?: true
   isActive?: true
-  areaOfLaw?: true
-  category?: true
   resetToken?: true
   resetTokenExp?: true
   createdAt?: true
   updatedAt?: true
+  areaOfLaw?: true
+  category?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -120,12 +120,12 @@ export type UserCountAggregateInputType = {
   dateOfBirth?: true
   role?: true
   isActive?: true
-  areaOfLaw?: true
-  category?: true
   resetToken?: true
   resetTokenExp?: true
   createdAt?: true
   updatedAt?: true
+  areaOfLaw?: true
+  category?: true
   _all?: true
 }
 
@@ -210,12 +210,12 @@ export type UserGroupByOutputType = {
   dateOfBirth: Date | null
   role: $Enums.UserRole
   isActive: boolean
-  areaOfLaw: string | null
-  category: string | null
   resetToken: string | null
   resetTokenExp: Date | null
   createdAt: Date
   updatedAt: Date
+  areaOfLaw: string | null
+  category: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -248,12 +248,12 @@ export type UserWhereInput = {
   dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolFilter<"User"> | boolean
-  areaOfLaw?: Prisma.StringNullableFilter<"User"> | string | null
-  category?: Prisma.StringNullableFilter<"User"> | string | null
   resetToken?: Prisma.StringNullableFilter<"User"> | string | null
   resetTokenExp?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  areaOfLaw?: Prisma.StringNullableFilter<"User"> | string | null
+  category?: Prisma.StringNullableFilter<"User"> | string | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -265,12 +265,12 @@ export type UserOrderByWithRelationInput = {
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  areaOfLaw?: Prisma.SortOrderInput | Prisma.SortOrder
-  category?: Prisma.SortOrderInput | Prisma.SortOrder
   resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   resetTokenExp?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  areaOfLaw?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -285,12 +285,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   dateOfBirth?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolFilter<"User"> | boolean
-  areaOfLaw?: Prisma.StringNullableFilter<"User"> | string | null
-  category?: Prisma.StringNullableFilter<"User"> | string | null
   resetToken?: Prisma.StringNullableFilter<"User"> | string | null
   resetTokenExp?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  areaOfLaw?: Prisma.StringNullableFilter<"User"> | string | null
+  category?: Prisma.StringNullableFilter<"User"> | string | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -302,12 +302,12 @@ export type UserOrderByWithAggregationInput = {
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  areaOfLaw?: Prisma.SortOrderInput | Prisma.SortOrder
-  category?: Prisma.SortOrderInput | Prisma.SortOrder
   resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   resetTokenExp?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  areaOfLaw?: Prisma.SortOrderInput | Prisma.SortOrder
+  category?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -325,12 +325,12 @@ export type UserScalarWhereWithAggregatesInput = {
   dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  areaOfLaw?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  category?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   resetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   resetTokenExp?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  areaOfLaw?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  category?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -342,12 +342,12 @@ export type UserCreateInput = {
   dateOfBirth?: Date | string | null
   role?: $Enums.UserRole
   isActive?: boolean
-  areaOfLaw?: string | null
-  category?: string | null
   resetToken?: string | null
   resetTokenExp?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  areaOfLaw?: string | null
+  category?: string | null
 }
 
 export type UserUncheckedCreateInput = {
@@ -359,12 +359,12 @@ export type UserUncheckedCreateInput = {
   dateOfBirth?: Date | string | null
   role?: $Enums.UserRole
   isActive?: boolean
-  areaOfLaw?: string | null
-  category?: string | null
   resetToken?: string | null
   resetTokenExp?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  areaOfLaw?: string | null
+  category?: string | null
 }
 
 export type UserUpdateInput = {
@@ -376,12 +376,12 @@ export type UserUpdateInput = {
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateInput = {
@@ -393,12 +393,12 @@ export type UserUncheckedUpdateInput = {
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCreateManyInput = {
@@ -410,12 +410,12 @@ export type UserCreateManyInput = {
   dateOfBirth?: Date | string | null
   role?: $Enums.UserRole
   isActive?: boolean
-  areaOfLaw?: string | null
-  category?: string | null
   resetToken?: string | null
   resetTokenExp?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  areaOfLaw?: string | null
+  category?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -427,12 +427,12 @@ export type UserUpdateManyMutationInput = {
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -444,12 +444,12 @@ export type UserUncheckedUpdateManyInput = {
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetTokenExp?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  areaOfLaw?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -461,12 +461,12 @@ export type UserCountOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  areaOfLaw?: Prisma.SortOrder
-  category?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
   resetTokenExp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  areaOfLaw?: Prisma.SortOrder
+  category?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -478,12 +478,12 @@ export type UserMaxOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  areaOfLaw?: Prisma.SortOrder
-  category?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
   resetTokenExp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  areaOfLaw?: Prisma.SortOrder
+  category?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -495,12 +495,12 @@ export type UserMinOrderByAggregateInput = {
   dateOfBirth?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  areaOfLaw?: Prisma.SortOrder
-  category?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
   resetTokenExp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  areaOfLaw?: Prisma.SortOrder
+  category?: Prisma.SortOrder
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -538,12 +538,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   dateOfBirth?: boolean
   role?: boolean
   isActive?: boolean
-  areaOfLaw?: boolean
-  category?: boolean
   resetToken?: boolean
   resetTokenExp?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  areaOfLaw?: boolean
+  category?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -555,12 +555,12 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   dateOfBirth?: boolean
   role?: boolean
   isActive?: boolean
-  areaOfLaw?: boolean
-  category?: boolean
   resetToken?: boolean
   resetTokenExp?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  areaOfLaw?: boolean
+  category?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -572,12 +572,12 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   dateOfBirth?: boolean
   role?: boolean
   isActive?: boolean
-  areaOfLaw?: boolean
-  category?: boolean
   resetToken?: boolean
   resetTokenExp?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  areaOfLaw?: boolean
+  category?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -589,15 +589,15 @@ export type UserSelectScalar = {
   dateOfBirth?: boolean
   role?: boolean
   isActive?: boolean
-  areaOfLaw?: boolean
-  category?: boolean
   resetToken?: boolean
   resetTokenExp?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  areaOfLaw?: boolean
+  category?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "password" | "dateOfBirth" | "role" | "isActive" | "areaOfLaw" | "category" | "resetToken" | "resetTokenExp" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "password" | "dateOfBirth" | "role" | "isActive" | "resetToken" | "resetTokenExp" | "createdAt" | "updatedAt" | "areaOfLaw" | "category", ExtArgs["result"]["user"]>
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
@@ -611,12 +611,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     dateOfBirth: Date | null
     role: $Enums.UserRole
     isActive: boolean
-    areaOfLaw: string | null
-    category: string | null
     resetToken: string | null
     resetTokenExp: Date | null
     createdAt: Date
     updatedAt: Date
+    areaOfLaw: string | null
+    category: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1048,12 +1048,12 @@ export interface UserFieldRefs {
   readonly dateOfBirth: Prisma.FieldRef<"User", 'DateTime'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
-  readonly areaOfLaw: Prisma.FieldRef<"User", 'String'>
-  readonly category: Prisma.FieldRef<"User", 'String'>
   readonly resetToken: Prisma.FieldRef<"User", 'String'>
   readonly resetTokenExp: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly areaOfLaw: Prisma.FieldRef<"User", 'String'>
+  readonly category: Prisma.FieldRef<"User", 'String'>
 }
     
 
