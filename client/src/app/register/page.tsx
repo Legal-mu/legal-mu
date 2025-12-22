@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { registerAction } from '../actions/auth';
 import { useAuthStore } from '../../store/authStore';
 import { AREA_OF_LAW_OPTIONS, LAWYER_CATEGORY_OPTIONS } from '../../lib/constants';
+import GoogleLoginButton from '../../components/GoogleLoginButton';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -108,7 +109,22 @@ export default function RegisterPage() {
             </Link>
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <div className="mt-8">
+          <div className="mt-6">
+            <GoogleLoginButton />
+          </div>
+
+          <div className="relative mt-6">
+            <div className="absolute inset-0 flex items-center" aria-hidden="true">
+              <div className="w-full border-t border-gray-300" />
+            </div>
+            <div className="relative flex justify-center text-sm font-medium leading-6">
+              <span className="bg-white px-6 text-gray-900">Or continue with email</span>
+            </div>
+          </div>
+        </div>
+
+        <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="rounded-md bg-red-50 p-4">
               <div className="flex">

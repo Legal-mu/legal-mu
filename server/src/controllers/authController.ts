@@ -130,6 +130,10 @@ export async function login(
     }
 
     // Verify password
+    if (!user.password) {
+      throw new AppError('This account was created with Google. Please sign in with Google.', 400);
+    }
+
     const isPasswordValid = await comparePassword(password, user.password);
 
     if (!isPasswordValid) {
