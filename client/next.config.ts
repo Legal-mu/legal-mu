@@ -7,6 +7,16 @@ const nextConfig: NextConfig = {
     '192.168.0.101', // Your current IP
     // Add more IPs as needed, or use a pattern
   ],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 };
 
 export default nextConfig;
