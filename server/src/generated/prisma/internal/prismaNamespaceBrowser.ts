@@ -51,7 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  LawyerProfile: 'LawyerProfile'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -76,18 +77,44 @@ export const UserScalarFieldEnum = {
   lastName: 'lastName',
   email: 'email',
   password: 'password',
-  googleId: 'googleId',
-  avatar: 'avatar',
   dateOfBirth: 'dateOfBirth',
   role: 'role',
   isActive: 'isActive',
   resetToken: 'resetToken',
   resetTokenExp: 'resetTokenExp',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  avatar: 'avatar',
+  googleId: 'googleId',
+  status: 'status'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const LawyerProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  fullLegalName: 'fullLegalName',
+  title: 'title',
+  registrationNumber: 'registrationNumber',
+  firmName: 'firmName',
+  address: 'address',
+  phoneNumber: 'phoneNumber',
+  mobileNumber: 'mobileNumber',
+  websiteUrl: 'websiteUrl',
+  practiceAreas: 'practiceAreas',
+  experienceYears: 'experienceYears',
+  jurisdictions: 'jurisdictions',
+  languages: 'languages',
+  biography: 'biography',
+  valueProposition: 'valueProposition',
+  awards: 'awards',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LawyerProfileScalarFieldEnum = (typeof LawyerProfileScalarFieldEnum)[keyof typeof LawyerProfileScalarFieldEnum]
 
 
 export const SortOrder = {

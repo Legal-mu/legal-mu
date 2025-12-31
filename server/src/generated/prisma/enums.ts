@@ -11,7 +11,26 @@
 
 export const UserRole = {
   ADMIN: 'ADMIN',
-  VISITOR: 'VISITOR'
+  CLIENT: 'CLIENT',
+  LAWYER: 'LAWYER'
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const UserStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const ProfessionalTitle = {
+  BARRISTER: 'BARRISTER',
+  ATTORNEY: 'ATTORNEY',
+  NOTARY: 'NOTARY'
+} as const
+
+export type ProfessionalTitle = (typeof ProfessionalTitle)[keyof typeof ProfessionalTitle]

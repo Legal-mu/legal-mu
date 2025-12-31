@@ -384,7 +384,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  LawyerProfile: 'LawyerProfile'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -400,7 +401,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user"
+    modelProps: "user" | "lawyerProfile"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -478,6 +479,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LawyerProfile: {
+      payload: Prisma.$LawyerProfilePayload<ExtArgs>
+      fields: Prisma.LawyerProfileFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LawyerProfileFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerProfilePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LawyerProfileFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerProfilePayload>
+        }
+        findFirst: {
+          args: Prisma.LawyerProfileFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerProfilePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LawyerProfileFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerProfilePayload>
+        }
+        findMany: {
+          args: Prisma.LawyerProfileFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerProfilePayload>[]
+        }
+        create: {
+          args: Prisma.LawyerProfileCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerProfilePayload>
+        }
+        createMany: {
+          args: Prisma.LawyerProfileCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LawyerProfileCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerProfilePayload>[]
+        }
+        delete: {
+          args: Prisma.LawyerProfileDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerProfilePayload>
+        }
+        update: {
+          args: Prisma.LawyerProfileUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerProfilePayload>
+        }
+        deleteMany: {
+          args: Prisma.LawyerProfileDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LawyerProfileUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LawyerProfileUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerProfilePayload>[]
+        }
+        upsert: {
+          args: Prisma.LawyerProfileUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LawyerProfilePayload>
+        }
+        aggregate: {
+          args: Prisma.LawyerProfileAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLawyerProfile>
+        }
+        groupBy: {
+          args: Prisma.LawyerProfileGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LawyerProfileGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LawyerProfileCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LawyerProfileCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -523,18 +598,44 @@ export const UserScalarFieldEnum = {
   lastName: 'lastName',
   email: 'email',
   password: 'password',
-  googleId: 'googleId',
-  avatar: 'avatar',
   dateOfBirth: 'dateOfBirth',
   role: 'role',
   isActive: 'isActive',
   resetToken: 'resetToken',
   resetTokenExp: 'resetTokenExp',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  avatar: 'avatar',
+  googleId: 'googleId',
+  status: 'status'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const LawyerProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  fullLegalName: 'fullLegalName',
+  title: 'title',
+  registrationNumber: 'registrationNumber',
+  firmName: 'firmName',
+  address: 'address',
+  phoneNumber: 'phoneNumber',
+  mobileNumber: 'mobileNumber',
+  websiteUrl: 'websiteUrl',
+  practiceAreas: 'practiceAreas',
+  experienceYears: 'experienceYears',
+  jurisdictions: 'jurisdictions',
+  languages: 'languages',
+  biography: 'biography',
+  valueProposition: 'valueProposition',
+  awards: 'awards',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LawyerProfileScalarFieldEnum = (typeof LawyerProfileScalarFieldEnum)[keyof typeof LawyerProfileScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -617,6 +718,34 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'UserStatus'
+ */
+export type EnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'UserStatus[]'
+ */
+export type ListEnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ProfessionalTitle'
+ */
+export type EnumProfessionalTitleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProfessionalTitle'>
+    
+
+
+/**
+ * Reference to a field of type 'ProfessionalTitle[]'
+ */
+export type ListEnumProfessionalTitleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProfessionalTitle[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -627,6 +756,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -725,6 +868,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  lawyerProfile?: Prisma.LawyerProfileOmit
 }
 
 /* Types for Logging */

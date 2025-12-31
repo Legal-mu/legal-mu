@@ -44,7 +44,7 @@ export default function Hero() {
 
                         <span className="block">
                             YOUR{" "}
-                            <span className="text-[#312E81] italic font-semibold">
+                            <span className="text-[#1C2250] italic font-semibold">
                                 RIGHTS
                             </span>
                         </span>
@@ -68,44 +68,44 @@ export default function Hero() {
             >
                 {/* Background Image */}
                 <Image
-                    src="/lady_justice_landscape.png"
+                    src="/lady_justice_landscape.jpg"
                     alt="Lady Justice"
                     fill
                     className="object-cover"
-                    priority
                 />
 
                 {/* Dark Gradient Overlay for readability */}
                 <div className="absolute inset-0 bg-black/40" />
 
-                {/* Content Overlay */}
-                <div className="absolute inset-0 flex flex-col justify-center items-end px-8 md:px-16 text-right">
-                    <div className="max-w-lg space-y-6">
+                <div className="absolute inset-0 flex items-center justify-end px-8 md:px-16">
+                    <div className="max-w-xl text-left space-y-6">
+
                         {/* Access to Justice Badge */}
-                        <div className="flex justify-end">
-                            <span className="px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-medium border border-white/20 shadow-sm">
-                                Access to Justice
-                            </span>
-                        </div>
+                        <span className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-medium border border-white/20 shadow-sm">
+                            Access to Justice
+                        </span>
 
                         {/* Quote */}
-                        <blockquote className="text-xl md:text-3xl lg:text-3xl font-serif text-white leading-tight tracking-wide font-medium drop-shadow-lg">
-                            "Justice consists not in being neutral between right and wrong, but in finding out the right and upholding it."
+                        <blockquote className="text-xl md:text-3xl lg:text-3xl font-serif text-white leading-snug tracking-wide font-medium drop-shadow-lg">
+                            “Justice consists not in being neutral between right and wrong,
+                            but in finding out the right and upholding it.”
                         </blockquote>
 
                         {/* Search Bar */}
-                        <div className="flex justify-end pt-2">
-                            <div className="bg-white rounded-full p-1.5 pl-5 flex items-center justify-between w-full max-w-sm shadow-xl hover:shadow-2xl transition-all ring-1 ring-white/50">
+                        <div className="pt-2">
+                            <div className="bg-white rounded-full px-5 py-2 flex items-center gap-3 w-full max-w-sm shadow-xl ring-1 ring-white/50 hover:shadow-2xl transition-all">
                                 <MagnifyingGlassIcon className="w-5 h-5 text-[#1e3a8a]" />
                                 <input
                                     type="text"
                                     placeholder="Search area of law..."
-                                    className="flex-1 bg-transparent border-none outline-none text-gray-700 text-sm placeholder-gray-400 px-3"
+                                    className="flex-1 bg-transparent outline-none text-gray-700 text-sm placeholder-gray-400"
                                 />
                             </div>
                         </div>
+
                     </div>
                 </div>
+
             </motion.div>
         </section>
     );

@@ -15,9 +15,9 @@ export default function PracticeAreas() {
                 transition={{ duration: 0.6 }}
                 className="mb-12"
             >
-                <p className="text-sm font-semibold text-gray-400 uppercase tracking-[0.2em] mb-4">OUR PRACTICE AREAS</p>
+                <p className="text-xl font-bold text-gray-800 uppercase tracking-[0.2em] mb-4">OUR PRACTICE AREAS</p>
                 <h2 className="text-4xl md:text-5xl font-extrabold text-[#111827] mb-6 leading-tight">
-                    Comprehensive <span className="text-[#2563eb]">Legal Solutions</span>
+                    Comprehensive <span className="text-[#1C2250]">Legal Solutions</span>
                 </h2>
                 <p className="text-gray-500 max-w-2xl text-lg leading-relaxed">
                     We specialize in a wide range of legal fields to support your personal and business needs with dedication and expertise

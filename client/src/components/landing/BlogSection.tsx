@@ -18,7 +18,7 @@ export default function BlogSection() {
                 >
                     <p className="text-sm font-bold uppercase tracking-[0.2em] text-gray-400">OUR BLOG</p>
                     <h2 className="text-4xl md:text-5xl font-extrabold text-[#111827] leading-tight">
-                        Latest Legal <span className="text-[#2563eb]">Insights</span>
+                        Latest Legal <span className="text-[#1C2250]">Insights</span>
                     </h2>
                 </motion.div>
                 <Link href="/resources" className="text-[#2563eb] font-bold flex items-center gap-2 hover:gap-3 transition-all">
