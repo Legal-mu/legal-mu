@@ -17,7 +17,7 @@ export default function Navbar() {
                 </div>
 
                 <nav className="hidden md:flex items-center justify-center flex-1">
-                    <div className="flex items-center gap-1 border border-gray-200 rounded-full px-2 py-1.5 bg-white/50 backdrop-blur-md shadow-sm">
+                    <div className="flex items-center gap-20 border border-gray-400 rounded-3xl px-2 py-2 bg-white/50 backdrop-blur-md shadow-sm">
                         <Link
                             href="/"
                             className={`px-6 py-2 text-sm font-medium rounded-full transition-colors ${pathname === '/'

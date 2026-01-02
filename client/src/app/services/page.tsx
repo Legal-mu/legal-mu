@@ -1,169 +1,233 @@
 'use client';
 
-import Link from 'next/link';
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { SERVICES } from '@/data/services';
+import Image from 'next/image';
+import {
+    MagnifyingGlassIcon,
+    ChevronDownIcon,
+    StarIcon,
+    BookmarkIcon,
+    MapPinIcon,
+    BriefcaseIcon,
+    LanguageIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon
+} from '@heroicons/react/24/outline';
+import { StarIcon as StarIconSolid } from '@heroicons/react/24/solid';
+import { LAWYERS } from '@/data/lawyers';
 
 export default function ServicesPage() {
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-[#F8F9FD]">
             <Navbar />
 
             {/* Hero Section */}
-            <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-blue-50 via-white to-purple-50">
-                <div className="max-w-7xl mx-auto">
-                    <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h1 className="text-5xl md:text-6xl font-bold text-[#1e3a8a] mb-6">Legal Services</h1>
-                        <p className="text-xl text-gray-600 leading-relaxed">
-                            Comprehensive legal solutions tailored to your needs. Our expert attorneys provide professional representation across all practice areas with proven results.
-                        </p>
-                    </div>
+            <section className="pt-40 pb-20 px-6 bg-white">
+                <div className="max-w-7xl mx-auto text-center">
+                    <h1 className="text-5xl md:text-7xl font-extrabold text-[#1A2542] mb-6 tracking-tight">
+                        Find Your Legal Expert
+                    </h1>
+                    <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 font-medium">
+                        Connect with top rated lawyers in Mauritius specializing in your specific legal needs.
+                    </p>
 
-                    {/* Service Categories */}
-                    <div className="flex flex-wrap justify-center gap-3 mb-12">
-                        {['All Services', 'Popular', 'Corporate', 'Personal', 'Property'].map((category, idx) => (
-                            <button
-                                key={idx}
-                                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${idx === 0
-                                    ? 'bg-blue-600 text-white'
-                                    : 'bg-white border border-gray-200 text-gray-700 hover:border-blue-600 hover:text-blue-600'
-                                    }`}
-                            >
-                                {category}
+                    {/* Search Bar */}
+                    <div className="max-w-3xl mx-auto">
+                        <div className="flex items-center bg-[#F3F4F6] border border-gray-100 rounded-full p-2 pl-6 shadow-sm">
+                            <MagnifyingGlassIcon className="w-6 h-6 text-gray-400 mr-4" />
+                            <input
+                                type="text"
+                                placeholder="Search by Name, Practice Area or Location..."
+                                className="flex-grow bg-transparent border-none focus:outline-none text-gray-700 placeholder-gray-400 text-lg font-medium"
+                            />
+                            <button className="bg-[#1A2542] hover:bg-[#111827] text-white px-8 py-3 rounded-full font-bold transition-all ml-2 whitespace-nowrap">
+                                Search
                             </button>
-                        ))}
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Services Grid */}
-            <section className="py-16 px-6">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {SERVICES.map((service) => (
-                            <div
-                                key={service.id}
-                                className="relative bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-2xl hover:border-blue-600 transition-all duration-300 group"
-                            >
-                                {service.popular && (
-                                    <div className="absolute -top-3 -right-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-4 py-1 rounded-full shadow-lg">
-                                        MOST POPULAR
+            {/* Lawyer Listing & Filters Section */}
+            <section className="py-12 px-6">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+
+                    {/* Filters Sidebar */}
+                    <aside className="w-full md:w-72 flex-shrink-0">
+                        <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 uppercase tracking-tight">
+                            <div className="flex justify-between items-center mb-8">
+                                <h2 className="text-2xl font-bold text-[#1A2542] normal-case">Filters</h2>
+                                <button className="text-sm font-semibold text-blue-600 hover:text-blue-700 tracking-tight normal-case">Clear all</button>
+                            </div>
+
+                            {/* Location */}
+                            <div className="mb-8">
+                                <h3 className="text-lg font-bold text-[#1A2542] mb-4 normal-case">Location</h3>
+                                <div className="relative">
+                                    <select className="w-full bg-[#F3F4F6] border-none rounded-2xl py-3.5 px-5 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-400 font-medium lowercase">
+                                        <option>All cities</option>
+                                        <option>Port Louis</option>
+                                        <option>Grand Baie</option>
+                                        <option>Curepipe</option>
+                                    </select>
+                                    <ChevronDownIcon className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+                                </div>
+                            </div>
+
+                            {/* Practice Area */}
+                            <div className="mb-8">
+                                <h3 className="text-lg font-bold text-[#1A2542] mb-4 normal-case">Practice Area</h3>
+                                <div className="space-y-3">
+                                    {["Corporate Law", "Family Law", "Criminal Defense", "Real Estate", "Immigration"].map((area, idx) => (
+                                        <label key={idx} className="flex items-center gap-3 cursor-pointer group normal-case">
+                                            <div className="relative flex items-center">
+                                                <input type="checkbox" className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-all cursor-pointer" />
+                                            </div>
+                                            <span className="text-gray-600 font-medium group-hover:text-[#1A2542] transition-colors">{area}</span>
+                                        </label>
+                                    ))}
+                                    <button className="text-sm font-bold text-blue-600 mt-2 flex items-center gap-1 normal-case">
+                                        Show more <ChevronDownIcon className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Experience */}
+                            <div className="mb-8">
+                                <h3 className="text-lg font-bold text-[#1A2542] mb-4 normal-case">Experience</h3>
+                                <div className="space-y-3">
+                                    {["Any", "5+ years", "10+ years", "20+ years"].map((exp, idx) => (
+                                        <label key={idx} className="flex items-center gap-3 cursor-pointer group normal-case">
+                                            <input type="checkbox" className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                                            <span className="text-gray-600 font-medium group-hover:text-[#1A2542] transition-colors">{exp}</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Client Rating */}
+                            <div className="mb-10">
+                                <h3 className="text-lg font-bold text-[#1A2542] mb-4 normal-case">Client Rating</h3>
+                                <label className="flex items-center gap-3 cursor-pointer group normal-case">
+                                    <input type="checkbox" className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
+                                    <div className="flex gap-0.5 text-[#FFC107]">
+                                        <StarIconSolid className="w-5 h-5" />
+                                        <StarIconSolid className="w-5 h-5" />
+                                        <StarIconSolid className="w-5 h-5" />
+                                        <StarIconSolid className="w-5 h-5" />
+                                        <StarIcon className="w-5 h-5" />
                                     </div>
-                                )}
-                                <div className="text-5xl mb-6 group-hover:scale-110 transition-transform">{service.icon}</div>
-                                <h3 className="text-2xl font-bold text-gray-900 mb-3">{service.title}</h3>
-                                <p className="text-gray-600 mb-6 leading-relaxed text-sm">{service.description}</p>
+                                    <span className="text-gray-600 font-bold tracking-tight">& Up</span>
+                                </label>
+                            </div>
 
-                                <div className="mb-6 pb-6 border-b border-gray-100">
-                                    <p className="text-sm text-gray-500 mb-1">Fee Range</p>
-                                    <p className="text-xl font-bold text-blue-600 mb-3">{service.priceRange}</p>
+                            <button className="w-full bg-[#1A2542] hover:bg-[#111827] text-white font-bold py-3 rounded-xl transition-all shadow-lg text-lg normal-case">
+                                Apply Filters
+                            </button>
+                        </div>
+                    </aside>
 
-                                    <div className="grid grid-cols-2 gap-3 mt-4">
-                                        <div className="bg-green-50 rounded-lg p-3">
-                                            <p className="text-xs text-gray-600 mb-1">Success Rate</p>
-                                            <p className="text-lg font-bold text-green-700">{service.successRate}</p>
+                    {/* Main Content Area */}
+                    <div className="flex-grow">
+                        <div className="flex justify-between items-center mb-8">
+                            <h2 className="text-3xl font-bold text-[#1A2542]">Showing 6 of 45 Lawyers</h2>
+                            <div className="flex items-center gap-4">
+                                <span className="text-2xl font-medium text-gray-500">Sort by:</span>
+                                <div className="relative min-w-[180px]">
+                                    <select className="w-full bg-white border border-gray-200 rounded-2xl py-3 px-5 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-700 font-bold shadow-sm">
+                                        <option>Most Relevant</option>
+                                        <option>Top Rated</option>
+                                        <option>Most Experienced</option>
+                                    </select>
+                                    <ChevronDownIcon className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Lawyer Grid */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-12 items-stretch">
+                            {LAWYERS.map((lawyer, idx) => (
+                                <div key={idx} className="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-50 relative group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+                                    <button className="absolute top-6 right-6 text-blue-600 bg-blue-50/50 p-2 rounded-xl hover:bg-blue-600 hover:text-white transition-all z-10">
+                                        <BookmarkIcon className="w-5 h-5" />
+                                    </button>
+
+                                    <div className="flex items-center gap-4 mb-5">
+                                        <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-gray-50 shadow-inner">
+                                            <Image
+                                                src={lawyer.image}
+                                                alt={lawyer.name}
+                                                width={80}
+                                                height={80}
+                                                className="object-cover"
+                                            />
                                         </div>
-                                        <div className="bg-blue-50 rounded-lg p-3">
-                                            <p className="text-xs text-gray-600 mb-1">Avg. Duration</p>
-                                            <p className="text-sm font-semibold text-blue-700">{service.avgDuration}</p>
+                                        <div>
+                                            <h3 className="text-xl font-bold text-[#1A2542] mb-0.5">{lawyer.name}</h3>
+                                            <p className="text-sm font-semibold text-gray-400 mb-1.5">{lawyer.title}</p>
+                                            <div className="flex items-center gap-1">
+                                                <StarIconSolid className="w-4 h-4 text-[#FFC107]" />
+                                                <span className="text-sm font-bold text-[#1A2542]">{lawyer.rating}</span>
+                                                <span className="text-xs font-semibold text-gray-400">({lawyer.reviewCount} Reviews)</span>
+                                            </div>
                                         </div>
+                                    </div>
+
+                                    {/* Tags */}
+                                    <div className="flex flex-wrap gap-2 mb-6">
+                                        {lawyer.tags.map((tag, tIdx) => (
+                                            <span key={tIdx} className="px-3 py-1 bg-[#F3F4F6] text-[#4285F4] text-[10px] font-bold rounded-full uppercase tracking-wider">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    {/* Details */}
+                                    <div className="space-y-3 mb-8">
+                                        <div className="flex items-center gap-3 text-gray-500">
+                                            <MapPinIcon className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                                            <span className="text-sm font-semibold tracking-tight">{lawyer.location}</span>
+                                        </div>
+                                        <div className="flex items-center gap-3 text-gray-500">
+                                            <BriefcaseIcon className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                                            <span className="text-sm font-semibold tracking-tight">{lawyer.experience}</span>
+                                        </div>
+                                        <div className="flex items-center gap-3 text-gray-500">
+                                            <LanguageIcon className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                                            <span className="text-sm font-semibold tracking-tight">{lawyer.languages}</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Action Buttons */}
+                                    <div className="space-y-3 mt-auto">
+                                        <button className="w-full border-2 border-gray-100 hover:border-gray-200 text-[#1A2542] font-bold py-3.5 rounded-2xl transition-all shadow-sm active:scale-[0.98]">
+                                            View Profile
+                                        </button>
+                                        <button className="w-full bg-[#1A2542] hover:bg-[#111827] text-white font-bold py-3.5 rounded-2xl transition-all shadow-md active:scale-[0.98]">
+                                            Contact Now
+                                        </button>
                                     </div>
                                 </div>
-
-                                <ul className="space-y-3 mb-8">
-                                    {service.features.map((feature, idx) => (
-                                        <li key={idx} className="flex items-start gap-3 text-sm text-gray-700">
-                                            <svg className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                            <span className="leading-tight">{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <Link
-                                    href="/register"
-                                    className="block w-full text-center bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3.5 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg shadow-blue-600/30 hover:shadow-xl hover:shadow-blue-600/40"
-                                >
-                                    Get Free Consultation
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Why Choose Us */}
-            <section className="py-20 px-6 bg-gradient-to-br from-gray-50 to-white">
-                <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Legal.mu?</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">Trusted by over 2,500 clients across Mauritius for professional legal excellence</p>
-                    </div>
-
-                    <div className="grid md:grid-cols-4 gap-8">
-                        <div className="text-center">
-                            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <svg className="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <h3 className="text-4xl font-bold text-blue-600 mb-2">500+</h3>
-                            <p className="text-gray-600 font-medium">Cases Won</p>
+                            ))}
                         </div>
-                        <div className="text-center">
-                            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
-                                </svg>
-                            </div>
-                            <h3 className="text-4xl font-bold text-green-600 mb-2">96%</h3>
-                            <p className="text-gray-600 font-medium">Client Satisfaction</p>
-                        </div>
-                        <div className="text-center">
-                            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <svg className="w-8 h-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
-                            <h3 className="text-4xl font-bold text-purple-600 mb-2">20+</h3>
-                            <p className="text-gray-600 font-medium">Years Experience</p>
-                        </div>
-                        <div className="text-center">
-                            <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <svg className="w-8 h-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                            </div>
-                            <h3 className="text-4xl font-bold text-orange-600 mb-2">15</h3>
-                            <p className="text-gray-600 font-medium">Expert Attorneys</p>
+
+                        {/* Pagination */}
+                        <div className="flex justify-center items-center gap-2">
+                            <button className="p-2.5 rounded-xl border border-gray-200 text-gray-400 hover:bg-gray-50 transition-all">
+                                <ChevronLeftIcon className="w-5 h-5" />
+                            </button>
+                            <button className="w-10 h-10 rounded-xl bg-[#1A2542] text-white font-bold text-sm shadow-md">1</button>
+                            <button className="w-10 h-10 rounded-xl bg-white border border-gray-200 text-[#1A2542] font-bold text-sm hover:bg-gray-50 transition-all">2</button>
+                            <button className="w-10 h-10 rounded-xl bg-white border border-gray-200 text-[#1A2542] font-bold text-sm hover:bg-gray-50 transition-all">3</button>
+                            <span className="px-2 text-gray-400 font-bold">...</span>
+                            <button className="w-10 h-10 rounded-xl bg-white border border-gray-200 text-[#1A2542] font-bold text-sm hover:bg-gray-50 transition-all">8</button>
+                            <button className="p-2.5 rounded-xl border border-gray-200 text-gray-400 hover:bg-gray-50 transition-all">
+                                <ChevronRightIcon className="w-5 h-5" />
+                            </button>
                         </div>
                     </div>
                 </div>
             </section>
-
-            {/* CTA Section */}
-            <section className="py-24 px-6 bg-gradient-to-br from-[#1e3a8a] to-[#2563eb] relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full filter blur-3xl"></div>
-                    <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full filter blur-3xl"></div>
-                </div>
-                <div className="relative max-w-4xl mx-auto text-center text-white">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">Need Expert Legal Consultation?</h2>
-                    <p className="text-xl mb-10 text-blue-100 leading-relaxed">
-                        Don't wait. Our experienced attorneys are ready to provide the guidance you need. Schedule a free consultation today and take the first step toward resolving your legal matters.
-                    </p>
-                    <Link
-                        href="/register"
-                        className="inline-block bg-white text-blue-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-colors shadow-2xl hover:scale-105 transform duration-200"
-                    >
-                        Book Free Consultation
-                    </Link>
-                </div>
-            </section>
-
-            <Footer />
         </div>
     );
 }
