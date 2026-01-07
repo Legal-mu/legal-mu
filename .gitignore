@@ -34,8 +34,8 @@ yarn-error.log*
 # OS
 Thumbs.db
 
-# Prisma
-prisma/migrations/
+# Prisma generated client (auto-generated, should not be committed)
+**/generated/prisma/
 
 # Testing
 coverage/

@@ -27,8 +27,5 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Prisma
-# prisma/migrations/ is now UN-ignored so the team can sync the database
-
-# Prisma generated client
-server/src/generated/prisma
+# Prisma generated client (auto-generated, should not be committed)
+src/generated/
