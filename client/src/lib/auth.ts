@@ -61,7 +61,7 @@ export async function requireAuth(): Promise<User> {
 /**
  * Require specific role in Server Components
  */
-export async function requireRole(role: 'ADMIN' | 'VISITOR'): Promise<User> {
+export async function requireRole(role: 'ADMIN' | 'LAWYER' | 'CLIENT'): Promise<User> {
   const user = await requireAuth();
 
   if (user.role !== role) {

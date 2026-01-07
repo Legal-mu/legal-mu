@@ -7,6 +7,8 @@ import authRoutes from './routes/authRoutes';
 import googleAuthRoutes from './routes/googleAuthRoutes';
 import protectedRoutes from './routes/index';
 import adminRoutes from './routes/adminRoutes';
+import lawyerRoutes from './routes/lawyerRoutes';
+import userRoutes from './routes/userRoutes';
 import { errorHandler } from './middleware/errorHandler';
 
 // Load environment variables
@@ -68,6 +70,8 @@ app.use('/api/auth/google', googleAuthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', protectedRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/lawyers', lawyerRoutes);
+app.use('/api/users', userRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

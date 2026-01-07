@@ -24,7 +24,7 @@ export default function LawyerShowcase() {
                     >
                         <p className="text-xl font-extrabold text-gray-900 uppercase tracking-[0.2em] mb-2">OUR ELITE TEAM</p>
                         <h2 className="text-4xl md:text-5xl font-extrabold text-[#111827] leading-tight">
-                            Our Top Rated <span className="text-[#2563eb]">Lawyers</span>
+                            Our Top Rated <span className="text-[#1C2250]">Lawyers</span>
                         </h2>
                     </motion.div>
                     <Link href="/community" className="px-10 py-5 rounded-full border-2 border-gray-200 text-gray-900 font-bold hover:bg-gray-50 transition-all flex items-center gap-3 group">

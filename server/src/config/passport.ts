@@ -1,6 +1,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import prisma from '../db/prisma';
+import { UserRole } from '../generated/prisma/enums';
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
@@ -55,7 +56,7 @@ passport.use(
                         lastName,
                         googleId,
                         avatar,
-                        role: 'VISITOR',
+                        role: UserRole.CLIENT,
                         isActive: true,
                     },
                 });
