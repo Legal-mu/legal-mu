@@ -11,7 +11,7 @@ export default function GoogleLoginButton() {
         <button
             type="button"
             onClick={handleGoogleLogin}
-            className="flex w-full justify-center items-center gap-3 rounded-md bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]"
+            className="flex w-full justify-center items-center gap-3 rounded-full bg-[#F3F4F6] px-3 py-4 text-sm font-bold text-[#111827] transition-all hover:bg-gray-200"
         >
             <svg className="h-5 w-5" aria-hidden="true" viewBox="0 0 24 24">
                 <path
@@ -31,7 +31,7 @@ export default function GoogleLoginButton() {
                     fill="#EA4335"
                 />
             </svg>
-            <span className="text-sm font-semibold leading-6">Sign in with Google</span>
+            <span>Google</span>
         </button>
     );
 }
