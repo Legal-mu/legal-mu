@@ -16,7 +16,7 @@ export default function Stats() {
                         transition={{ duration: 0.5, delay: i * 0.1 }}
                         className="text-center"
                     >
-                        <h3 className="text-4xl md:text-5xl font-bold text-[#1e3a8a] mb-2">{stat.value}</h3>
+                        <h3 className="text-4xl md:text-5xl font-bold text-[#1A2853] mb-2">{stat.value}</h3>
                         <p className="text-sm text-gray-600 uppercase tracking-wide">{stat.label}</p>
                     </motion.div>
                 ))}

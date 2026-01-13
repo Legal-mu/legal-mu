@@ -24,8 +24,8 @@ export default function LandingPage() {
         <PracticeAreas />
         <QuoteSection />
         <LawyerShowcase />
-        <Testimonials />
         <BlogSection />
+        <Testimonials />
         <ContactSection />
       </main>
 

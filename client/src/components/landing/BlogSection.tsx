@@ -16,12 +16,12 @@ export default function BlogSection() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    <p className="text-sm font-bold uppercase tracking-[0.2em] text-gray-400">OUR BLOG</p>
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-[#111827] leading-tight">
-                        Latest Legal <span className="text-[#1C2250]">Insights</span>
+                    <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-gray-800">OUR BLOG</p>
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-[#1A2853] leading-tight">
+                        Latest Legal <span className="text-[#1A2853]">Insights</span>
                     </h2>
                 </motion.div>
-                <Link href="/resources" className="text-[#2563eb] font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                <Link href="/resources" className="text-[#1A2853] font-bold flex items-center gap-2 hover:gap-3 transition-all">
                     View All Insights <ArrowRightIcon className="w-5 h-5" />
                 </Link>
             </div>

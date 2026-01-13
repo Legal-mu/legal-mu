@@ -57,17 +57,17 @@ export default function ContactSection() {
                         <div className="bg-white rounded-[2.5rem] p-10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] border border-gray-100">
                             <form className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-[#1e3a8a]">Full Name</label>
+                                    <label className="text-sm font-bold text-[#1A2542]">Full Name</label>
                                     <input type="text" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none transition-all font-medium text-gray-900 placeholder-gray-400" placeholder="Zaryab Khan" />
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-[#1e3a8a]">Email Address</label>
+                                    <label className="text-sm font-bold text-[#1A2542]">Email Address</label>
                                     <input type="email" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none transition-all font-medium text-gray-900 placeholder-gray-400" placeholder="zaryab@example.com" />
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-[#1e3a8a]">Practice Area</label>
+                                    <label className="text-sm font-bold text-[#1A2542]">Practice Area</label>
                                     <div className="relative">
                                         <select className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none transition-all font-medium text-gray-900 appearance-none cursor-pointer">
                                             <option>General Inquiry</option>

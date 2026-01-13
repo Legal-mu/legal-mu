@@ -19,19 +19,19 @@ export const practiceAreas = [
         title: "Corporate Law",
         description: "Navigating complex business regulations, mergers and acquisitions with strategic foresight.",
         icon: BriefcaseIcon,
-        link: "/services"
+        link: "/lawyers-directory"
     },
     {
         title: "Family Law",
         description: "Compassionate support for divorce, custody and sensitive family matters when you need it most.",
         icon: UserGroupIcon,
-        link: "/services"
+        link: "/lawyers-directory"
     },
     {
         title: "Criminal Defense",
         description: "Aggressive and strategic defense to protect your rights and future against all charges.",
         icon: ShieldCheckIcon,
-        link: "/services"
+        link: "/lawyers-directory"
     }
 ];
 

@@ -12,7 +12,7 @@ export default function ActionCards() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="bg-[#1C2237] rounded-[2rem] p-6 flex items-center justify-between group cursor-pointer hover:bg-[#2a3047] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                className="bg-[#1A2853] rounded-[2rem] p-6 flex items-center justify-between group cursor-pointer hover:bg-[#2a3047] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
             >
                 <div className="flex items-center gap-6">
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-white/10 flex items-center justify-center text-white backdrop-blur-sm">

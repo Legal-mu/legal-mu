@@ -38,10 +38,10 @@ export default function Footer() {
 
                     {/* Column 2: Services */}
                     <div>
-                        <h3 className="text-gray-900 font-extrabold text-sm uppercase tracking-widest mb-8">SERVICES</h3>
+                        <h3 className="text-gray-900 font-extrabold text-sm uppercase tracking-widest mb-8">LAWYERS DIRECTORY</h3>
                         <ul className="space-y-4">
-                            <li><Link href="/services" className="hover:text-blue-600 transition-colors text-sm font-medium">Public Law</Link></li>
-                            <li><Link href="/services" className="hover:text-blue-600 transition-colors text-sm font-medium">Private law</Link></li>
+                            <li><Link href="/lawyers-directory" className="hover:text-blue-600 transition-colors text-sm font-medium">Public Law</Link></li>
+                            <li><Link href="/lawyers-directory" className="hover:text-blue-600 transition-colors text-sm font-medium">Private law</Link></li>
                         </ul>
                     </div>
 

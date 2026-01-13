@@ -8,31 +8,30 @@ import { lawyers } from '@/data/landing';
 
 export default function LawyerShowcase() {
     return (
-        <section className="relative py-12 px-6 overflow-hidden">
+        <section className="relative py-24 px-6 overflow-hidden">
             <div className="absolute inset-0 z-0">
-                <Image src="/courthouse_legal.png" alt="Background" fill className="object-cover opacity-5" />
-                <div className="absolute inset-0 bg-white/95" />
+                <Image src="/courthouse_legal.png" alt="Background" fill className="object-cover opacity-20" />
+                <div className="absolute inset-0 bg-gray-900/10" />
             </div>
 
-            <div className="relative z-10 max-w-7xl mx-auto">
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+            <div className="relative z-10 max-w-7xl mx-auto rounded-[1rem] bg-[#F8F9FB]/95 backdrop-blur-sm p-12 md:p-20 shadow-2xl">
+                <div className="text-center max-w-3xl mx-auto mb-16">
                     <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        <p className="text-xl font-extrabold text-gray-900 uppercase tracking-[0.2em] mb-2">OUR ELITE TEAM</p>
-                        <h2 className="text-4xl md:text-5xl font-extrabold text-[#111827] leading-tight">
-                            Our Top Rated <span className="text-[#1C2250]">Lawyers</span>
+                        <h2 className="text-4xl md:text-5xl font-extrabold text-[#1A2542] mb-6 tracking-tight uppercase">
+                            Our Top Rated Lawyers
                         </h2>
+                        <p className="text-gray-500 text-lg leading-relaxed font-medium">
+                            Trusted by clients for dedication, transparency, and successful outcomes. Every case is handled with care, precision, and a deep commitment to protecting your rights.
+                        </p>
                     </motion.div>
-                    <Link href="/community" className="px-10 py-5 rounded-full border-2 border-gray-200 text-gray-900 font-bold hover:bg-gray-50 transition-all flex items-center gap-3 group">
-                        Find Your Lawyer <ArrowRightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </Link>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {lawyers.map((lawyer, i) => (
                         <motion.div
                             key={i}
@@ -40,14 +39,22 @@ export default function LawyerShowcase() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: i * 0.1 }}
-                            className="group cursor-pointer"
+                            className="group"
                         >
-                            <div className="relative aspect-[3/4] rounded-[2.5rem] overflow-hidden mb-6 bg-gray-100">
-                                <Image src={lawyer.img} alt={lawyer.name} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="bg-white rounded-[1rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+                                <div className="relative aspect-[4/5] overflow-hidden">
+                                    <Image
+                                        src={lawyer.img}
+                                        alt={lawyer.name}
+                                        fill
+                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                    />
+                                </div>
+                                <div className="p-6 bg-white">
+                                    <h3 className="text-xl font-bold text-[#1A2542]">{lawyer.name}</h3>
+                                    <p className="text-gray-500 text-sm font-medium mt-1">{lawyer.role}</p>
+                                </div>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900">{lawyer.name}</h3>
-                            <p className="text-[#2563eb] text-sm font-bold uppercase tracking-widest mt-1 opacity-80">{lawyer.role}</p>
                         </motion.div>
                     ))}
                 </div>
