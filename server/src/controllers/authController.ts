@@ -4,7 +4,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../db/prisma';
-import { UserRole, UserStatus, ProfessionalTitle } from '../generated/prisma/enums';
+import { UserRole, UserStatus, ProfessionalTitle } from '../generated/prisma';
 import { hashPassword, comparePassword } from '../utils/password';
 import { generateToken, generateResetToken, verifyResetToken } from '../utils/jwt';
 import { AppError } from '../middleware/errorHandler';

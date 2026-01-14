@@ -5,7 +5,7 @@
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../db/prisma';
 import { AppError } from '../middleware/errorHandler';
-import { UserRole, UserStatus, ProfessionalTitle } from '../generated/prisma/enums';
+import { UserRole, UserStatus, ProfessionalTitle } from '../generated/prisma';
 
 /**
  * Get all lawyers

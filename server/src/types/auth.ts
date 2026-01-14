@@ -3,7 +3,7 @@
  */
 
 // Import UserRole from Prisma generated types
-import { UserRole, UserStatus } from '../generated/prisma/enums';
+import { UserRole, UserStatus } from '../generated/prisma';
 export { UserRole, UserStatus };
 
 export interface RegisterRequest {
