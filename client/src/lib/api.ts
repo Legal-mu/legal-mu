@@ -11,6 +11,7 @@ import type {
   ResetPasswordRequest,
   HealthCheckResponse,
   ServerStatusResponse,
+  User,
 } from '../types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
@@ -154,11 +155,34 @@ export const api = {
   /**
    * Get all lawyers (admin only)
    */
-  async getLawyers(options?: RequestInit) {
-    return fetchAPI<ApiResponse<{ lawyers: import('../types').User[]; total: number }>>(
-      '/api/admin/lawyers',
-      options
-    );
+  async getLawyers() {
+    return fetchAPI<ApiResponse<User[]>>('/api/admin/lawyers');
+  },
+
+  /**
+   * Get all clients (admin only)
+   */
+  async getClients() {
+    return fetchAPI<ApiResponse<User[]>>('/api/admin/clients');
+  },
+
+  /**
+   * Update user (admin only)
+   */
+  async updateUser(id: string, data: Partial<User> & { lawyerProfile?: any }) {
+    return fetchAPI<ApiResponse<User>>(`/api/admin/users/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  },
+
+  /**
+   * Delete user (admin only)
+   */
+  async deleteUser(id: string) {
+    return fetchAPI<ApiResponse>(`/api/admin/users/${id}`, {
+      method: 'DELETE',
+    });
   },
 };
 

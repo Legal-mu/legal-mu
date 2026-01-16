@@ -46,6 +46,7 @@ export interface User {
   dateOfBirth?: Date | null;
   isActive?: boolean;
   createdAt?: string;
+  lawyerProfile?: any;
 }
 
 // Auth types
