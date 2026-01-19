@@ -27,12 +27,12 @@ export default function Testimonials() {
                                 <Image src={testi.avatar} alt={testi.author} fill className="object-cover" />
                             </div>
                         </div>
-                        <p className="text-xl md:text-2xl text-gray-700 italic leading-relaxed mb-8">
+                        <p className="text-xl md:text-2xl text-gray-700 italic leading-relaxed mb-8 font-jost">
                             &quot;{testi.quote}&quot;
                         </p>
                         <div>
-                            <h4 className="font-bold text-gray-900 text-lg">{testi.author}</h4>
-                            <p className="text-[#1A2853] font-medium">{testi.role}</p>
+                            <h4 className="font-bold text-gray-900 text-lg font-jost">{testi.author}</h4>
+                            <p className="text-[#1A2853] font-medium font-jost">{testi.role}</p>
                         </div>
                     </motion.div>
                 ))}

@@ -4,16 +4,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
-// app/fonts.ts or wherever you define fonts
-import { Montserrat } from "next/font/google";
-
-export const montserrat = Montserrat({
-    subsets: ["latin"],
-    weight: ["400", "600", "700", "800"],
-    style: ["normal", "italic"],
-});
-
-
 export default function Hero() {
     return (
         <section className="relative pt-6 pb-16">
@@ -25,20 +15,20 @@ export default function Hero() {
                     transition={{ duration: 0.6 }}
                     className="flex flex-col items-center mb-12"
                 >
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white text-[#1A2853] text-xs font-bold tracking-wide border border-gray-100 shadow-sm mb-8">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white text-[#1A2853] text-xs font-bold tracking-wide border border-gray-100 shadow-sm mb-8 font-jost">
                         <svg className="w-4 h-4 text-[#1A2853]" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                         </svg>
                         <span>Top Rated in Mauritius</span>
                     </div>
                     <h1
-                        className={`${montserrat.className} 
+                        className="font-jost 
   text-[42px] md:text-[64px] lg:text-[76px]
   font-semibold
   leading-[0.95]
   tracking-[-0.02em]
   text-[#111827]
-  mb-6`}
+  mb-6"
                     >
                         DEFENDING <br />
 
@@ -81,12 +71,12 @@ export default function Hero() {
                     <div className="max-w-xl text-left space-y-6">
 
                         {/* Access to Justice Badge */}
-                        <span className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-medium border border-white/20 shadow-sm">
+                        <span className="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-medium border border-white/20 shadow-sm font-jost">
                             Access to Justice
                         </span>
 
                         {/* Quote */}
-                        <blockquote className="text-xl md:text-3xl lg:text-3xl font-serif text-white leading-snug tracking-wide font-medium drop-shadow-lg">
+                        <blockquote className="text-xl md:text-3xl lg:text-3xl font-jost text-white leading-snug tracking-wide font-medium drop-shadow-lg">
                             “Justice consists not in being neutral between right and wrong,
                             but in finding out the right and upholding it.”
                         </blockquote>
@@ -98,7 +88,7 @@ export default function Hero() {
                                 <input
                                     type="text"
                                     placeholder="Search area of law..."
-                                    className="flex-1 bg-transparent outline-none text-gray-700 text-sm placeholder-gray-400"
+                                    className="flex-1 bg-transparent outline-none text-gray-700 text-sm placeholder-gray-400 font-jost"
                                 />
                             </div>
                         </div>

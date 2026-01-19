@@ -24,7 +24,7 @@ export default function ServicesPage() {
             {/* Hero Section */}
             <section className="pt-40 pb-20 px-6 bg-white">
                 <div className="max-w-7xl mx-auto text-center">
-                    <h1 className="text-5xl md:text-6xl font-extrabold text-[#1A2550] mb-6 tracking-tight">
+                    <h1 className="text-5xl md:text-6xl font-extrabold text-[#1A2550] mb-6 tracking-tight font-jost">
                         Find Your Legal Expert
                     </h1>
                     <p className="text-xl text-[#000000A6] max-w-2xl font-jost mx-auto mb-10 font-medium">
@@ -38,9 +38,9 @@ export default function ServicesPage() {
                             <input
                                 type="text"
                                 placeholder="Search by Name, Practice Area or Location..."
-                                className="flex-grow bg-transparent border-none focus:outline-none text-gray-700 placeholder-gray-500 text-lg font-medium"
+                                className="flex-grow bg-transparent border-none focus:outline-none text-gray-700 placeholder-gray-500 text-lg font-medium font-jost"
                             />
-                            <button className="bg-[#1A2542] hover:bg-[#111827] text-white px-8 py-3 rounded-[1rem] font-bold transition-all ml-2 whitespace-nowrap">
+                            <button className="bg-[#1A2542] hover:bg-[#111827] text-white px-8 py-3 rounded-[1rem] font-bold transition-all ml-2 whitespace-nowrap font-jost">
                                 Search
                             </button>
                         </div>
@@ -56,15 +56,15 @@ export default function ServicesPage() {
                     <aside className="w-full md:w-72 flex-shrink-0">
                         <div className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 uppercase tracking-tight">
                             <div className="flex justify-between items-center mb-8">
-                                <h2 className="text-2xl font-bold text-[#1A2542] normal-case">Filters</h2>
-                                <button className="text-sm font-semibold text-[#1A2542] hover:text-[#1A2542] tracking-tight normal-case">Clear all</button>
+                                <h2 className="text-2xl font-bold text-[#1A2542] normal-case font-jost">Filters</h2>
+                                <button className="text-sm font-semibold text-[#1A2542] hover:text-[#1A2542] tracking-tight normal-case font-jost">Clear all</button>
                             </div>
 
                             {/* Location */}
                             <div className="mb-8">
-                                <h3 className="text-lg font-bold text-[#1A2542] mb-4 normal-case">Location</h3>
+                                <h3 className="text-lg font-bold text-[#1A2542] mb-4 normal-case font-jost">Location</h3>
                                 <div className="relative">
-                                    <select className="w-full bg-[#F3F4F6] border-none rounded-2xl py-3.5 px-5 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-400 font-medium lowercase">
+                                    <select className="w-full bg-[#F3F4F6] border-none rounded-2xl py-3.5 px-5 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-400 font-medium lowercase font-jost">
                                         <option>All cities</option>
                                         <option>Port Louis</option>
                                         <option>Grand Baie</option>
@@ -76,17 +76,17 @@ export default function ServicesPage() {
 
                             {/* Practice Area */}
                             <div className="mb-8">
-                                <h3 className="text-lg font-bold text-[#1A2542] mb-4 normal-case">Practice Area</h3>
+                                <h3 className="text-lg font-bold text-[#1A2542] mb-4 normal-case font-jost">Practice Area</h3>
                                 <div className="space-y-3">
                                     {["Corporate Law", "Family Law", "Criminal Defense", "Real Estate", "Immigration"].map((area, idx) => (
                                         <label key={idx} className="flex items-center gap-3 cursor-pointer group normal-case">
                                             <div className="relative flex items-center">
                                                 <input type="checkbox" className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 transition-all cursor-pointer" />
                                             </div>
-                                            <span className="text-gray-600 font-medium group-hover:text-[#1A2542] transition-colors">{area}</span>
+                                            <span className="text-gray-600 font-medium group-hover:text-[#1A2542] transition-colors font-jost">{area}</span>
                                         </label>
                                     ))}
-                                    <button className="text-sm font-bold text-[#1A2542] mt-2 flex items-center gap-1 normal-case">
+                                    <button className="text-sm font-bold text-[#1A2542] mt-2 flex items-center gap-1 normal-case font-jost">
                                         Show more <ChevronDownIcon className="w-4 h-4" />
                                     </button>
                                 </div>
@@ -94,12 +94,12 @@ export default function ServicesPage() {
 
                             {/* Experience */}
                             <div className="mb-8">
-                                <h3 className="text-lg font-bold text-[#1A2542] mb-4 normal-case">Experience</h3>
+                                <h3 className="text-lg font-bold text-[#1A2542] mb-4 normal-case font-jost">Experience</h3>
                                 <div className="space-y-3">
                                     {["Any", "5+ years", "10+ years", "20+ years"].map((exp, idx) => (
                                         <label key={idx} className="flex items-center gap-3 cursor-pointer group normal-case">
                                             <input type="checkbox" className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-                                            <span className="text-gray-600 font-medium group-hover:text-[#1A2542] transition-colors">{exp}</span>
+                                            <span className="text-gray-600 font-medium group-hover:text-[#1A2542] transition-colors font-jost">{exp}</span>
                                         </label>
                                     ))}
                                 </div>
@@ -107,7 +107,7 @@ export default function ServicesPage() {
 
                             {/* Client Rating */}
                             <div className="mb-10">
-                                <h3 className="text-lg font-bold text-[#1A2853] mb-4 normal-case">Client Rating</h3>
+                                <h3 className="text-lg font-bold text-[#1A2853] mb-4 normal-case font-jost">Client Rating</h3>
                                 <label className="flex items-center gap-3 cursor-pointer group normal-case">
                                     <input type="checkbox" className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
                                     <div className="flex gap-0.5 text-[#1A2853]">
@@ -117,11 +117,11 @@ export default function ServicesPage() {
                                         <StarIconSolid className="w-5 h-5" />
                                         <StarIcon className="w-5 h-5" />
                                     </div>
-                                    <span className="text-gray-600 font-bold tracking-tight">& Up</span>
+                                    <span className="text-gray-600 font-bold tracking-tight font-jost">& Up</span>
                                 </label>
                             </div>
 
-                            <button className="w-full bg-[#1A2542] hover:bg-[#111827] text-white font-bold py-3 rounded-xl transition-all shadow-lg text-lg normal-case">
+                            <button className="w-full bg-[#1A2542] hover:bg-[#111827] text-white font-bold py-3 rounded-xl transition-all shadow-lg text-lg normal-case font-jost">
                                 Apply Filters
                             </button>
                         </div>
@@ -130,11 +130,11 @@ export default function ServicesPage() {
                     {/* Main Content Area */}
                     <div className="flex-grow">
                         <div className="flex justify-between items-center mb-8">
-                            <h2 className="text-3xl font-bold text-[#1A2542]">Showing 6 of 45 Lawyers</h2>
+                            <h2 className="text-3xl font-bold text-[#1A2542] font-jost">Showing 6 of 45 Lawyers</h2>
                             <div className="flex items-center gap-4">
-                                <span className="text-xl font-medium text-gray-500">Sort by:</span>
+                                <span className="text-xl font-medium text-gray-500 font-jost">Sort by:</span>
                                 <div className="relative min-w-[180px]">
-                                    <select className="w-full bg-[#F3F4F6] border border-gray-100 rounded-xl py-2.5 px-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-700 font-medium shadow-sm">
+                                    <select className="w-full bg-[#F3F4F6] border border-gray-100 rounded-xl py-2.5 px-4 pr-10 appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-gray-700 font-medium shadow-sm font-jost">
                                         <option>Most Relevant</option>
                                         <option>Top Rated</option>
                                         <option>Most Experienced</option>
@@ -168,12 +168,12 @@ export default function ServicesPage() {
                                             </div>
                                         </div>
                                         <div>
-                                            <h3 className="text-lg font-bold text-[#1A2542] mb-0.5">{lawyer.name}</h3>
-                                            <p className="text-xs font-semibold text-gray-400 mb-1.5">{lawyer.title}</p>
+                                            <h3 className="text-lg font-bold text-[#1A2542] mb-0.5 font-jost">{lawyer.name}</h3>
+                                            <p className="text-xs font-semibold text-gray-400 mb-1.5 font-jost">{lawyer.title}</p>
                                             <div className="flex items-center gap-1">
                                                 <StarIconSolid className="w-4 h-4 text-[#FFC107]" />
-                                                <span className="text-xs font-bold text-[#1A2542]">{lawyer.rating}</span>
-                                                <span className="text-[10px] font-semibold text-gray-400">({lawyer.reviewCount} Reviews)</span>
+                                                <span className="text-xs font-bold text-[#1A2542] font-jost">{lawyer.rating}</span>
+                                                <span className="text-[10px] font-semibold text-gray-400 font-jost">({lawyer.reviewCount} Reviews)</span>
                                             </div>
                                         </div>
                                     </div>
@@ -181,7 +181,7 @@ export default function ServicesPage() {
                                     {/* Tags */}
                                     <div className="flex flex-wrap gap-2 mb-6">
                                         {lawyer.tags.map((tag, tIdx) => (
-                                            <span key={tIdx} className="px-3 py-1 bg-[#EBF2FF] text-[#1A2853] text-[9px] font-bold rounded-lg uppercase tracking-wider">
+                                            <span key={tIdx} className="px-3 py-1 bg-[#EBF2FF] text-[#1A2853] text-[9px] font-bold rounded-lg uppercase tracking-wider font-jost">
                                                 {tag}
                                             </span>
                                         ))}
@@ -191,24 +191,24 @@ export default function ServicesPage() {
                                     <div className="space-y-3 mb-8">
                                         <div className="flex items-center gap-3 text-gray-500">
                                             <MapPinIcon className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                                            <span className="text-sm font-semibold tracking-tight">{lawyer.location}</span>
+                                            <span className="text-sm font-semibold tracking-tight font-jost">{lawyer.location}</span>
                                         </div>
                                         <div className="flex items-center gap-3 text-gray-500">
                                             <BriefcaseIcon className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                                            <span className="text-sm font-semibold tracking-tight">{lawyer.experience}</span>
+                                            <span className="text-sm font-semibold tracking-tight font-jost">{lawyer.experience}</span>
                                         </div>
                                         <div className="flex items-center gap-3 text-gray-500">
                                             <LanguageIcon className="w-5 h-5 text-gray-400 flex-shrink-0" />
-                                            <span className="text-sm font-semibold tracking-tight">{lawyer.languages}</span>
+                                            <span className="text-sm font-semibold tracking-tight font-jost">{lawyer.languages}</span>
                                         </div>
                                     </div>
 
                                     {/* Action Buttons */}
                                     <div className="space-y-3 mt-auto">
-                                        <button className="w-full border border-gray-200 hover:bg-gray-50 text-[#1A2542] font-bold py-3 rounded-xl transition-all shadow-sm">
+                                        <button className="w-full border border-gray-200 hover:bg-gray-50 text-[#1A2542] font-bold py-3 rounded-xl transition-all shadow-sm font-jost">
                                             View Profile
                                         </button>
-                                        <button className="w-full bg-[#1A2542] hover:bg-[#111827] text-white font-bold py-3 rounded-xl transition-all shadow-md">
+                                        <button className="w-full bg-[#1A2542] hover:bg-[#111827] text-white font-bold py-3 rounded-xl transition-all shadow-md font-jost">
                                             Contact Now
                                         </button>
                                     </div>
@@ -221,11 +221,11 @@ export default function ServicesPage() {
                             <button className="p-2 rounded-lg border border-gray-200 text-gray-400 hover:bg-gray-50 transition-all">
                                 <ChevronLeftIcon className="w-4 h-4" />
                             </button>
-                            <button className="w-10 h-10 rounded-lg bg-[#111827] text-white font-bold text-sm shadow-md">1</button>
-                            <button className="w-10 h-10 rounded-lg bg-white border border-gray-200 text-[#1A2542] font-bold text-sm hover:bg-gray-50 transition-all">2</button>
-                            <button className="w-10 h-10 rounded-lg bg-white border border-gray-200 text-[#1A2542] font-bold text-sm hover:bg-gray-50 transition-all">3</button>
-                            <span className="px-2 text-gray-400 font-bold">...</span>
-                            <button className="w-10 h-10 rounded-lg bg-white border border-gray-200 text-[#1A2542] font-bold text-sm hover:bg-gray-50 transition-all">8</button>
+                            <button className="w-10 h-10 rounded-lg bg-[#111827] text-white font-bold text-sm shadow-md font-jost">1</button>
+                            <button className="w-10 h-10 rounded-lg bg-white border border-gray-200 text-[#1A2542] font-bold text-sm hover:bg-gray-50 transition-all font-jost">2</button>
+                            <button className="w-10 h-10 rounded-lg bg-white border border-gray-200 text-[#1A2542] font-bold text-sm hover:bg-gray-50 transition-all font-jost">3</button>
+                            <span className="px-2 text-gray-400 font-bold font-jost">...</span>
+                            <button className="w-10 h-10 rounded-lg bg-white border border-gray-200 text-[#1A2542] font-bold text-sm hover:bg-gray-50 transition-all font-jost">8</button>
                             <button className="p-2 rounded-lg border border-gray-200 text-gray-400 hover:bg-gray-50 transition-all">
                                 <ChevronRightIcon className="w-4 h-4" />
                             </button>

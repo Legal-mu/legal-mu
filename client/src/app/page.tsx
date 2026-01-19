@@ -14,7 +14,7 @@ import ContactSection from '@/components/landing/ContactSection';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white text-[#111827] font-sans selection:bg-blue-100">
+    <div className="min-h-screen bg-white text-[#111827] font-jost selection:bg-blue-100">
       <Navbar />
 
       <main className="pt-28 pb-12 px-6 max-w-7xl mx-auto overflow-hidden">

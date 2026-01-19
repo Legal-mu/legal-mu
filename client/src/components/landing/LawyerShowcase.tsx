@@ -22,10 +22,10 @@ export default function LawyerShowcase() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        <h2 className="text-4xl md:text-5xl font-extrabold text-[#1A2542] mb-6 tracking-tight uppercase">
+                        <h2 className="text-4xl md:text-5xl font-extrabold text-[#1A2542] mb-6 tracking-tight uppercase font-jost">
                             Our Top Rated Lawyers
                         </h2>
-                        <p className="text-gray-500 text-lg leading-relaxed font-medium">
+                        <p className="text-gray-500 text-lg leading-relaxed font-medium font-jost">
                             Trusted by clients for dedication, transparency, and successful outcomes. Every case is handled with care, precision, and a deep commitment to protecting your rights.
                         </p>
                     </motion.div>
@@ -51,8 +51,8 @@ export default function LawyerShowcase() {
                                     />
                                 </div>
                                 <div className="p-6 bg-white">
-                                    <h3 className="text-xl font-bold text-[#1A2542]">{lawyer.name}</h3>
-                                    <p className="text-gray-500 text-sm font-medium mt-1">{lawyer.role}</p>
+                                    <h3 className="text-xl font-bold text-[#1A2542] font-jost">{lawyer.name}</h3>
+                                    <p className="text-gray-500 text-sm font-medium mt-1 font-jost">{lawyer.role}</p>
                                 </div>
                             </div>
                         </motion.div>

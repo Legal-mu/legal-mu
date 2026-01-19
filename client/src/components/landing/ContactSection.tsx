@@ -17,11 +17,11 @@ export default function ContactSection() {
                         {/* Left Content */}
                         <div className="space-y-10 pt-4">
                             <div className="space-y-6">
-                                <h2 className="text-5xl md:text-6xl font-extrabold text-[#1A2853] leading-[1.1] tracking-tight">
+                                <h2 className="text-5xl md:text-6xl font-extrabold text-[#1A2853] leading-[1.1] tracking-tight font-jost">
                                     Need Legal <br />
                                     <span className="text-[#1A2853]">Advice?</span>
                                 </h2>
-                                <p className="text-lg text-gray-500 leading-relaxed max-w-md">
+                                <p className="text-lg text-gray-500 leading-relaxed max-w-md font-jost">
                                     Don&apos;t navigate the complexity of law alone. Schedule a free, no-obligation consultation with our expert team today. We are here to listen and help.
                                 </p>
                             </div>
@@ -34,8 +34,8 @@ export default function ContactSection() {
                                         </svg>
                                     </div>
                                     <div>
-                                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">CALL US 24/7</p>
-                                        <p className="text-xl font-bold text-[#1A2853]">+1 (800) 555-0199</p>
+                                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 font-jost">CALL US 24/7</p>
+                                        <p className="text-xl font-bold text-[#1A2853] font-jost">+1 (800) 555-0199</p>
                                     </div>
                                 </div>
 
@@ -46,8 +46,8 @@ export default function ContactSection() {
                                         </svg>
                                     </div>
                                     <div>
-                                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">EMAIL US</p>
-                                        <p className="text-xl font-bold text-[#1A2853]">consult@legal.mu</p>
+                                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 font-jost">EMAIL US</p>
+                                        <p className="text-xl font-bold text-[#1A2853] font-jost">consult@legal.mu</p>
                                     </div>
                                 </div>
                             </div>
@@ -57,19 +57,19 @@ export default function ContactSection() {
                         <div className="bg-white rounded-[2.5rem] p-10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] border border-gray-100">
                             <form className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-[#1A2853]">Full Name</label>
-                                    <input type="text" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-[#1A2853] focus:bg-white focus:ring-4 focus:ring-[#1A2853]/10 outline-none transition-all font-medium text-gray-900 placeholder-gray-400" placeholder="Zaryab Khan" />
+                                    <label className="text-sm font-bold text-[#1A2853] font-jost">Full Name</label>
+                                    <input type="text" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-[#1A2853] focus:bg-white focus:ring-4 focus:ring-[#1A2853]/10 outline-none transition-all font-medium text-gray-900 placeholder-gray-400 font-jost" placeholder="Zaryab Khan" />
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-[#1A2853]">Email Address</label>
-                                    <input type="email" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-[#1A2853] focus:bg-white focus:ring-4 focus:ring-[#1A2853]/10 outline-none transition-all font-medium text-gray-900 placeholder-gray-400" placeholder="zaryab@example.com" />
+                                    <label className="text-sm font-bold text-[#1A2853] font-jost">Email Address</label>
+                                    <input type="email" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-[#1A2853] focus:bg-white focus:ring-4 focus:ring-[#1A2853]/10 outline-none transition-all font-medium text-gray-900 placeholder-gray-400 font-jost" placeholder="zaryab@example.com" />
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-[#1A2853]">Practice Area</label>
+                                    <label className="text-sm font-bold text-[#1A2853] font-jost">Practice Area</label>
                                     <div className="relative">
-                                        <select className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-[#1A2853] focus:bg-white focus:ring-4 focus:ring-[#1A2853]/10 outline-none transition-all font-medium text-gray-900 appearance-none cursor-pointer">
+                                        <select className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-[#1A2853] focus:bg-white focus:ring-4 focus:ring-[#1A2853]/10 outline-none transition-all font-medium text-gray-900 appearance-none cursor-pointer font-jost">
                                             <option>General Inquiry</option>
                                             <option>Corporate Law</option>
                                             <option>Family Law</option>
@@ -83,7 +83,7 @@ export default function ContactSection() {
                                     </div>
                                 </div>
 
-                                <button className="w-full py-4 rounded-xl bg-[#1A2853] hover:bg-[#111827] text-white font-bold text-lg transition-all shadow-xl hover:shadow-2xl active:scale-[0.98] mt-4">
+                                <button className="w-full py-4 rounded-xl bg-[#1A2853] hover:bg-[#111827] text-white font-bold text-lg transition-all shadow-xl hover:shadow-2xl active:scale-[0.98] mt-4 font-jost">
                                     Request Free Callback
                                 </button>
                             </form>
