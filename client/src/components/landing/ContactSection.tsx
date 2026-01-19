@@ -17,9 +17,9 @@ export default function ContactSection() {
                         {/* Left Content */}
                         <div className="space-y-10 pt-4">
                             <div className="space-y-6">
-                                <h2 className="text-5xl md:text-6xl font-extrabold text-[#111827] leading-[1.1] tracking-tight">
+                                <h2 className="text-5xl md:text-6xl font-extrabold text-[#1A2853] leading-[1.1] tracking-tight">
                                     Need Legal <br />
-                                    <span className="text-[#111827]">Advice?</span>
+                                    <span className="text-[#1A2853]">Advice?</span>
                                 </h2>
                                 <p className="text-lg text-gray-500 leading-relaxed max-w-md">
                                     Don&apos;t navigate the complexity of law alone. Schedule a free, no-obligation consultation with our expert team today. We are here to listen and help.
@@ -29,25 +29,25 @@ export default function ContactSection() {
                             <div className="space-y-8">
                                 <div className="flex items-center gap-6 group">
                                     <div className="w-16 h-16 rounded-2xl bg-[#eff6ff] flex items-center justify-center text-[#2563eb] group-hover:scale-110 transition-transform duration-300">
-                                        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="#1A2853">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                         </svg>
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">CALL US 24/7</p>
-                                        <p className="text-xl font-bold text-[#111827]">+1 (800) 555-0199</p>
+                                        <p className="text-xl font-bold text-[#1A2853]">+1 (800) 555-0199</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center gap-6 group">
                                     <div className="w-16 h-16 rounded-2xl bg-[#eff6ff] flex items-center justify-center text-[#2563eb] group-hover:scale-110 transition-transform duration-300">
-                                        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="#1A2853">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                         </svg>
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">EMAIL US</p>
-                                        <p className="text-xl font-bold text-[#111827]">consult@legal.mu</p>
+                                        <p className="text-xl font-bold text-[#1A2853]">consult@legal.mu</p>
                                     </div>
                                 </div>
                             </div>
@@ -57,33 +57,33 @@ export default function ContactSection() {
                         <div className="bg-white rounded-[2.5rem] p-10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.08)] border border-gray-100">
                             <form className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-[#1A2542]">Full Name</label>
-                                    <input type="text" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none transition-all font-medium text-gray-900 placeholder-gray-400" placeholder="Zaryab Khan" />
+                                    <label className="text-sm font-bold text-[#1A2853]">Full Name</label>
+                                    <input type="text" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-[#1A2853] focus:bg-white focus:ring-4 focus:ring-[#1A2853]/10 outline-none transition-all font-medium text-gray-900 placeholder-gray-400" placeholder="Zaryab Khan" />
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-[#1A2542]">Email Address</label>
-                                    <input type="email" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none transition-all font-medium text-gray-900 placeholder-gray-400" placeholder="zaryab@example.com" />
+                                    <label className="text-sm font-bold text-[#1A2853]">Email Address</label>
+                                    <input type="email" className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-[#1A2853] focus:bg-white focus:ring-4 focus:ring-[#1A2853]/10 outline-none transition-all font-medium text-gray-900 placeholder-gray-400" placeholder="zaryab@example.com" />
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-sm font-bold text-[#1A2542]">Practice Area</label>
+                                    <label className="text-sm font-bold text-[#1A2853]">Practice Area</label>
                                     <div className="relative">
-                                        <select className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 outline-none transition-all font-medium text-gray-900 appearance-none cursor-pointer">
+                                        <select className="w-full px-6 py-4 rounded-2xl bg-gray-50 border-transparent focus:border-[#1A2853] focus:bg-white focus:ring-4 focus:ring-[#1A2853]/10 outline-none transition-all font-medium text-gray-900 appearance-none cursor-pointer">
                                             <option>General Inquiry</option>
                                             <option>Corporate Law</option>
                                             <option>Family Law</option>
                                             <option>Criminal Defense</option>
                                         </select>
                                         <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
-                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="#1A2853">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                             </svg>
                                         </div>
                                     </div>
                                 </div>
 
-                                <button className="w-full py-4 rounded-xl bg-[#1e2a4a] hover:bg-[#111827] text-white font-bold text-lg transition-all shadow-xl hover:shadow-2xl active:scale-[0.98] mt-4">
+                                <button className="w-full py-4 rounded-xl bg-[#1A2853] hover:bg-[#111827] text-white font-bold text-lg transition-all shadow-xl hover:shadow-2xl active:scale-[0.98] mt-4">
                                     Request Free Callback
                                 </button>
                             </form>

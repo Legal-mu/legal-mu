@@ -107,10 +107,10 @@ export default function ServicesPage() {
 
                             {/* Client Rating */}
                             <div className="mb-10">
-                                <h3 className="text-lg font-bold text-[#1A2542] mb-4 normal-case">Client Rating</h3>
+                                <h3 className="text-lg font-bold text-[#1A2853] mb-4 normal-case">Client Rating</h3>
                                 <label className="flex items-center gap-3 cursor-pointer group normal-case">
                                     <input type="checkbox" className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-                                    <div className="flex gap-0.5 text-[#FFC107]">
+                                    <div className="flex gap-0.5 text-[#1A2853]">
                                         <StarIconSolid className="w-5 h-5" />
                                         <StarIconSolid className="w-5 h-5" />
                                         <StarIconSolid className="w-5 h-5" />
@@ -148,7 +148,7 @@ export default function ServicesPage() {
                         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-12 items-stretch">
                             {LAWYERS.map((lawyer, idx) => (
                                 <div key={idx} className="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-50 relative group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-                                    <button className="absolute top-6 right-6 text-[#2563EB] bg-[#EBF2FF] p-2 rounded-lg hover:bg-[#2563EB] hover:text-white transition-all z-10">
+                                    <button className="absolute top-6 right-6 text-[#1A2853] bg-[#EBF2FF] p-2 rounded-lg hover:bg-[#2563EB] hover:text-white transition-all z-10">
                                         <BookmarkIcon className="w-5 h-5" />
                                     </button>
 
@@ -164,7 +164,7 @@ export default function ServicesPage() {
                                                 />
                                             </div>
                                             <div className="absolute bottom-0 right-0 bg-white rounded-full p-0.5 shadow-sm">
-                                                <CheckBadgeIcon className="w-6 h-6 text-[#2563EB]" />
+                                                <CheckBadgeIcon className="w-6 h-6 text-[#1A2853]" />
                                             </div>
                                         </div>
                                         <div>
@@ -181,7 +181,7 @@ export default function ServicesPage() {
                                     {/* Tags */}
                                     <div className="flex flex-wrap gap-2 mb-6">
                                         {lawyer.tags.map((tag, tIdx) => (
-                                            <span key={tIdx} className="px-3 py-1 bg-[#EBF2FF] text-[#2563EB] text-[9px] font-bold rounded-lg uppercase tracking-wider">
+                                            <span key={tIdx} className="px-3 py-1 bg-[#EBF2FF] text-[#1A2853] text-[9px] font-bold rounded-lg uppercase tracking-wider">
                                                 {tag}
                                             </span>
                                         ))}

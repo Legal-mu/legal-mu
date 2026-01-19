@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display, Jost } from "next/font/google";
 import "./globals.css";
 import { Providers } from "../components/Providers";
 
@@ -18,6 +18,11 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
 });
 
+const jost = Jost({
+  variable: "--font-jost",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
   title: "Legal-MU | Legal Matters Management",
   description: "Legal matters management system built with Next.js and Express.js",
@@ -31,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${jost.variable} antialiased`}
       >
         <Providers>{children}</Providers>
       </body>

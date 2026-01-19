@@ -32,9 +32,9 @@ export default function PracticeAreas() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: i * 0.1 }}
-                        className="bg-[#F8FAFC] border border-gray-200 rounded-[2.5rem] p-10 hover:bg-white hover:shadow-2xl hover:shadow-blue-500/10 transition-all group cursor-pointer shadow-sm"
+                        className="bg-[#F8FAFC] border border-gray-200 rounded-[2.5rem] p-10 hover:bg-white hover:shadow-2xl hover:shadow-blue-500/10\ transition-all group cursor-pointer shadow-sm"
                     >
-                        <div className="w-16 h-16 rounded-full bg-white border border-gray-100 flex items-center justify-center text-[#1A2853] mb-8 group-hover:bg-[#2563eb] group-hover:text-white transition-all duration-300">
+                        <div className="w-16 h-16 rounded-full bg-white border border-gray-100 flex items-center justify-center text-[#1A2853] mb-8 group-hover:bg-[#1A2853] group-hover:text-white transition-all duration-300">
                             <area.icon className="w-8 h-8" />
                         </div>
                         <h3 className="text-xl font-bold text-[#1A2853] mb-4">{area.title}</h3>
