@@ -55,14 +55,14 @@ export default function AdminOverview() {
         <div className="space-y-8">
             {/* Welcome Section */}
             <div>
-                <h2 className="text-2xl font-bold text-gray-800">Overview</h2>
-                <p className="text-gray-500 mt-1">Welcome back, admin. Here's what's happening today.</p>
+                <h2 className="text-2xl font-bold text-gray-1000">Overview</h2>
+                <p className="text-gray-800 mt-1">Welcome back, admin. Here's what's happening today.</p>
             </div>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat) => (
-                    <div key={stat.label} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div key={stat.label} className="bg-[#F5F5F5] p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
                         <div className="flex justify-between items-start">
                             <div className={`${stat.color} p-3 rounded-xl text-white`}>
                                 <stat.icon size={24} />
@@ -85,7 +85,7 @@ export default function AdminOverview() {
 
             {/* Charts/Tables Placeholder Row */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                <div className="lg:col-span-2 bg-[#F5F5F5] p-6 rounded-2xl border border-gray-100 shadow-sm">
                     <div className="flex justify-between items-center mb-6">
                         <h3 className="font-bold text-gray-800">Growth Activity</h3>
                         <select className="text-sm border-none bg-gray-50 rounded-lg text-gray-500 py-2 px-3">
@@ -101,7 +101,7 @@ export default function AdminOverview() {
                     </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                <div className="bg-[#F5F5F5] p-6 rounded-2xl border border-gray-100 shadow-sm">
                     <h3 className="font-bold text-gray-800 mb-6">System Status</h3>
                     <div className="space-y-6">
                         <div className="flex items-center justify-between">

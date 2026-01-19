@@ -15,8 +15,11 @@ import {
     Bell,
     Search
 } from 'lucide-react';
+import { Jost } from 'next/font/google';
 import { useAuthStore } from '@/store/authStore';
 import { logoutAction } from '@/app/actions/auth';
+
+const jost = Jost({ subsets: ['latin'] });
 
 const sidebarItems = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
@@ -36,25 +39,25 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex">
+        <div className={`min-h-screen bg-white flex ${jost.className}`}>
             {/* Sidebar */}
             <aside
                 className={`${isSidebarOpen ? 'w-64' : 'w-20'
-                    } bg-[#1A2853] text-white transition-all duration-300 flex flex-col fixed h-full z-30`}
+                    } bg-white border-r border-gray-200 text-gray-600 transition-all duration-300 flex flex-col fixed h-full z-30`}
             >
                 <div className="p-6 flex items-center justify-between">
                     {isSidebarOpen ? (
                         <Link href="/">
-                            <Image src="/legal-mu-logo.webp" alt="Legal.mu Logo" width={150} height={40} className="brightness-200" />
+                            <Image src="/legal-mu-logo.webp" alt="Legal.mu Logo" width={150} height={40} />
                         </Link>
                     ) : (
-                        <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center">
-                            <span className="text-[#1e3a8a] font-bold">L</span>
+                        <div className="w-8 h-8 bg-[#1A2853] rounded-md flex items-center justify-center">
+                            <span className="text-white font-bold">L</span>
                         </div>
                     )}
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        className="p-1 hover:bg-blue-800 rounded-md transition-colors"
+                        className="p-1 hover:bg-gray-100 rounded-md transition-colors text-gray-500"
                     >
                         {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
                     </button>
@@ -68,21 +71,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                                 key={item.href}
                                 href={item.href}
                                 className={`flex items-center p-3 rounded-lg transition-all ${isActive
-                                    ? 'bg-white text-[#1e3a8a] shadow-md'
-                                    : 'text-blue-100 hover:bg-blue-800'
+                                    ? 'bg-[#1A2853] text-white shadow-md'
+                                    : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900'
                                     }`}
                             >
-                                <item.icon size={22} className={isActive ? 'text-[#1e3a8a]' : ''} />
+                                <item.icon size={22} className={isActive ? 'text-white' : ''} />
                                 {isSidebarOpen && <span className="ml-3 font-medium">{item.name}</span>}
                             </Link>
                         );
                     })}
                 </nav>
 
-                <div className="p-4 border-t border-blue-800">
+                <div className="p-4 border-t border-gray-200">
                     <button
                         onClick={handleLogout}
-                        className="flex items-center w-full p-3 text-blue-100 hover:bg-blue-800 rounded-lg transition-all"
+                        className="flex items-center w-full p-3 text-gray-500 hover:bg-gray-100 hover:text-gray-900 rounded-lg transition-all"
                     >
                         <LogOut size={22} />
                         {isSidebarOpen && <span className="ml-3 font-medium">Logout</span>}
