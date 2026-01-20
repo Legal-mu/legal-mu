@@ -1,9 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Settings as SettingsIcon, Bell, Shield, Lock, Eye } from 'lucide-react';
+import ChangePasswordModal from '../components/ChangePasswordModal';
 
 export default function AdminSettings() {
+    const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+
     return (
         <div className="space-y-6 max-w-4xl">
             <div>
@@ -47,7 +50,10 @@ export default function AdminSettings() {
                         </div>
                     </div>
 
-                    <button className="text-sm font-semibold text-[#1e3a8a] hover:underline">
+                    <button
+                        onClick={() => setIsPasswordModalOpen(true)}
+                        className="text-sm font-semibold text-[#1e3a8a] hover:underline"
+                    >
                         Update administrator password
                     </button>
                 </div>
@@ -63,6 +69,11 @@ export default function AdminSettings() {
                     Enable Maintenance Mode
                 </button>
             </div>
+
+            <ChangePasswordModal
+                isOpen={isPasswordModalOpen}
+                onClose={() => setIsPasswordModalOpen(false)}
+            />
         </div>
     );
 }

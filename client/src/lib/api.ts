@@ -184,6 +184,16 @@ export const api = {
       method: 'DELETE',
     });
   },
+
+  /**
+   * Change admin password
+   */
+  async changeAdminPassword(data: { currentPassword: string; newPassword: string }) {
+    return fetchAPI<ApiResponse>('/api/admin/change-password', {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
 };
 
 export default api;
