@@ -3,6 +3,7 @@
 import { useState, useEffect, useTransition, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Jost } from 'next/font/google';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
@@ -13,6 +14,11 @@ import {
 import { loginAction } from '../actions/auth';
 import { useAuthStore } from '../../store/authStore';
 import GoogleLoginButton from '../../components/GoogleLoginButton';
+
+const jost = Jost({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+});
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -62,7 +68,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F3F4F7] flex flex-col font-sans">
+    <div className={`min-h-screen bg-[#f6f8ff] flex flex-col ${jost.className}`}>
       {/* Header */}
       <header className="w-full bg-white py-3 px-12 md:px-16 flex justify-between items-center border-b border-gray-100">
         <div className="flex items-center gap-2">
@@ -78,7 +84,7 @@ function LoginForm() {
         </div>
         <div className="text-sm">
           <span className="text-gray-400">Don't have an account? </span>
-          <Link href="/register" className="font-bold text-[#111827] hover:underline ml-1">
+          <Link href="/register" className="font-bold text-[#1A2853] hover:underline ml-1">
             Register
           </Link>
         </div>
@@ -113,7 +119,7 @@ function LoginForm() {
 
                 {/* Email Address */}
                 <div>
-                  <label className="block text-sm font-bold text-[#111827] mb-2 ml-1">Email Address</label>
+                  <label className="block text-sm font-bold text-[#1A2853] mb-2 ml-1">Email Address</label>
                   <div className="relative">
                     <input
                       type="email"
@@ -130,8 +136,8 @@ function LoginForm() {
                 {/* Password */}
                 <div>
                   <div className="flex justify-between items-center mb-2 ml-1">
-                    <label className="block text-sm font-bold text-[#111827]">Password</label>
-                    <Link href="/forgot-password" className="text-xs font-bold text-gray-400 hover:text-[#111827]">
+                    <label className="block text-sm font-bold text-[#1A2853]">Password</label>
+                    <Link href="/forgot-password" className="text-xs font-bold text-[#1A2853] hover:text-[#111827]">
                       Forgot Password?
                     </Link>
                   </div>
@@ -158,7 +164,7 @@ function LoginForm() {
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="w-full bg-[#1A2542] hover:bg-[#111827] text-white font-bold py-3 rounded-lg transition-all shadow-lg text-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-[#1A2853] hover:bg-[#111827] text-white font-bold py-3 rounded-lg transition-all shadow-lg text-md disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isPending ? 'Signing in...' : 'Sign In'}
                 </button>
@@ -189,14 +195,14 @@ function LoginForm() {
                 src="/legal_hero_bg.png"
                 alt="Branding"
                 fill
-                className="object-cover opacity-70"
+                className="object-cover opacity-30"
               />
               <div className="absolute inset-0 bg-gradient-to-b from-[#121E3E]/30 via-[#121E3E]/60 to-[#121E3E]/90"></div>
             </div>
 
             {/* Marketing Content */}
             <div className="relative z-10 w-full h-full p-6 lg:p-8 flex flex-col justify-center text-white">
-              <div className="max-w-2xl mt-auto mb-6">
+              <div className="max-w-2xl mt-auto mb-2">
                 <h2 className="text-3xl lg:text-3xl font-semibold mb-4 leading-[1.1] tracking-tight">
                   Trusted by 10,000+ Clients
                 </h2>
