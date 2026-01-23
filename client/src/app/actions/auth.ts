@@ -6,6 +6,7 @@
 'use server';
 
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import type { RegisterRequest, LoginRequest } from '../../types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
@@ -139,27 +140,25 @@ export async function registerAction(
 /**
  * Server Action: Logout
  */
-export async function logoutAction(): Promise<ActionResult> {
-  const cookieStore = await cookies();
-
+export async function logoutAction(): Promise<void> {
   try {
-    // Call backend to clear cookie
-    await fetch(`${API_URL}/api/auth/logout`, {
+    const cookieStore = await cookies();
+
+    // 1. Clear cookie on client side (Server Action side)
+    cookieStore.delete('auth_token');
+
+    // 2. Call backend to clear cookie (Async, don't wait if it hangs)
+    fetch(`${API_URL}/api/auth/logout`, {
       method: 'POST',
-      credentials: 'include', // Include cookies
-    });
+      credentials: 'include',
+    }).catch(err => console.error('Backend logout error:', err));
+
   } catch (error) {
     console.error('Logout error:', error);
-  } finally {
-    // Clear cookie on client side as well
-    cookieStore.delete('auth_token');
   }
 
-  // Return success - redirect will be handled on client side
-  return {
-    success: true,
-    message: 'Logged out successfully',
-  };
+  // 3. Redirect to login
+  redirect('/login');
 }
 
 /**

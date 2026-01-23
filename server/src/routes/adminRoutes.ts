@@ -10,7 +10,8 @@ import {
     getAllClients,
     getUserById,
     updateUser,
-    deleteUser
+    deleteUser,
+    changeAdminPassword
 } from '../controllers/adminController';
 
 const router = Router();
@@ -49,5 +50,12 @@ router.patch('/users/:id', authenticate, authorize(UserRole.ADMIN), updateUser);
  * @access  Private (Admin only)
  */
 router.delete('/users/:id', authenticate, authorize(UserRole.ADMIN), deleteUser);
+
+/**
+ * @route   PUT /api/admin/change-password
+ * @desc    Change admin password
+ * @access  Private (Admin only)
+ */
+router.put('/change-password', authenticate, authorize(UserRole.ADMIN), changeAdminPassword);
 
 export default router;

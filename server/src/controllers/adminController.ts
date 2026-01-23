@@ -6,6 +6,7 @@ import { Request, Response, NextFunction } from 'express';
 import prisma from '../db/prisma';
 import { AppError } from '../middleware/errorHandler';
 import { UserRole, UserStatus, ProfessionalTitle } from '../generated/prisma';
+import { comparePassword, hashPassword } from '../utils/password';
 
 /**
  * Get all lawyers
@@ -172,6 +173,60 @@ export async function deleteUser(req: Request, res: Response, next: NextFunction
         res.json({
             success: true,
             message: 'User deleted successfully',
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+/**
+ * Change Admin Password
+ */
+export async function changeAdminPassword(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { currentPassword, newPassword } = req.body;
+        const adminId = req.user?.userId;
+
+        if (!adminId) {
+            throw new AppError('Not authenticated', 401);
+        }
+
+        // Find admin user
+        const admin = await prisma.user.findUnique({
+            where: { id: adminId },
+        });
+
+        if (!admin) {
+            throw new AppError('Admin user not found', 404);
+        }
+
+        // Verify it's actually an admin
+        if (admin.role !== UserRole.ADMIN) {
+            throw new AppError('Forbidden: Only admins can use this endpoint', 403);
+        }
+
+        // Verify current password
+        if (!admin.password) {
+            throw new AppError('Account has no password (Google Login). Please set a password first.', 400);
+        }
+
+        const isPasswordValid = await comparePassword(currentPassword, admin.password);
+        if (!isPasswordValid) {
+            throw new AppError('Incorrect current password', 400);
+        }
+
+        // Hash new password
+        const hashedPassword = await hashPassword(newPassword);
+
+        // Update password
+        await prisma.user.update({
+            where: { id: adminId },
+            data: { password: hashedPassword },
+        });
+
+        res.json({
+            success: true,
+            message: 'Password updated successfully',
         });
     } catch (error) {
         next(error);

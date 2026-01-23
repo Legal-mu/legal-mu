@@ -56,8 +56,10 @@ function LoginForm() {
         if (result.data && typeof result.data === 'object' && 'id' in result.data) {
           useAuthStore.getState().setAuth(result.data as any);
         }
-        // Redirect to dashboard on success
-        const redirectPath = searchParams.get('redirect') || '/dashboard';
+
+        // Redirect based on role
+        const user = result.data as any;
+        const redirectPath = searchParams.get('redirect') || (user?.role === 'ADMIN' ? '/admin' : '/dashboard');
         router.push(redirectPath);
       }
     });
