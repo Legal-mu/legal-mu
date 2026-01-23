@@ -12,7 +12,7 @@ export default function ActionCards() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="bg-[#1C2237] rounded-[2rem] p-6 flex items-center justify-between group cursor-pointer hover:bg-[#2a3047] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                className="bg-[#1A2853] rounded-[2rem] p-6 flex items-center justify-between group cursor-pointer hover:bg-[#2a3047] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
             >
                 <div className="flex items-center gap-6">
                     <div className="w-16 h-16 shrink-0 rounded-2xl bg-white/10 flex items-center justify-center text-white backdrop-blur-sm">
@@ -24,8 +24,8 @@ export default function ActionCards() {
                         </svg>
                     </div>
                     <div>
-                        <h3 className="text-white text-2xl font-bold mb-1">Hire a Lawyer</h3>
-                        <p className="text-gray-400 text-sm font-medium max-w-[200px] leading-snug">Get expert legal defence for your case today</p>
+                        <h3 className="text-white text-2xl font-bold mb-1 font-jost">Hire a Lawyer</h3>
+                        <p className="text-gray-400 text-sm font-medium max-w-[200px] leading-snug font-jost">Get expert legal defence for your case today</p>
                     </div>
                 </div>
                 <div className="w-12 h-12 shrink-0 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#1C2237] transition-all">
@@ -49,8 +49,8 @@ export default function ActionCards() {
                         </svg>
                     </div>
                     <div>
-                        <h3 className="text-[#111827] text-2xl font-bold mb-1">Join as a Lawyer</h3>
-                        <p className="text-gray-500 text-sm font-medium max-w-[200px] leading-snug">Get expert legal defence for your case today</p>
+                        <h3 className="text-[#111827] text-2xl font-bold mb-1 font-jost">Join as a Lawyer</h3>
+                        <p className="text-gray-500 text-sm font-medium max-w-[200px] leading-snug font-jost">Get expert legal defence for your case today</p>
                     </div>
                 </div>
                 <div className="w-12 h-12 shrink-0 rounded-full bg-[#E5E7EB] flex items-center justify-center text-gray-600 group-hover:bg-[#1C2237] group-hover:text-white transition-all">

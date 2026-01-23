@@ -35,10 +35,10 @@ export default function QuoteSection() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="relative z-10 space-y-6"
                 >
-                    <p className="text-3xl md:text-5xl italic font-serif text-[#2563eb] leading-[1.3] tracking-tight">
+                    <p className="text-3xl md:text-5xl italic font-jost text-[#1A2542] leading-[1.3] tracking-tight">
                         “Law is the substitute for the personal revenge of the primitive world.”
                     </p>
-                    <p className="text-gray-500 font-medium tracking-wide">
+                    <p className="text-gray-500 font-medium tracking-wide font-jost">
                         Oliver Wendell Holmes Jr.
                     </p>
                 </motion.div>

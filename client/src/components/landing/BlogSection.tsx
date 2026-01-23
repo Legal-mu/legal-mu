@@ -16,12 +16,12 @@ export default function BlogSection() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
                 >
-                    <p className="text-sm font-bold uppercase tracking-[0.2em] text-gray-400">OUR BLOG</p>
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-[#111827] leading-tight">
-                        Latest Legal <span className="text-[#1C2250]">Insights</span>
+                    <p className="text-sm font-extrabold uppercase tracking-[0.2em] text-gray-800 font-jost">OUR BLOG</p>
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-[#1A2853] leading-tight font-jost">
+                        Latest Legal <span className="text-[#1A2853]">Insights</span>
                     </h2>
                 </motion.div>
-                <Link href="/resources" className="text-[#2563eb] font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                <Link href="/resources" className="text-[#1A2853] font-bold flex items-center gap-2 hover:gap-3 transition-all font-jost">
                     View All Insights <ArrowRightIcon className="w-5 h-5" />
                 </Link>
             </div>
@@ -38,12 +38,12 @@ export default function BlogSection() {
                     >
                         <div className="relative aspect-[16/10] rounded-[2rem] overflow-hidden mb-6 bg-gray-50">
                             <Image src={post.img} alt={post.title} fill className="object-cover transition-transform group-hover:scale-110" />
-                            <div className="absolute top-4 left-4 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-sm shadow-sm text-blue-600 text-[10px] font-bold uppercase tracking-widest">
+                            <div className="absolute top-4 left-4 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-sm shadow-sm text-blue-600 text-[10px] font-bold uppercase tracking-widest font-jost">
                                 {post.category}
                             </div>
                         </div>
-                        <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4">{post.title}</h3>
-                        <span className="text-xs text-gray-400 font-medium">{post.date} · {post.duration}</span>
+                        <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-4 font-jost">{post.title}</h3>
+                        <span className="text-xs text-gray-400 font-medium font-jost">{post.date} · {post.duration}</span>
                     </motion.div>
                 ))}
             </div>
