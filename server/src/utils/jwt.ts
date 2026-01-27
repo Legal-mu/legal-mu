@@ -17,7 +17,7 @@ export function generateToken(payload: JwtPayload): string {
     email: payload.email,
     role: String(payload.role), // Convert enum to string for JWT
   };
-  
+
   return jwt.sign(tokenPayload, JWT_SECRET, {
     expiresIn: JWT_EXPIRES_IN,
   } as SignOptions);

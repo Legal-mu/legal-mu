@@ -523,8 +523,6 @@ export const UserScalarFieldEnum = {
   lastName: 'lastName',
   email: 'email',
   password: 'password',
-  googleId: 'googleId',
-  avatar: 'avatar',
   dateOfBirth: 'dateOfBirth',
   role: 'role',
   isActive: 'isActive',
@@ -533,7 +531,13 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   areaOfLaw: 'areaOfLaw',
-  category: 'category'
+  category: 'category',
+  avatar: 'avatar',
+  googleId: 'googleId',
+  emailVerified: 'emailVerified',
+  approvalStatus: 'approvalStatus',
+  verificationToken: 'verificationToken',
+  verificationTokenExp: 'verificationTokenExp'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -615,6 +619,20 @@ export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'ApprovalStatus'
+ */
+export type EnumApprovalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApprovalStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ApprovalStatus[]'
+ */
+export type ListEnumApprovalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApprovalStatus[]'>
     
 
 
