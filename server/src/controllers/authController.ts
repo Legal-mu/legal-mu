@@ -4,6 +4,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../db/prisma';
+import { UserRole, UserStatus, ProfessionalTitle } from '../generated/prisma';
 import { hashPassword, comparePassword } from '../utils/password';
 import { generateToken, generateResetToken, verifyResetToken } from '../utils/jwt';
 import { AppError } from '../middleware/errorHandler';
@@ -23,7 +24,13 @@ export async function register(
   next: NextFunction
 ) {
   try {
-    const { firstName, lastName, email, password, dateOfBirth, areaOfLaw, category } = req.body;
+    const {
+      firstName, lastName, email, password, dateOfBirth, role,
+      fullLegalName, professionalTitle, registrationNumber, firmName,
+      address, phoneNumber, mobileNumber, websiteUrl, practiceAreas,
+      experienceYears, jurisdictions, languagesSpeak, biography,
+      valueProposition, awards
+    } = req.body;
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
@@ -41,6 +48,9 @@ export async function register(
     const dob = dateOfBirth ? new Date(dateOfBirth) : null;
 
     // Create user
+    const userRole = role || UserRole.CLIENT;
+    const userStatus = userRole === UserRole.LAWYER ? UserStatus.PENDING : UserStatus.APPROVED;
+
     const user = await prisma.user.create({
       data: {
         firstName,
@@ -48,9 +58,30 @@ export async function register(
         email: email.toLowerCase(),
         password: hashedPassword,
         dateOfBirth: dob,
-        role: 'VISITOR', // Default role
-        areaOfLaw,
-        category,
+        role: userRole,
+        status: userStatus,
+        // Add lawyer profile if registering as a lawyer
+        ...(userRole === UserRole.LAWYER && {
+          lawyerProfile: {
+            create: {
+              fullLegalName: fullLegalName || `${firstName} ${lastName}`,
+              title: professionalTitle as ProfessionalTitle || ProfessionalTitle.BARRISTER,
+              registrationNumber: registrationNumber || 'PENDING',
+              firmName,
+              address: address || 'PENDING',
+              phoneNumber: phoneNumber || 'PENDING',
+              mobileNumber: mobileNumber || 'PENDING',
+              websiteUrl,
+              practiceAreas: practiceAreas || [],
+              experienceYears: experienceYears || 0,
+              jurisdictions: jurisdictions || [],
+              languages: languagesSpeak || [],
+              biography: biography || '',
+              valueProposition: valueProposition || '',
+              awards,
+            }
+          }
+        })
       },
       select: {
         id: true,
@@ -58,9 +89,9 @@ export async function register(
         lastName: true,
         email: true,
         role: true,
+        status: true,
         dateOfBirth: true,
-        areaOfLaw: true,
-        category: true,
+        lawyerProfile: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -92,11 +123,12 @@ export async function register(
           lastName: user.lastName,
           email: user.email,
           role: user.role,
+          status: user.status as UserStatus,
           dateOfBirth: user.dateOfBirth,
-          areaOfLaw: user.areaOfLaw,
-          category: user.category,
+          lawyerProfile: user.lawyerProfile,
         },
         token, // Return token for Server Actions to set cookie
+        redirectHint: user.role === UserRole.LAWYER ? (user.status === UserStatus.APPROVED ? '/pricing-plan' : 'Waiting for Approval') : '/dashboard',
       },
     });
   } catch (error) {
@@ -166,11 +198,13 @@ export async function login(
           lastName: user.lastName,
           email: user.email,
           role: user.role,
+          status: user.status as UserStatus,
           dateOfBirth: user.dateOfBirth,
           areaOfLaw: user.areaOfLaw,
           category: user.category,
         },
         token, // Return token for Server Actions to set cookie
+        redirectHint: user.role === UserRole.LAWYER ? (user.status === UserStatus.APPROVED ? '/pricing-plan' : 'Waiting for Approval') : '/dashboard',
       },
     });
   } catch (error) {
@@ -310,4 +344,3 @@ export async function logout(
     next(error);
   }
 }
-

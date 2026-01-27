@@ -4,54 +4,58 @@
 
 import { Router } from 'express';
 import { authenticate, authorize } from '../middleware/auth';
-import { UserRole } from '../types/auth';
-import prisma from '../db/prisma';
+import { UserRole } from '../generated/prisma';
+import {
+    getAllLawyers,
+    getAllClients,
+    getUserById,
+    updateUser,
+    deleteUser,
+    changeAdminPassword
+} from '../controllers/adminController';
 
 const router = Router();
 
 /**
  * @route   GET /api/admin/lawyers
- * @desc    Get all registered lawyers (VISITOR users)
+ * @desc    Get all lawyers
  * @access  Private (Admin only)
  */
-router.get(
-    '/lawyers',
-    authenticate,
-    authorize(UserRole.ADMIN),
-    async (req, res) => {
-        try {
-            const lawyers = await prisma.user.findMany({
-                where: { role: 'VISITOR' },
-                select: {
-                    id: true,
-                    firstName: true,
-                    lastName: true,
-                    email: true,
-                    dateOfBirth: true,
-                    isActive: true,
-                    areaOfLaw: true,
-                    category: true,
-                    createdAt: true,
-                    updatedAt: true,
-                },
-                orderBy: { createdAt: 'desc' },
-            });
+router.get('/lawyers', authenticate, authorize(UserRole.ADMIN), getAllLawyers);
 
-            res.json({
-                success: true,
-                data: {
-                    lawyers,
-                    total: lawyers.length,
-                },
-            });
-        } catch (error) {
-            console.error('Error fetching lawyers:', error);
-            res.status(500).json({
-                success: false,
-                message: 'Error fetching lawyers',
-            });
-        }
-    }
-);
+/**
+ * @route   GET /api/admin/clients
+ * @desc    Get all clients
+ * @access  Private (Admin only)
+ */
+router.get('/clients', authenticate, authorize(UserRole.ADMIN), getAllClients);
+
+/**
+ * @route   GET /api/admin/users/:id
+ * @desc    Get user by ID
+ * @access  Private (Admin only)
+ */
+router.get('/users/:id', authenticate, authorize(UserRole.ADMIN), getUserById);
+
+/**
+ * @route   PATCH /api/admin/users/:id
+ * @desc    Update user
+ * @access  Private (Admin only)
+ */
+router.patch('/users/:id', authenticate, authorize(UserRole.ADMIN), updateUser);
+
+/**
+ * @route   DELETE /api/admin/users/:id
+ * @desc    Delete user
+ * @access  Private (Admin only)
+ */
+router.delete('/users/:id', authenticate, authorize(UserRole.ADMIN), deleteUser);
+
+/**
+ * @route   PUT /api/admin/change-password
+ * @desc    Change admin password
+ * @access  Private (Admin only)
+ */
+router.put('/change-password', authenticate, authorize(UserRole.ADMIN), changeAdminPassword);
 
 export default router;

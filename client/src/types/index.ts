@@ -26,7 +26,14 @@ export interface ServerStatusResponse {
 // User types
 export enum UserRole {
   ADMIN = 'ADMIN',
-  VISITOR = 'VISITOR',
+  LAWYER = 'LAWYER',
+  CLIENT = 'CLIENT',
+}
+
+export enum UserStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
 }
 
 export interface User {
@@ -35,11 +42,11 @@ export interface User {
   lastName: string;
   email: string;
   role: UserRole;
+  status: UserStatus;
   dateOfBirth?: Date | null;
   isActive?: boolean;
   createdAt?: string;
-  areaOfLaw?: string | null;
-  category?: string | null;
+  lawyerProfile?: any;
 }
 
 // Auth types

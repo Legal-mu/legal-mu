@@ -1,3 +1,4 @@
+// Server Entry Point - Trigger Reload
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -7,6 +8,8 @@ import authRoutes from './routes/authRoutes';
 import googleAuthRoutes from './routes/googleAuthRoutes';
 import protectedRoutes from './routes/index';
 import adminRoutes from './routes/adminRoutes';
+import lawyerRoutes from './routes/lawyerRoutes';
+import userRoutes from './routes/userRoutes';
 import { errorHandler } from './middleware/errorHandler';
 
 // Load environment variables
@@ -44,6 +47,11 @@ app.get('/', (req, res) => {
   });
 });
 
+app.post('/test-post', (req, res) => {
+  console.log('--- TEST POST HIT ---', req.body);
+  res.json({ received: req.body });
+});
+
 // Health check route
 app.get('/health', async (req, res) => {
   try {
@@ -66,8 +74,10 @@ app.get('/health', async (req, res) => {
 // API Routes
 app.use('/api/auth/google', googleAuthRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api', protectedRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api', protectedRoutes);
+app.use('/api/lawyers', lawyerRoutes);
+app.use('/api/users', userRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

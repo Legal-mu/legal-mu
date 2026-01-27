@@ -17,12 +17,12 @@ export default function RegisterStep1() {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [error, setError] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

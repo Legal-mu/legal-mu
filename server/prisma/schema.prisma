@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -8,27 +8,74 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  firstName     String    @map("first_name")
-  lastName      String    @map("last_name")
-  email         String    @unique
-  password      String?    // Hashed password - Optional for Google Auth users
-  googleId      String?   @unique @map("google_id")
+  id            String         @id @default(uuid())
+  firstName     String         @map("first_name")
+  lastName      String         @map("last_name")
+  email         String         @unique
+  password      String?
+  dateOfBirth   DateTime?      @map("date_of_birth") @db.Date
+  role          UserRole       @default(CLIENT)
+  isActive      Boolean        @default(true) @map("is_active")
+  resetToken    String?        @map("reset_token")
+  resetTokenExp DateTime?      @map("reset_token_exp")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
   avatar        String?
-  dateOfBirth   DateTime? @map("date_of_birth") @db.Date
-  role          UserRole  @default(VISITOR)
-  isActive      Boolean   @default(true) @map("is_active")
-  resetToken    String?   @map("reset_token")
-  resetTokenExp DateTime? @map("reset_token_exp")
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-  areaOfLaw     String?   @map("area_of_law")
-  category      String?
+  googleId      String?        @unique @map("google_id")
+  status        UserStatus     @default(APPROVED)
+  lawyerProfile LawyerProfile?
 
   @@map("users")
 }
 
+model LawyerProfile {
+  id                    String             @id @default(uuid())
+  userId                String             @unique @map("user_id")
+  fullLegalName         String?            @map("full_legal_name")
+  title                 ProfessionalTitle?
+  registrationNumber    String?            @map("registration_number")
+  firmName              String?            @map("firm_name")
+  address               String?
+  phoneNumber           String?            @map("phone_number")
+  mobileNumber          String?            @map("mobile_number")
+  websiteUrl            String?            @map("website_url")
+  practiceAreas         String[]           @map("practice_areas")
+  experienceYears       Int?               @map("experience_years")
+  jurisdictions         String[]
+  languages             String[]
+  biography             String?
+  valueProposition      String?            @map("value_proposition")
+  awards                String?
+  createdAt             DateTime           @default(now()) @map("created_at")
+  updatedAt             DateTime           @updatedAt @map("updated_at")
+  city                  String?
+  country               String?
+  linkedin_url          String?
+  twitter_url           String?
+  completion_percentage Int                @default(0)
+  current_step          Int                @default(0)
+  is_profile_complete   Boolean            @default(false)
+  postal_code           String?
+  twitter_handle        String?
+  user                  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("lawyer_profiles")
+}
+
 enum UserRole {
   ADMIN
-  VISITOR
+  CLIENT
+  LAWYER
+}
+
+enum UserStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ProfessionalTitle {
+  BARRISTER
+  ATTORNEY
+  NOTARY
 }

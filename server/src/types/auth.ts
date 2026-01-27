@@ -3,8 +3,8 @@
  */
 
 // Import UserRole from Prisma generated types
-import { UserRole } from '../generated/prisma/enums';
-export { UserRole };
+import { UserRole, UserStatus } from '../generated/prisma';
+export { UserRole, UserStatus };
 
 export interface RegisterRequest {
   firstName: string;
@@ -12,8 +12,24 @@ export interface RegisterRequest {
   email: string;
   password: string;
   dateOfBirth?: string;
-  areaOfLaw?: string;
-  category?: string;
+  role?: UserRole; // Optional, defaults to CLIENT in controller
+
+  // Lawyer profile fields
+  fullLegalName?: string;
+  professionalTitle?: 'BARRISTER' | 'ATTORNEY' | 'NOTARY';
+  registrationNumber?: string;
+  firmName?: string;
+  address?: string;
+  phoneNumber?: string;
+  mobileNumber?: string;
+  websiteUrl?: string;
+  practiceAreas?: string[];
+  experienceYears?: number;
+  jurisdictions?: string[];
+  languagesSpeak?: string[];
+  biography?: string;
+  valueProposition?: string;
+  awards?: string;
 }
 
 export interface LoginRequest {
@@ -37,11 +53,13 @@ export interface AuthResponse {
     lastName: string;
     email: string;
     role: UserRole;
+    status: UserStatus;
     dateOfBirth?: Date | null;
     areaOfLaw?: string | null;
     category?: string | null;
   };
   token: string;
+  redirectHint?: string; // Hint for where to redirect based on role/status
 }
 
 export interface JwtPayload {

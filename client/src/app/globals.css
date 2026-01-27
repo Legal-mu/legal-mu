@@ -8,10 +8,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-jost), var(--font-geist-sans), ui-sans-serif, system-ui;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
   --font-jost: var(--font-jost);
-  --font-playfair: var(--font-playfair);
 }
 
 @media (prefers-color-scheme: dark) {
