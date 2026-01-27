@@ -200,8 +200,6 @@ export async function login(
           role: user.role,
           status: user.status as UserStatus,
           dateOfBirth: user.dateOfBirth,
-          areaOfLaw: user.areaOfLaw,
-          category: user.category,
         },
         token, // Return token for Server Actions to set cookie
         redirectHint: user.role === UserRole.LAWYER ? (user.status === UserStatus.APPROVED ? '/pricing-plan' : 'Waiting for Approval') : '/dashboard',
