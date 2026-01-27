@@ -56,6 +56,8 @@ export interface RegisterRequest {
   email: string;
   password: string;
   dateOfBirth?: string;
+  areaOfLaw?: string;
+  category?: string;
 }
 
 export interface LoginRequest {

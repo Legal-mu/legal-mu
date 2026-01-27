@@ -18,7 +18,7 @@ passport.use(
             clientSecret: GOOGLE_CLIENT_SECRET || 'missing-client-secret',
             callbackURL: `${API_URL}/api/auth/google/callback`,
         },
-        async (accessToken, refreshToken, profile, done) => {
+        async (accessToken: string, refreshToken: string, profile: any, done: (error: any, user?: any) => void) => {
             try {
                 const email = profile.emails?.[0]?.value;
                 const googleId = profile.id;

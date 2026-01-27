@@ -84,6 +84,18 @@ export async function registerAction(
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
   const dateOfBirth = formData.get('dateOfBirth') as string | null;
+  const areaOfLaw = formData.get('areaOfLaw') as string;
+  const category = formData.get('category') as string;
+
+  const payload = {
+    firstName,
+    lastName,
+    email,
+    password,
+    ...(dateOfBirth && { dateOfBirth }),
+    ...(areaOfLaw && { areaOfLaw }),
+    ...(category && { category }),
+  };
 
   try {
     const response = await fetch(`${API_URL}/api/auth/register`, {
@@ -91,13 +103,7 @@ export async function registerAction(
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        dateOfBirth: dateOfBirth || undefined,
-      }),
+      body: JSON.stringify(payload),
     });
 
     const data = await response.json();

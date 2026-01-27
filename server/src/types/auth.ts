@@ -55,6 +55,8 @@ export interface AuthResponse {
     role: UserRole;
     status: UserStatus;
     dateOfBirth?: Date | null;
+    areaOfLaw?: string | null;
+    category?: string | null;
   };
   token: string;
   redirectHint?: string; // Hint for where to redirect based on role/status

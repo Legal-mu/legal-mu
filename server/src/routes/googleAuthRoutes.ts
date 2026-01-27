@@ -27,7 +27,7 @@ router.get(
     }),
     (req, res) => {
         // User is authenticated and available in req.user
-        const user = req.user as unknown as User;
+        const user = (req as any).user as unknown as User;
 
         if (!user) {
             return res.redirect(`${FRONTEND_URL}/login?error=auth_failed`);
