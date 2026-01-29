@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { X, Save, User as UserIcon, Briefcase, MapPin, Phone, Mail, Globe, Award, BookOpen, Star, FileText } from 'lucide-react';
-import { useUpdateUser } from '@/hooks/useAdminData';
+import { useUpdateUser, useApproveLawyer } from '@/hooks/useAdminData';
 import { User, UserStatus } from '@/types';
 
 interface EditUserModalProps {
@@ -13,13 +13,13 @@ interface EditUserModalProps {
 
 export default function EditUserModal({ user, isOpen, onClose }: EditUserModalProps) {
     const updateUser = useUpdateUser();
+    const approveLawyer = useApproveLawyer();
     const [formData, setFormData] = useState<Partial<User>>({});
     const [lawyerProfile, setLawyerProfile] = useState<any>({});
 
     // Form states for array fields (comma-separated strings in UI)
     const [practiceAreasStr, setPracticeAreasStr] = useState('');
     const [languagesStr, setLanguagesStr] = useState('');
-    const [jurisdictionsStr, setJurisdictionsStr] = useState('');
 
     useEffect(() => {
         if (user) {
@@ -35,7 +35,6 @@ export default function EditUserModal({ user, isOpen, onClose }: EditUserModalPr
             // Initialize array fields
             setPracticeAreasStr((profile.practiceAreas || []).join(', '));
             setLanguagesStr((profile.languages || []).join(', '));
-            setJurisdictionsStr((profile.jurisdictions || []).join(', '));
         }
     }, [user]);
 
@@ -49,7 +48,6 @@ export default function EditUserModal({ user, isOpen, onClose }: EditUserModalPr
             ...lawyerProfile,
             practiceAreas: practiceAreasStr.split(',').map(s => s.trim()).filter(Boolean),
             languages: languagesStr.split(',').map(s => s.trim()).filter(Boolean),
-            jurisdictions: jurisdictionsStr.split(',').map(s => s.trim()).filter(Boolean),
         };
 
         updateUser.mutate(
@@ -168,25 +166,14 @@ export default function EditUserModal({ user, isOpen, onClose }: EditUserModalPr
                                             className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-100 outline-none transition-all"
                                         />
                                     </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-1">
-                                            <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Phone</label>
-                                            <input
-                                                type="text"
-                                                value={lawyerProfile.phoneNumber || ''}
-                                                onChange={(e) => setLawyerProfile({ ...lawyerProfile, phoneNumber: e.target.value })}
-                                                className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-                                            />
-                                        </div>
-                                        <div className="space-y-1">
-                                            <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Mobile</label>
-                                            <input
-                                                type="text"
-                                                value={lawyerProfile.mobileNumber || ''}
-                                                onChange={(e) => setLawyerProfile({ ...lawyerProfile, mobileNumber: e.target.value })}
-                                                className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-                                            />
-                                        </div>
+                                    <div className="space-y-1">
+                                        <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Phone</label>
+                                        <input
+                                            type="text"
+                                            value={lawyerProfile.phoneNumber || ''}
+                                            onChange={(e) => setLawyerProfile({ ...lawyerProfile, phoneNumber: e.target.value })}
+                                            className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-100 outline-none transition-all"
+                                        />
                                     </div>
                                     <div className="space-y-1">
                                         <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Office Address</label>
@@ -302,29 +289,6 @@ export default function EditUserModal({ user, isOpen, onClose }: EditUserModalPr
                                             placeholder="English, French, Creole..."
                                         />
                                     </div>
-                                    <div className="space-y-1">
-                                        <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Jurisdictions (Comma separated)</label>
-                                        <input
-                                            type="text"
-                                            value={jurisdictionsStr}
-                                            onChange={(e) => setJurisdictionsStr(e.target.value)}
-                                            className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm"
-                                            placeholder="Mauritius, UK..."
-                                        />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Awards & Recognitions</label>
-                                        <div className="relative">
-                                            <Award className="absolute left-3 top-3 text-gray-400" size={16} />
-                                            <textarea
-                                                rows={2}
-                                                value={lawyerProfile.awards || ''}
-                                                onChange={(e) => setLawyerProfile({ ...lawyerProfile, awards: e.target.value })}
-                                                className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-100 rounded-xl focus:ring-2 focus:ring-blue-100 outline-none transition-all resize-none text-sm"
-                                                placeholder="List any major awards..."
-                                            />
-                                        </div>
-                                    </div>
                                 </section>
                             </div>
                         )}
@@ -346,19 +310,10 @@ export default function EditUserModal({ user, isOpen, onClose }: EditUserModalPr
                             onClick={() => {
                                 const confirmMsg = "Do you want to Approve this lawyer profile?";
                                 if (window.confirm(confirmMsg)) {
-                                    const finalProfile = {
-                                        ...lawyerProfile,
-                                        practiceAreas: practiceAreasStr.split(',').map(s => s.trim()).filter(Boolean),
-                                        languages: languagesStr.split(',').map(s => s.trim()).filter(Boolean),
-                                        jurisdictions: jurisdictionsStr.split(',').map(s => s.trim()).filter(Boolean),
-                                    };
-                                    updateUser.mutate(
-                                        { id: user.id, data: { status: 'APPROVED' as any, lawyerProfile: finalProfile } },
-                                        { onSuccess: () => onClose() }
-                                    );
+                                    approveLawyer.mutate(user.id, { onSuccess: () => onClose() });
                                 }
                             }}
-                            disabled={updateUser.isPending}
+                            disabled={approveLawyer.isPending}
                             className="bg-emerald-600 text-white px-8 py-2.5 rounded-xl text-sm font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-100 flex items-center gap-2 disabled:opacity-50"
                         >
                             <Save size={18} />

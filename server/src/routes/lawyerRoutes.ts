@@ -1,17 +1,16 @@
-/**
- * Lawyer related routes
- */
-
 import { Router } from 'express';
 import { UserRole, UserStatus } from '../types/auth';
 import prisma from '../db/prisma';
+import { authenticate, authorize } from '../middleware/auth';
+import { upload } from '../middleware/upload';
+import * as profileController from '../controllers/lawyerProfileController';
 
 const router = Router();
 
 /**
  * @route   GET /api/lawyers
- * @desc    Get all approved lawyers (accessible to all authenticated users)
- * @access  Public (Authenticated)
+ * @desc    Get all approved lawyers
+ * @access  Public
  */
 router.get(
     '/',
@@ -48,5 +47,16 @@ router.get(
         }
     }
 );
+
+/**
+ * Profile Completion Routes
+ */
+router.get('/profile/status', authenticate, authorize(UserRole.LAWYER), profileController.getProfileStatus);
+router.patch('/profile/professional-identity', authenticate, authorize(UserRole.LAWYER), profileController.updateProfessionalIdentity);
+router.patch('/profile/contact-information', authenticate, authorize(UserRole.LAWYER), profileController.updateContactInformation);
+router.patch('/profile/practice-details', authenticate, authorize(UserRole.LAWYER), profileController.updatePracticeDetails);
+router.patch('/profile/biography', authenticate, authorize(UserRole.LAWYER), upload.single('headshot'), profileController.updateBiography);
+router.patch('/profile/social-media', authenticate, authorize(UserRole.LAWYER), profileController.updateSocialMedia);
+router.post('/profile/submit-for-review', authenticate, authorize(UserRole.LAWYER), profileController.submitForReview);
 
 export default router;

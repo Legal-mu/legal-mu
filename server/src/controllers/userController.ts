@@ -54,9 +54,8 @@ export async function updateProfile(req: Request, res: Response, next: NextFunct
             firstName, lastName, dateOfBirth, avatar,
             // Lawyer profile fields
             fullLegalName, professionalTitle, registrationNumber, firmName,
-            address, phoneNumber, mobileNumber, websiteUrl, practiceAreas,
-            experienceYears, jurisdictions, languagesSpeak, biography,
-            valueProposition, awards
+            address, phoneNumber, websiteUrl, practiceAreas,
+            experienceYears, languagesSpeak, biography
         } = req.body;
 
         // Check if user is a lawyer to determine if profile should be updated
@@ -93,15 +92,11 @@ export async function updateProfile(req: Request, res: Response, next: NextFunct
                         firmName,
                         address: address || 'PENDING',
                         phoneNumber: phoneNumber || 'PENDING',
-                        mobileNumber: mobileNumber || 'PENDING',
                         websiteUrl,
                         practiceAreas: practiceAreas || [],
                         experienceYears: experienceYears || 0,
-                        jurisdictions: jurisdictions || [],
                         languages: languagesSpeak || [],
                         biography: biography || '',
-                        valueProposition: valueProposition || '',
-                        awards,
                     },
                     update: {
                         fullLegalName,
@@ -110,15 +105,11 @@ export async function updateProfile(req: Request, res: Response, next: NextFunct
                         firmName,
                         address,
                         phoneNumber,
-                        mobileNumber,
                         websiteUrl,
                         practiceAreas,
                         experienceYears,
-                        jurisdictions,
                         languages: languagesSpeak,
                         biography,
-                        valueProposition,
-                        awards,
                     }
                 });
             }

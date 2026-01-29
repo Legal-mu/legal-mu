@@ -1,0 +1,340 @@
+{
+    "info": {
+        "_postman_id": "lawyer-onboarding-v1",
+        "name": "Lawyer Onboarding API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Phase 1: Registration",
+            "item": [
+                {
+                    "name": "Basic Registration",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"LAWYER\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/auth/register",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "register"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Phase 2: Profile Completion",
+            "item": [
+                {
+                    "name": "Get Profile Status",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/lawyers/profile/status",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "lawyers",
+                                "profile",
+                                "status"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Step 1: Professional Identity",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"fullLegalName\": \"John Fitzgerald Doe\",\n    \"title\": \"BARRISTER\",\n    \"registrationNumber\": \"BAR-12345\",\n    \"firmName\": \"Doe & Associates\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/lawyers/profile/professional-identity",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "lawyers",
+                                "profile",
+                                "professional-identity"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Step 2: Contact Information",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"address\": \"123 Legal St\",\n    \"city\": \"Port Louis\",\n    \"postal_code\": \"71501\",\n    \"country\": \"Mauritius\",\n    \"phoneNumber\": \"+23051234567\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/lawyers/profile/contact-information",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "lawyers",
+                                "profile",
+                                "contact-information"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Step 3: Practice Details",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"practiceAreas\": [\"Criminal Law\", \"Corporate Law\"],\n    \"admissionYear\": 2015,\n    \"experienceYears\": 10,\n    \"languages\": [\"English\", \"French\"]\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/lawyers/profile/practice-details",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "lawyers",
+                                "profile",
+                                "practice-details"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Step 4: Biography (Text)",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"biography\": \"I am a dedicated barrister with 10 years of experience in criminal defense and corporate litigation.\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/lawyers/profile/biography",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "lawyers",
+                                "profile",
+                                "biography"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Step 5: Social Media",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"websiteUrl\": \"https://doe-legal.mu\",\n    \"linkedinUrl\": \"https://linkedin.com/in/johndoe\",\n    \"twitterUrl\": \"https://twitter.com/johndoe_law\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/lawyers/profile/social-media",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "lawyers",
+                                "profile",
+                                "social-media"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Submit for Review",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/lawyers/profile/submit-for-review",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "lawyers",
+                                "profile",
+                                "submit-for-review"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Admin Workflow",
+            "item": [
+                {
+                    "name": "Get Pending Lawyers",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/admin/lawyers/pending-review",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "lawyers",
+                                "pending-review"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Approve Lawyer",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/admin/lawyers/{{profile_id}}/approve",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "lawyers",
+                                "{{profile_id}}",
+                                "approve"
+                            ]
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Reject Lawyer",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"reason\": \"Invalid registration number provided.\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/admin/lawyers/{{profile_id}}/reject",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "admin",
+                                "lawyers",
+                                "{{profile_id}}",
+                                "reject"
+                            ]
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "if (pm.response.json().data && pm.response.json().data.token) {",
+                    "    pm.environment.set(\"authToken\", pm.response.json().data.token);",
+                    "}"
+                ]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:5001"
+        },
+        {
+            "key": "profile_id",
+            "value": ""
+        }
+    ]
+}

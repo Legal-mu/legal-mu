@@ -67,3 +67,41 @@ export function useDeleteUser() {
         },
     });
 }
+
+export function useApproveLawyer() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (id: string) => api.approveLawyer(id),
+        onSuccess: (response) => {
+            if (response.success) {
+                queryClient.invalidateQueries({ queryKey: ['admin'] });
+                toast.success(response.message || 'Lawyer approved successfully');
+            } else {
+                toast.error(response.message || 'Failed to approve lawyer');
+            }
+        },
+        onError: (error: Error) => {
+            toast.error(error.message || 'An error occurred');
+        },
+    });
+}
+
+export function useRejectLawyer() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: ({ id, reason }: { id: string; reason?: string }) => api.rejectLawyer(id, reason),
+        onSuccess: (response) => {
+            if (response.success) {
+                queryClient.invalidateQueries({ queryKey: ['admin'] });
+                toast.success(response.message || 'Lawyer rejected successfully');
+            } else {
+                toast.error(response.message || 'Failed to reject lawyer');
+            }
+        },
+        onError: (error: Error) => {
+            toast.error(error.message || 'An error occurred');
+        },
+    });
+}
