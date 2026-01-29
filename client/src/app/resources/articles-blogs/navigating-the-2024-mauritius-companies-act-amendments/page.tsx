@@ -7,18 +7,19 @@ import {
   ArrowRightIcon,
   ArrowDownTrayIcon,
 } from '@heroicons/react/24/outline';
-import { PracticeAreaHeader } from '@/components/practice-area';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 export default function CompaniesActArticlePage() {
   return (
     <div className="min-h-screen bg-[#F6F8FF] font-jost">
-      <PracticeAreaHeader />
+      <Navbar />
 
-      <main className="pt-40 pb-24 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16">
+      <main className="pt-40 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back link */}
         <div className="mb-10">
           <Link
-            href="/blog"
+            href="/resources/articles-blogs"
             className="inline-flex items-center gap-2 text-[12px] font-bold text-[#1A2853] px-4 py-1.5 rounded-full bg-[#E2E8F0] hover:bg-[#CBD5E1] transition-all"
           >
             <ArrowLeftIcon className="w-3.5 h-3.5 stroke-[3]" />
@@ -326,14 +327,7 @@ export default function CompaniesActArticlePage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="py-12 bg-white border-t border-gray-100">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-2">
-          <p className="text-[12px] text-gray-400 font-medium text-left opacity-70">
-            © 2025 LEGAL.MU Lawfirm. All Rights Reserved
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

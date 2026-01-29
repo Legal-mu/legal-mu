@@ -1,6 +1,8 @@
 'use client';
 
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import Link from 'next/link';
 import Image from 'next/image';
 import {
     MagnifyingGlassIcon,
@@ -22,7 +24,7 @@ export default function ServicesPage() {
             <Navbar />
 
             {/* Hero Section */}
-            <section className="pt-40 pb-20 px-6 bg-white">
+            <section className="pt-44 pb-20 px-6 bg-white">
                 <div className="max-w-7xl mx-auto text-center">
                     <h1 className="text-5xl md:text-6xl font-extrabold text-[#1A2550] mb-6 tracking-tight font-jost">
                         Find Your Legal Expert
@@ -205,9 +207,9 @@ export default function ServicesPage() {
 
                                     {/* Action Buttons */}
                                     <div className="space-y-3 mt-auto">
-                                        <button className="w-full border border-gray-200 hover:bg-gray-50 text-[#1A2542] font-bold py-3 rounded-xl transition-all shadow-sm font-jost">
+                                        <Link href="/lawyer-profile" className="w-full border border-gray-200 hover:bg-gray-50 text-[#1A2542] font-bold py-3 rounded-xl transition-all shadow-sm font-jost text-center block">
                                             View Profile
-                                        </button>
+                                        </Link>
                                         <button className="w-full bg-[#1A2542] hover:bg-[#111827] text-white font-bold py-3 rounded-xl transition-all shadow-md font-jost">
                                             Contact Now
                                         </button>
@@ -233,6 +235,8 @@ export default function ServicesPage() {
                     </div>
                 </div>
             </section>
+
+            <Footer />
         </div>
     );
 }

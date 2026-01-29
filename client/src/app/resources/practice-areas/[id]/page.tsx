@@ -1,7 +1,9 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { PracticeAreaHeader, CTASection, PracticeDetailHero, HighlightsBar, FrameworkSection, PracticeAreaCard } from '@/components/practice-area';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import { CTASection, PracticeDetailHero, HighlightsBar, FrameworkSection, PracticeAreaCard } from '@/components/practice-area';
 
 // Mock data mirrored from main page, plus detail-specific content if needed
 const practiceAreasData = [
@@ -30,10 +32,10 @@ export default function PracticeAreaDetail() {
 
     return (
         <div className="min-h-screen bg-[#F6F8FF] font-jost">
-            <PracticeAreaHeader />
+            <Navbar />
 
             <main className="pt-40 pb-16">
-                <div className="max-w-[1440px] mx-auto px-6 mb-12">
+                <div className="max-w-7xl mx-auto px-6 mb-12">
                     <div className="bg-white rounded-[32px] shadow-sm border border-gray-100 overflow-hidden">
                         {/* Hero Section */}
                         <PracticeDetailHero
@@ -45,7 +47,7 @@ export default function PracticeAreaDetail() {
                     </div>
                 </div>
 
-                <div className="max-w-[1440px] mx-auto px-2">
+                <div className="max-w-7xl mx-auto px-6 md:px-8">
                     {/* Key Sections Framework */}
                     <FrameworkSection />
 
@@ -59,7 +61,7 @@ export default function PracticeAreaDetail() {
                                     id={area.id}
                                     title={area.title}
                                     description={area.description} // Short description for cards
-                                    href={`/practice-area/${area.id}`}
+                                    href={`/resources/practice-areas/${area.id}`}
                                 />
                             ))}
                         </div>
@@ -70,14 +72,7 @@ export default function PracticeAreaDetail() {
             {/* CTA Section */}
             <CTASection />
 
-            {/* Footer */}
-            <footer className="py-8 border-t border-gray-100 bg-white">
-                <div className="max-w-[1440px] mx-auto px-20">
-                    <p className="text-sm text-gray-400 font-medium">
-                        © 2025 LEGAL.MU Lawfirm. All Rights Reserved
-                    </p>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 }
