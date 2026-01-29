@@ -19,16 +19,16 @@ export const registerSchema = z.object({
   registrationNumber: z.string().optional(),
   firmName: z.string().optional(),
   address: z.string().optional(),
+  city: z.string().optional(),
+  postal_code: z.string().optional(),
+  country: z.string().optional(),
   phoneNumber: z.string().optional(),
-  mobileNumber: z.string().optional(),
   websiteUrl: z.string().optional(),
   practiceAreas: z.array(z.string()).optional(),
-  experienceYears: z.number().optional(),
-  jurisdictions: z.array(z.string()).optional(),
+  admissionYear: z.number().int().optional(),
+  experienceYears: z.number().int().optional(),
   languagesSpeak: z.array(z.string()).optional(),
-  biography: z.string().max(2500).optional(), // Approx 500 words
-  valueProposition: z.string().max(1000).optional(), // Approx 200 words
-  awards: z.string().optional(),
+  biography: z.string().max(2500).optional(),
 });
 
 // Login validation schema

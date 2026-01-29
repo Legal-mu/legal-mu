@@ -5,7 +5,7 @@
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../db/prisma';
 import { AppError } from '../middleware/errorHandler';
-import { UserRole, UserStatus, ProfessionalTitle } from '../generated/prisma';
+import { UserRole, UserStatus, ProfessionalTitle, LawyerProfileStatus } from '../generated/prisma';
 import { comparePassword, hashPassword } from '../utils/password';
 
 /**
@@ -14,7 +14,12 @@ import { comparePassword, hashPassword } from '../utils/password';
 export async function getAllLawyers(req: Request, res: Response, next: NextFunction) {
     try {
         const lawyers = await prisma.user.findMany({
-            where: { role: UserRole.LAWYER },
+            where: {
+                role: UserRole.LAWYER,
+                lawyerProfile: {
+                    status: { not: LawyerProfileStatus.INCOMPLETE }
+                }
+            },
             include: { lawyerProfile: true },
             orderBy: { createdAt: 'desc' },
         });
@@ -118,18 +123,24 @@ export async function updateUser(req: Request, res: Response, next: NextFunction
                         firmName: lawyerProfile.firmName,
                         address: lawyerProfile.address || 'PENDING',
                         phoneNumber: lawyerProfile.phoneNumber || 'PENDING',
-                        mobileNumber: lawyerProfile.mobileNumber || 'PENDING',
                         websiteUrl: lawyerProfile.websiteUrl,
                         practiceAreas: lawyerProfile.practiceAreas || [],
                         experienceYears: lawyerProfile.experienceYears || 0,
-                        jurisdictions: lawyerProfile.jurisdictions || [],
                         languages: lawyerProfile.languages || [],
                         biography: lawyerProfile.biography || '',
-                        valueProposition: lawyerProfile.valueProposition || '',
-                        awards: lawyerProfile.awards,
                     },
                     update: {
-                        ...lawyerProfile
+                        fullLegalName: lawyerProfile.fullLegalName,
+                        title: lawyerProfile.title,
+                        registrationNumber: lawyerProfile.registrationNumber,
+                        firmName: lawyerProfile.firmName,
+                        address: lawyerProfile.address,
+                        phoneNumber: lawyerProfile.phoneNumber,
+                        websiteUrl: lawyerProfile.websiteUrl,
+                        practiceAreas: lawyerProfile.practiceAreas,
+                        experienceYears: lawyerProfile.experienceYears,
+                        languages: lawyerProfile.languages,
+                        biography: lawyerProfile.biography,
                     }
                 });
             }
@@ -227,6 +238,111 @@ export async function changeAdminPassword(req: Request, res: Response, next: Nex
         res.json({
             success: true,
             message: 'Password updated successfully',
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+/**
+ * Get all lawyers pending review
+ */
+export async function getPendingLawyers(req: Request, res: Response, next: NextFunction) {
+    try {
+        const lawyers = await prisma.lawyerProfile.findMany({
+            where: { status: LawyerProfileStatus.PENDING_REVIEW },
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        firstName: true,
+                        lastName: true,
+                        email: true,
+                        avatar: true,
+                    }
+                }
+            },
+            orderBy: { submittedAt: 'desc' },
+        });
+
+        res.json({
+            success: true,
+            data: lawyers,
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+/**
+ * Approve lawyer profile
+ */
+export async function approveLawyer(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { id: userId } = req.params;
+        const adminId = req.user?.userId;
+
+        console.log(`Approving lawyer. UserID: ${userId}, AdminID: ${adminId}`);
+
+        const profile = await prisma.lawyerProfile.update({
+            where: { userId },
+            data: {
+                status: LawyerProfileStatus.APPROVED,
+                reviewedAt: new Date(),
+                reviewedById: adminId,
+                rejectionReason: null
+            },
+            include: { user: true }
+        });
+
+        // Update User status to APPROVED
+        await prisma.user.update({
+            where: { id: userId },
+            data: { status: UserStatus.APPROVED }
+        });
+
+        res.json({
+            success: true,
+            message: 'Lawyer profile approved successfully',
+            data: profile,
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+/**
+ * Reject lawyer profile
+ */
+export async function rejectLawyer(req: Request, res: Response, next: NextFunction) {
+    try {
+        const { id: userId } = req.params;
+        const { reason } = req.body;
+        const adminId = req.user?.userId;
+
+        console.log(`Rejecting lawyer. UserID: ${userId}, AdminID: ${adminId}, Reason: ${reason}`);
+
+        const profile = await prisma.lawyerProfile.update({
+            where: { userId },
+            data: {
+                status: LawyerProfileStatus.REJECTED,
+                reviewedAt: new Date(),
+                reviewedById: adminId,
+                rejectionReason: reason || 'Profile did not meet requirements'
+            },
+            include: { user: true }
+        });
+
+        // Update User status to REJECTED
+        await prisma.user.update({
+            where: { id: userId },
+            data: { status: UserStatus.REJECTED }
+        });
+
+        res.json({
+            success: true,
+            message: 'Lawyer profile rejected successfully',
+            data: profile,
         });
     } catch (error) {
         next(error);

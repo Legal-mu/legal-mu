@@ -11,7 +11,10 @@ import {
     getUserById,
     updateUser,
     deleteUser,
-    changeAdminPassword
+    changeAdminPassword,
+    getPendingLawyers,
+    approveLawyer,
+    rejectLawyer
 } from '../controllers/adminController';
 
 const router = Router();
@@ -50,6 +53,27 @@ router.patch('/users/:id', authenticate, authorize(UserRole.ADMIN), updateUser);
  * @access  Private (Admin only)
  */
 router.delete('/users/:id', authenticate, authorize(UserRole.ADMIN), deleteUser);
+
+/**
+ * @route   GET /api/admin/lawyers/pending-review
+ * @desc    Get all lawyers pending review
+ * @access  Private (Admin only)
+ */
+router.get('/lawyers/pending-review', authenticate, authorize(UserRole.ADMIN), getPendingLawyers);
+
+/**
+ * @route   PATCH /api/admin/lawyers/:id/approve
+ * @desc    Approve lawyer profile
+ * @access  Private (Admin only)
+ */
+router.patch('/lawyers/:id/approve', authenticate, authorize(UserRole.ADMIN), approveLawyer);
+
+/**
+ * @route   PATCH /api/admin/lawyers/:id/reject
+ * @desc    Reject lawyer profile
+ * @access  Private (Admin only)
+ */
+router.patch('/lawyers/:id/reject', authenticate, authorize(UserRole.ADMIN), rejectLawyer);
 
 /**
  * @route   PUT /api/admin/change-password

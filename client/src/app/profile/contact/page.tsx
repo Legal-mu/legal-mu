@@ -11,8 +11,6 @@ export default function ContactInfoPage() {
         country: 'Mauritius',
         primaryPhoneCode: '+230',
         primaryPhone: '5814976',
-        mobileCode: '+230',
-        mobileNumber: '5814976',
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -148,41 +146,6 @@ export default function ContactInfoPage() {
                             </div>
                         </div>
 
-                        {/* Mobile Number */}
-                        <div>
-                            <label className="block text-[#0F172A] text-sm font-semibold mb-2">Mobile Number</label>
-                            <div className="flex gap-4">
-                                <div className="relative">
-                                    <div className="flex items-center gap-1 px-2 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F5F5F5]">
-                                        <span className="text-lg">🇲🇺</span>
-                                        <select
-                                            name="mobileCode"
-                                            value={formData.mobileCode}
-                                            onChange={handleChange}
-                                            className="bg-transparent text-sm text-[#64748B] appearance-none pr-4 outline-none"
-                                        >
-                                            {phoneCodeOptions.map((option) => (
-                                                <option key={option.value} value={option.value}>
-                                                    {option.label}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2">
-                                            <polyline points="6 9 12 15 18 9" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <input
-                                    type="text"
-                                    name="mobileNumber"
-                                    value={formData.mobileNumber}
-                                    onChange={handleChange}
-                                    placeholder="5814976"
-                                    className="w-[180px] px-4 py-2.5 rounded-xl text-[14px] text-[#64748B] border border-[#E2E8F0]"
-                                    style={{ backgroundColor: 'rgba(245, 245, 245, 1)' }}
-                                />
-                            </div>
-                        </div>
                     </div>
 
                     {/* Buttons */}

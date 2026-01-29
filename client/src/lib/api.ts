@@ -194,6 +194,25 @@ export const api = {
       body: JSON.stringify(data),
     });
   },
+
+  /**
+   * Approve lawyer (admin only)
+   */
+  async approveLawyer(id: string) {
+    return fetchAPI<ApiResponse>(`/api/admin/lawyers/${id}/approve`, {
+      method: 'PATCH',
+    });
+  },
+
+  /**
+   * Reject lawyer (admin only)
+   */
+  async rejectLawyer(id: string, reason?: string) {
+    return fetchAPI<ApiResponse>(`/api/admin/lawyers/${id}/reject`, {
+      method: 'PATCH',
+      body: JSON.stringify({ reason }),
+    });
+  },
 };
 
 export default api;
