@@ -153,17 +153,21 @@ export async function logoutAction(): Promise<void> {
     // 1. Clear cookie on client side (Server Action side)
     cookieStore.delete('auth_token');
 
-    // 2. Call backend to clear cookie (Async, don't wait if it hangs)
-    fetch(`${API_URL}/api/auth/logout`, {
-      method: 'POST',
-      credentials: 'include',
-    }).catch(err => console.error('Backend logout error:', err));
-
+    // 2. Call backend to clear cookie (Redundant but for completeness)
+    try {
+      fetch(`${API_URL}/api/auth/logout`, {
+        method: 'POST',
+      }).catch(() => { }); // Non-blocking
+    } catch (err) {
+      // Ignore
+    }
   } catch (error) {
     console.error('Logout error:', error);
   }
 
   // 3. Redirect to login
+  // redirect() must be called outside of try/catch or it will be caught
+  // because it works by throwing an error.
   redirect('/login');
 }
 

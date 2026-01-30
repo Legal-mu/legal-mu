@@ -62,6 +62,29 @@ const calculateCompletion = (profile: any) => {
 };
 
 /**
+ * @desc Get current profile details
+ */
+export const getProfile = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.user?.userId;
+        if (!userId) throw new AppError('Unauthorized', 401);
+
+        const profile = await prisma.lawyerProfile.findUnique({
+            where: { userId }
+        });
+
+        if (!profile) throw new AppError('Profile not found', 404);
+
+        res.json({
+            success: true,
+            data: profile
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
  * @desc Get current profile status
  */
 export const getProfileStatus = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
@@ -99,8 +122,8 @@ export const updateProfessionalIdentity = async (req: AuthenticatedRequest, res:
         const userId = req.user?.userId;
         const { fullLegalName, title, registrationNumber, firmName } = req.body;
 
-        if (!fullLegalName || !title || !registrationNumber || !firmName) {
-            throw new AppError('All Step 1 fields are required', 400);
+        if (!fullLegalName || !title || !registrationNumber) {
+            throw new AppError('All required Step 1 fields must be filled', 400);
         }
 
         // Check bar registration unique
@@ -147,8 +170,8 @@ export const updateContactInformation = async (req: AuthenticatedRequest, res: R
         const userId = req.user?.userId;
         const { address, city, postal_code, country, phoneNumber } = req.body;
 
-        if (!address || !city || !postal_code || !country || !phoneNumber) {
-            throw new AppError('All Step 2 fields are required', 400);
+        if (!address || !city || !country || !phoneNumber) {
+            throw new AppError('All required Step 2 fields must be filled', 400);
         }
 
         const profile = await prisma.lawyerProfile.update({

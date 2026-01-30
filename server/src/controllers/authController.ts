@@ -98,7 +98,15 @@ export async function register(
       success: true,
       message: 'User registered successfully',
       data: {
-        user_id: user.id,
+        user: {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          role: user.role,
+          status: user.status as UserStatus,
+          createdAt: user.createdAt.toISOString(),
+        },
         token,
         profile_status: user.lawyerProfile?.status || null
       },
