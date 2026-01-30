@@ -6,25 +6,38 @@ import { useRouter } from 'next/navigation';
 import Header from '../../components/register/Header';
 import FormInput from '../../components/register/FormInput';
 import FeatureCard from '../../components/register/FeatureCard';
+import { UserRole } from '@/types';
+import api from '@/lib/api';
+import { useAuthStore } from '@/store/authStore';
 
-export default function RegisterStep1() {
+export default function Register() {
   const router = useRouter();
+  const setAuth = useAuthStore(state => state.setAuth);
+
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
+    role: UserRole.LAWYER,
   });
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleRoleToggle = (role: UserRole) => {
+    setFormData({ ...formData, role });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -38,16 +51,47 @@ export default function RegisterStep1() {
       return;
     }
 
-    sessionStorage.setItem('registerStep1', JSON.stringify(formData));
-    router.push('/register/step-2');
+    if (!termsAccepted) {
+      setError('You must accept the terms and conditions');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await api.register({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+      });
+
+      if (response.success && response.data) {
+        setAuth(response.data.user);
+
+        if (formData.role === UserRole.LAWYER) {
+          router.push('/lawyer/dashboard');
+        } else {
+          router.push('/dashboard');
+        }
+      } else {
+        setError(response.message || 'Registration failed');
+      }
+    } catch (err: any) {
+      setError(err.message || 'An error occurred during registration');
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  const isLawyer = formData.role === UserRole.LAWYER;
 
   return (
     <div className="min-h-screen" style={{ background: 'rgba(240, 240, 240, 1)', fontFamily: 'var(--font-jost), Jost, sans-serif' }}>
-      <Header />
+      <Header activeLink={isLawyer ? 'for-lawyers' : 'for-clients'} />
 
       {/* Main Content */}
-      <div className="max-w-[1400px] mx-auto px-4 md:px-6 py-6">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-6 py-6 pb-20">
         {/* Breadcrumb Badge */}
         <div className="my-8">
           <span
@@ -58,16 +102,16 @@ export default function RegisterStep1() {
           </span>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-end">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left Section - Marketing */}
           <div className="flex flex-col max-w-[626px]">
             {/* Hero Title */}
             <div className="mb-8">
               <h1 className="text-[70px] font-extrabold text-[#0F172A] leading-[100%] tracking-[0%] mb-4">
-                Expand Your
+                {isLawyer ? 'Expand Your' : 'Find Your'}
               </h1>
               <h1 className="text-[70px] font-extrabold text-[#1A2853] leading-[100%] tracking-[0%]">
-                Legal Practice
+                {isLawyer ? 'Legal Practice' : 'Professional Lawyer'}
               </h1>
             </div>
 
@@ -75,15 +119,19 @@ export default function RegisterStep1() {
               className="text-[23px] font-normal leading-[135%] tracking-[0%] mb-8"
               style={{ fontFamily: 'var(--font-jost)', color: '#737373' }}
             >
-              Join thousands of top-tier legal professionals connecting with high value clients. We handle the marketing and you focus on the law.
+              {isLawyer
+                ? 'Join thousands of top-tier legal professionals connecting with high value clients. We handle the marketing and you focus on the law.'
+                : 'Connect with expert legal professionals in Mauritius. Get the legal advice and representation you need with ease and security.'}
             </p>
 
             {/* Feature Cards */}
             <div className="flex flex-col gap-5 mb-8">
               <FeatureCard
                 icon="shield"
-                title="Verified Leads"
-                description={<>Our AI screening ensures you only talk to serious<br />clients with valid cases.</>}
+                title={isLawyer ? "Verified Leads" : "Verified Lawyers"}
+                description={isLawyer
+                  ? <>Our AI screening ensures you only talk to serious<br />clients with valid cases.</>
+                  : <>Every lawyer on our platform is thoroughly vetted<br />and professionally verified.</>}
               />
 
               <FeatureCard
@@ -106,15 +154,40 @@ export default function RegisterStep1() {
                   <div className="w-10 h-10 rounded-full bg-[#94A3B8] border-2 border-[#1E3A5F]" />
                   <div className="w-10 h-10 rounded-full bg-[#64748B] border-2 border-[#1E3A5F]" />
                 </div>
-                <span className="text-white font-semibold text-[14px]">Join 100+ attorneys today</span>
+                <span className="text-white font-semibold text-[14px]">
+                  {isLawyer ? 'Join 100+ attorneys today' : 'Trusted by 5000+ clients'}
+                </span>
               </div>
             </div>
           </div>
 
           {/* Right Section - Form */}
-          <div className="bg-white p-10 rounded-[30px] shadow-[0_4px_24px_rgba(0,0,0,0.04)] w-[583px] h-[900px]">
-            <h2 className="text-[28px] font-extrabold text-[#0F172A] ">Create Your Account</h2>
-            <p className="text-[#111827] text-[22px] leading-[130%] mb-9 font-light">
+          <div className="bg-white p-10 rounded-[30px] shadow-[0_4px_24px_rgba(0,0,0,0.04)] w-[583px]">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-[28px] font-extrabold text-[#0F172A]">Create Your Account</h2>
+            </div>
+
+            {/* Role Toggle */}
+            <div className="flex bg-[#F5F5F5] p-1.5 rounded-2xl mb-8">
+              <button
+                type="button"
+                onClick={() => handleRoleToggle(UserRole.LAWYER)}
+                className={`flex-1 py-3 px-4 rounded-xl text-[15px] font-semibold transition-all ${isLawyer ? 'bg-white text-[#1E3A5F] shadow-sm' : 'text-[#64748B]'
+                  }`}
+              >
+                As a Lawyer
+              </button>
+              <button
+                type="button"
+                onClick={() => handleRoleToggle(UserRole.CLIENT)}
+                className={`flex-1 py-3 px-4 rounded-xl text-[15px] font-semibold transition-all ${!isLawyer ? 'bg-white text-[#1E3A5F] shadow-sm' : 'text-[#64748B]'
+                  }`}
+              >
+                As a Client
+              </button>
+            </div>
+
+            <p className="text-[#111827] text-[20px] leading-[130%] mb-9 font-light">
               Join mauritius legal network. Please enter your account credentials below to get started
             </p>
 
@@ -125,6 +198,31 @@ export default function RegisterStep1() {
             )}
 
             <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-2 gap-4">
+                <FormInput
+                  label="First Name"
+                  name="firstName"
+                  type="text"
+                  placeholder="John"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  required
+                  labelSize="18px"
+                  marginClass="mb-6"
+                />
+                <FormInput
+                  label="Last Name"
+                  name="lastName"
+                  type="text"
+                  placeholder="Doe"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  required
+                  labelSize="18px"
+                  marginClass="mb-6"
+                />
+              </div>
+
               <FormInput
                 label="Email Address"
                 name="email"
@@ -133,8 +231,8 @@ export default function RegisterStep1() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                labelSize="20px"
-                marginClass="mb-8"
+                labelSize="18px"
+                marginClass="mb-6"
               />
 
               <FormInput
@@ -146,8 +244,8 @@ export default function RegisterStep1() {
                 onChange={handleChange}
                 helperText="Must contain atleast 8 characters, one uppercase and one number."
                 required
-                labelSize="20px"
-                marginClass="mb-8"
+                labelSize="18px"
+                marginClass="mb-6"
               />
 
               <FormInput
@@ -157,8 +255,8 @@ export default function RegisterStep1() {
                 placeholder="Re-enter Password...."
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                labelSize="20px"
-                marginClass="mb-8"
+                labelSize="18px"
+                marginClass="mb-6"
               />
 
               {/* Terms Checkbox */}
@@ -184,12 +282,19 @@ export default function RegisterStep1() {
 
               <button
                 type="submit"
-                className="w-full bg-[#1E3A5F] text-white py-4 rounded-xl font-semibold text-[15px] mb-8 flex items-center justify-center gap-2 hover:bg-[#2D4A6F] transition-colors"
+                disabled={isLoading}
+                className="w-full bg-[#1E3A5F] text-white py-4 rounded-xl font-semibold text-[15px] mb-8 flex items-center justify-center gap-2 hover:bg-[#2D4A6F] transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Create Account
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+                {isLoading ? (
+                  <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <>
+                    Create Account
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </>
+                )}
               </button>
             </form>
 

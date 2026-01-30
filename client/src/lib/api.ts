@@ -72,11 +72,10 @@ async function fetchAPI<T>(
   } catch (error) {
     // Re-throw if it's already an Error
     if (error instanceof Error) {
-      console.error('API request failed:', {
-        url,
-        error: error.message,
-        stack: error.stack,
-      });
+      console.error(`API request failed [${url}]:`, error.message);
+      if (process.env.NODE_ENV === 'development') {
+        console.error(error.stack);
+      }
       throw error;
     }
     // Handle unexpected errors
@@ -140,6 +139,15 @@ export const api = {
     return fetchAPI<ApiResponse>('/api/auth/reset-password', {
       method: 'POST',
       body: JSON.stringify(data),
+    });
+  },
+
+  /**
+   * Logout user
+   */
+  async logout() {
+    return fetchAPI<ApiResponse>('/api/auth/logout', {
+      method: 'POST',
     });
   },
 
@@ -211,6 +219,94 @@ export const api = {
     return fetchAPI<ApiResponse>(`/api/admin/lawyers/${id}/reject`, {
       method: 'PATCH',
       body: JSON.stringify({ reason }),
+    });
+  },
+
+  /**
+   * Lawyer Profile Endpoints
+   */
+  async getLawyerProfile() {
+    return fetchAPI<ApiResponse<any>>('/api/lawyers/profile');
+  },
+
+  async getLawyerProfileStatus() {
+    return fetchAPI<ApiResponse<{
+      status: string;
+      completionPercentage: number;
+      completedSteps: string[];
+      missingFields: string[];
+    }>>('/api/lawyers/profile/status');
+  },
+
+  async updateProfessionalIdentity(data: {
+    fullLegalName: string;
+    title: string;
+    registrationNumber: string;
+    firmName: string;
+  }) {
+    return fetchAPI<ApiResponse>('/api/lawyers/profile/professional-identity', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updateContactInformation(data: {
+    address: string;
+    city: string;
+    postal_code: string;
+    country: string;
+    phoneNumber: string;
+  }) {
+    return fetchAPI<ApiResponse>('/api/lawyers/profile/contact-information', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updatePracticeDetails(data: {
+    practiceAreas: string[];
+    admissionYear: number;
+    experienceYears: number;
+    languages: string[];
+  }) {
+    return fetchAPI<ApiResponse>('/api/lawyers/profile/practice-details', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updateBiography(formData: FormData) {
+    // Biography update uses multipart/form-data for file upload
+    const url = `${API_URL}/api/lawyers/profile/biography`;
+    const response = await fetch(url, {
+      method: 'PATCH',
+      body: formData,
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to update biography');
+    }
+
+    return response.json();
+  },
+
+  async updateSocialMedia(data: {
+    websiteUrl?: string;
+    linkedinUrl?: string;
+    twitterUrl?: string;
+    youtubeUrl?: string;
+  }) {
+    return fetchAPI<ApiResponse>('/api/lawyers/profile/social-media', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async submitProfileForReview() {
+    return fetchAPI<ApiResponse>('/api/lawyers/profile/submit-for-review', {
+      method: 'POST',
     });
   },
 };

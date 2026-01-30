@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
     LayoutDashboard,
     Users,
@@ -31,6 +31,7 @@ const sidebarItems = [
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const pathname = usePathname();
+    const router = useRouter();
     const { user, clearAuth } = useAuthStore();
 
     const handleLogout = async () => {
