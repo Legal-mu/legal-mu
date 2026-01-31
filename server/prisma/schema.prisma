@@ -50,8 +50,27 @@ model LawyerProfile {
   languages             String[]
   
   biography             String?
+  extendedBiography    String?            @map("extended_biography") // New: Max 300 words
   headshotUrl           String?            @map("headshot_url")
   
+  // Work Experience
+  workExperience        Json?              @map("work_experience") // New: Timeline array
+
+  // Client Feedback
+  showGoogleReviews     Boolean            @default(false) @map("show_google_reviews")
+  googleBusinessProfileUrl String?         @map("google_business_profile_url")
+  clientTestimonials    Json?              @map("client_testimonials") // New: Up to 3 testimonials
+
+  // Advanced Details
+  legalCategory         LegalCategory?     @map("legal_category")
+  cvUrl                 String?            @map("cv_url") // New: PDF Upload
+  caseStudies           String?            @map("case_studies") // New: Featured Success Stories
+  barCertificateUrl     String?            @map("bar_certificate_url") // New: For "Verified" tick
+  
+  // Client Data Upload Feature
+  clientUploadNotificationEmail String?     @map("client_upload_notification_email")
+  authorizedFileTypes   String[]           @map("authorized_file_types")
+
   websiteUrl            String?            @map("website_url")
   linkedinUrl           String?            @map("linkedin_url")
   twitterUrl            String?            @map("twitter_url")
@@ -99,3 +118,11 @@ enum ProfessionalTitle {
   ATTORNEY
   NOTARY
 }
+
+enum LegalCategory {
+  SENIOR_COUNSEL_SILK
+  LEADING_LAW_FIRM
+  INTERNATIONAL_CHAMBERS
+  NOTARIAL_STUDY
+}
+
