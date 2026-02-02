@@ -11,7 +11,7 @@ export default function ResourcesPage() {
             <Navbar />
 
             {/* Hero Section */}
-            <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-green-50 via-white to-blue-50">
+            <section className="pt-40 pb-20 px-6 bg-gradient-to-br from-green-50 via-white to-blue-50">
                 <div className="max-w-7xl mx-auto text-center">
                     <h1 className="text-5xl md:text-6xl font-bold text-[#1e3a8a] mb-6">Legal Resources</h1>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">

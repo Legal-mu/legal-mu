@@ -14,7 +14,7 @@ export default function CTASection() {
                     </p>
                 </div>
                 <Link
-                    href="/lawyers"
+                    href="/lawyers-directory"
                     className="flex items-center gap-2 px-5 py-3 bg-[#1A2853] text-white rounded-lg text-sm font-semibold hover:bg-[#2A3B73] transition-all shadow-md whitespace-nowrap"
                 >
                     Find a Lawyer

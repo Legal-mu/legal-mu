@@ -29,6 +29,9 @@ model User {
   subscriptionPlanId   String?        @map("subscription_plan_id")
   lawyerProfile        LawyerProfile?
 
+  // Admin relations
+  reviewedProfiles LawyerProfile[] @relation("AdminReviews")
+
   @@map("users")
 }
 
@@ -39,28 +42,58 @@ model LawyerProfile {
   title                 ProfessionalTitle?
   registrationNumber    String?            @map("registration_number")
   firmName              String?            @map("firm_name")
+  legalCategory         LegalCategory?     @map("legal_category")
   address               String?
+  city                  String?
+  postal_code           String?
+  country               String?
   phoneNumber           String?            @map("phone_number")
-  mobileNumber          String?            @map("mobile_number")
-  websiteUrl            String?            @map("website_url")
+  
   practiceAreas         String[]           @map("practice_areas")
+  admissionYear         Int?               @map("admission_year")
   experienceYears       Int?               @map("experience_years")
-  jurisdictions         String[]
   languages             String[]
-  biography             String?
-  valueProposition      String?            @map("value_proposition")
-  awards                String?
+  workExperience        Json?              @map("work_experience") // Array of { role: string, firm: string, years: string }
+  cvUrl                 String?            @map("cv_url")
+  
+  biography             String? // Max 100 words (existing)
+  extendedBiography     String?            @map("extended_biography") // Max 300 words
+  headshotUrl           String?            @map("headshot_url")
+  
+  websiteUrl            String?            @map("website_url")
+  linkedinUrl           String?            @map("linkedin_url")
+  twitterUrl            String?            @map("twitter_url")
+  youtubeUrl            String?            @map("youtube_url")
+  
+  // Google Reviews Integration
+  showGoogleReviews          Boolean       @default(false) @map("show_google_reviews")
+  googleBusinessProfileUrl   String?       @map("google_business_profile_url")
+
+  // Client Testimonials & Success Stories
+  clientTestimonials    Json?              @map("client_testimonials") // Array of { text: string, initials: string }
+  featuredSuccessStories String?           @map("featured_success_stories")
+
+  // Verification
+  verifiedBadges        String[]           @map("verified_badges") // Array of document URLs
+
+  // Client Data Upload Feature
+  clientDataUploadEnabled       Boolean    @default(false) @map("client_data_upload_enabled")
+  clientUploadNotificationEmail String?    @map("client_upload_notification_email")
+  authorizedFileTypes           String[]   @default(["PDF", "DOCX", "JPG"]) @map("authorized_file_types")
+
+  status                LawyerProfileStatus @default(INCOMPLETE)
+  completionPercentage  Int                @default(0) @map("completion_percentage")
+  completedSteps        Json?              @map("completed_steps") // Array of strings like ["step1", "step2"]
+  
+  submittedAt           DateTime?          @map("submitted_at")
+  reviewedAt            DateTime?          @map("reviewed_at")
+  reviewedById          String?            @map("reviewed_by_id")
+  reviewedBy            User?              @relation("AdminReviews", fields: [reviewedById], references: [id])
+  rejectionReason       String?            @map("rejection_reason")
+
   createdAt             DateTime           @default(now()) @map("created_at")
   updatedAt             DateTime           @updatedAt @map("updated_at")
-  city                  String?
-  country               String?
-  linkedin_url          String?
-  twitter_url           String?
-  completion_percentage Int                @default(0)
-  current_step          Int                @default(0)
-  is_profile_complete   Boolean            @default(false)
-  postal_code           String?
-  twitter_handle        String?
+  
   user                  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("lawyer_profiles")
@@ -78,8 +111,22 @@ enum UserStatus {
   REJECTED
 }
 
+enum LawyerProfileStatus {
+  INCOMPLETE
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+}
+
 enum ProfessionalTitle {
   BARRISTER
   ATTORNEY
   NOTARY
+}
+
+enum LegalCategory {
+  SENIOR_COUNSEL_SILK
+  LEADING_LAW_FIRM
+  INTERNATIONAL_CHAMBERS
+  NOTARIAL_STUDY
 }

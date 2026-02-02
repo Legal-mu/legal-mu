@@ -72,11 +72,10 @@ async function fetchAPI<T>(
   } catch (error) {
     // Re-throw if it's already an Error
     if (error instanceof Error) {
-      console.error('API request failed:', {
-        url,
-        error: error.message,
-        stack: error.stack,
-      });
+      console.error(`API request failed [${url}]:`, error.message);
+      if (process.env.NODE_ENV === 'development') {
+        console.error(error.stack);
+      }
       throw error;
     }
     // Handle unexpected errors
@@ -144,6 +143,15 @@ export const api = {
   },
 
   /**
+   * Logout user
+   */
+  async logout() {
+    return fetchAPI<ApiResponse>('/api/auth/logout', {
+      method: 'POST',
+    });
+  },
+
+  /**
    * Get protected route data (example)
    */
   async getProtectedData() {
@@ -192,6 +200,147 @@ export const api = {
     return fetchAPI<ApiResponse>('/api/admin/change-password', {
       method: 'PUT',
       body: JSON.stringify(data),
+    });
+  },
+
+  /**
+   * Approve lawyer (admin only)
+   */
+  async approveLawyer(id: string) {
+    return fetchAPI<ApiResponse>(`/api/admin/lawyers/${id}/approve`, {
+      method: 'PATCH',
+    });
+  },
+
+  /**
+   * Reject lawyer (admin only)
+   */
+  async rejectLawyer(id: string, reason?: string) {
+    return fetchAPI<ApiResponse>(`/api/admin/lawyers/${id}/reject`, {
+      method: 'PATCH',
+      body: JSON.stringify({ reason }),
+    });
+  },
+
+  /**
+   * Lawyer Profile Endpoints
+   */
+  async getLawyerProfile() {
+    return fetchAPI<ApiResponse<any>>('/api/lawyers/profile');
+  },
+
+  async getLawyerProfileStatus() {
+    return fetchAPI<ApiResponse<{
+      status: string;
+      completionPercentage: number;
+      completedSteps: string[];
+      missingFields: string[];
+    }>>('/api/lawyers/profile/status');
+  },
+
+  async updateProfessionalIdentity(data: {
+    fullLegalName: string;
+    title: string;
+    registrationNumber: string;
+    firmName: string;
+    legalCategory: string;
+  }) {
+    return fetchAPI<ApiResponse>('/api/lawyers/profile/professional-identity', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updateContactInformation(data: {
+    address: string;
+    city: string;
+    postal_code: string;
+    country: string;
+    phoneNumber: string;
+  }) {
+    return fetchAPI<ApiResponse>('/api/lawyers/profile/contact-information', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updatePracticeDetails(formData: FormData) {
+    // Now uses FormData to support CV upload
+    const url = `${API_URL}/api/lawyers/profile/practice-details`;
+    const response = await fetch(url, {
+      method: 'PATCH',
+      body: formData,
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to update practice details');
+    }
+
+    return response.json();
+  },
+
+  async updateBiography(formData: FormData) {
+    // Biography update uses multipart/form-data for headshot upload
+    const url = `${API_URL}/api/lawyers/profile/biography`;
+    const response = await fetch(url, {
+      method: 'PATCH',
+      body: formData,
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to update biography');
+    }
+
+    return response.json();
+  },
+
+  async updateSocialMedia(data: {
+    websiteUrl?: string;
+    linkedinUrl?: string;
+    twitterUrl?: string;
+    youtubeUrl?: string;
+    showGoogleReviews: boolean;
+    googleBusinessProfileUrl?: string;
+  }) {
+    return fetchAPI<ApiResponse>('/api/lawyers/profile/social-media', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updateCaseStories(data: {
+    clientTestimonials: { text: string; initials: string }[];
+    featuredSuccessStories: string;
+  }) {
+    return fetchAPI<ApiResponse>('/api/lawyers/profile/case-stories', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updateVerificationTools(formData: FormData) {
+    const url = `${API_URL}/api/lawyers/profile/verification-tools`;
+    const response = await fetch(url, {
+      method: 'PATCH',
+      body: formData,
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to update verification tools');
+    }
+
+    return response.json();
+  },
+
+  async submitProfileForReview() {
+    return fetchAPI<ApiResponse>('/api/lawyers/profile/submit-for-review', {
+      method: 'POST',
     });
   },
 };

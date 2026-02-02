@@ -3,8 +3,8 @@
  */
 
 // Import UserRole from Prisma generated types
-import { UserRole, UserStatus } from '../generated/prisma';
-export { UserRole, UserStatus };
+import { UserRole, UserStatus, LawyerProfileStatus, ProfessionalTitle } from '../generated/prisma';
+export { UserRole, UserStatus, LawyerProfileStatus, ProfessionalTitle };
 
 export interface RegisterRequest {
   firstName: string;
@@ -20,16 +20,15 @@ export interface RegisterRequest {
   registrationNumber?: string;
   firmName?: string;
   address?: string;
+  city?: string;
+  postal_code?: string;
+  country?: string;
   phoneNumber?: string;
-  mobileNumber?: string;
-  websiteUrl?: string;
   practiceAreas?: string[];
+  admissionYear?: number;
   experienceYears?: number;
-  jurisdictions?: string[];
   languagesSpeak?: string[];
   biography?: string;
-  valueProposition?: string;
-  awards?: string;
 }
 
 export interface LoginRequest {

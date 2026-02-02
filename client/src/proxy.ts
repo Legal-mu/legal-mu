@@ -8,7 +8,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // Public routes that don't require authentication
-const publicRoutes = ['/login', '/register', '/forgot-password', '/', '/api-test', '/lawyer-profile', '/lawyers-directory'];
+const publicRoutes = ['/login', '/register', '/forgot-password', '/', '/api-test', '/lawyers-directory', '/community', '/resources'];
 
 // Protected routes that require authentication
 const protectedRoutes = ['/dashboard', '/admin', '/client'];
@@ -17,11 +17,15 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const authToken = request.cookies.get('auth_token')?.value;
 
-  // Check if route is protected
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    pathname.startsWith(route)
+  // Check if route is public (including sub-routes for things like resources)
+  const isPublicRoute = publicRoutes.some((route) =>
+    pathname === route || pathname.startsWith(route + '/')
   );
-  const isPublicRoute = publicRoutes.some((route) => pathname === route);
+
+  // Check if route is protected
+  const isProtectedRoute = !isPublicRoute && protectedRoutes.some((route) =>
+    pathname === route || pathname.startsWith(route + '/')
+  );
 
   // If accessing protected route without token, redirect to login
   if (isProtectedRoute && !authToken) {

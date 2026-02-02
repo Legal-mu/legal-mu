@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface HeaderProps {
     activeLink?: 'for-lawyers' | 'for-clients' | 'homepage';
@@ -12,10 +13,12 @@ export default function Header({ activeLink = 'for-lawyers' }: HeaderProps) {
             <div className="w-full max-w-[1700px] flex justify-between items-center">
                 {/* Logo */}
                 <Link href="/" className="flex items-center">
-                    <img
-                        src="/logo.svg"
+                    <Image
+                        src="/legal-mu-logo.webp"
                         alt="LEGAL.MU - Access to justice"
-                        className="h-10 w-auto"
+                        width={200}
+                        height={40}
+                        className="object-contain"
                     />
                 </Link>
 

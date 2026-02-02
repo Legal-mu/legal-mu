@@ -4,7 +4,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../db/prisma';
-import { UserRole, UserStatus, ProfessionalTitle } from '../generated/prisma';
+import { UserRole, UserStatus, ProfessionalTitle, LawyerProfileStatus } from '../generated/prisma';
 import { hashPassword, comparePassword } from '../utils/password';
 import { generateToken, generateResetToken, verifyResetToken } from '../utils/jwt';
 import { AppError } from '../middleware/errorHandler';
@@ -24,13 +24,7 @@ export async function register(
   next: NextFunction
 ) {
   try {
-    const {
-      firstName, lastName, email, password, dateOfBirth, role,
-      fullLegalName, professionalTitle, registrationNumber, firmName,
-      address, phoneNumber, mobileNumber, websiteUrl, practiceAreas,
-      experienceYears, jurisdictions, languagesSpeak, biography,
-      valueProposition, awards
-    } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
@@ -44,9 +38,6 @@ export async function register(
     // Hash password
     const hashedPassword = await hashPassword(password);
 
-    // Parse date of birth if provided
-    const dob = dateOfBirth ? new Date(dateOfBirth) : null;
-
     // Create user
     const userRole = role || UserRole.CLIENT;
     const userStatus = userRole === UserRole.LAWYER ? UserStatus.PENDING : UserStatus.APPROVED;
@@ -57,28 +48,15 @@ export async function register(
         lastName,
         email: email.toLowerCase(),
         password: hashedPassword,
-        dateOfBirth: dob,
         role: userRole,
         status: userStatus,
         // Add lawyer profile if registering as a lawyer
         ...(userRole === UserRole.LAWYER && {
           lawyerProfile: {
             create: {
-              fullLegalName: fullLegalName || `${firstName} ${lastName}`,
-              title: professionalTitle as ProfessionalTitle || ProfessionalTitle.BARRISTER,
-              registrationNumber: registrationNumber || 'PENDING',
-              firmName,
-              address: address || 'PENDING',
-              phoneNumber: phoneNumber || 'PENDING',
-              mobileNumber: mobileNumber || 'PENDING',
-              websiteUrl,
-              practiceAreas: practiceAreas || [],
-              experienceYears: experienceYears || 0,
-              jurisdictions: jurisdictions || [],
-              languages: languagesSpeak || [],
-              biography: biography || '',
-              valueProposition: valueProposition || '',
-              awards,
+              status: LawyerProfileStatus.INCOMPLETE,
+              completionPercentage: 0,
+              completedSteps: []
             }
           }
         })
@@ -90,8 +68,11 @@ export async function register(
         email: true,
         role: true,
         status: true,
-        dateOfBirth: true,
-        lawyerProfile: true,
+        lawyerProfile: {
+          select: {
+            status: true
+          }
+        },
         createdAt: true,
         updatedAt: true,
       },
@@ -124,11 +105,10 @@ export async function register(
           email: user.email,
           role: user.role,
           status: user.status as UserStatus,
-          dateOfBirth: user.dateOfBirth,
-          lawyerProfile: user.lawyerProfile,
+          createdAt: user.createdAt.toISOString(),
         },
-        token, // Return token for Server Actions to set cookie
-        redirectHint: user.role === UserRole.LAWYER ? (user.status === UserStatus.APPROVED ? '/pricing-plan' : 'Waiting for Approval') : '/dashboard',
+        token,
+        profile_status: user.lawyerProfile?.status || null
       },
     });
   } catch (error) {

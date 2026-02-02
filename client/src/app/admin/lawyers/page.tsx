@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import {
     useLawyers,
-    useUpdateUser,
+    useApproveLawyer,
+    useRejectLawyer,
     useDeleteUser
 } from '@/hooks/useAdminData';
 import {
@@ -16,14 +17,16 @@ import {
     Filter,
     User as UserIcon,
     ShieldCheck,
-    ShieldClose
+    ShieldClose,
+    AlertCircle
 } from 'lucide-react';
 import { UserStatus, User } from '@/types';
 import EditUserModal from '../components/EditUserModal';
 
 export default function LawyersManagement() {
     const { data: lawyers, isLoading } = useLawyers();
-    const updateUser = useUpdateUser();
+    const approveLawyer = useApproveLawyer();
+    const rejectLawyer = useRejectLawyer();
     const deleteUser = useDeleteUser();
     const [searchTerm, setSearchTerm] = useState('');
     const [editingUser, setEditingUser] = useState<User | null>(null);
@@ -35,12 +38,15 @@ export default function LawyersManagement() {
     );
 
     const handleApprove = (id: string) => {
-        updateUser.mutate({ id, data: { status: UserStatus.APPROVED } });
+        if (confirm('Are you sure you want to approve this lawyer?')) {
+            approveLawyer.mutate(id);
+        }
     };
 
     const handleReject = (id: string) => {
-        if (confirm('Reviewing this lawyer - Rejection will delete their application. Proceed?')) {
-            deleteUser.mutate(id);
+        const reason = prompt('Please provide a reason for rejection:');
+        if (reason !== null) {
+            rejectLawyer.mutate({ id, reason });
         }
     };
 
@@ -122,11 +128,12 @@ export default function LawyersManagement() {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${lawyer.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' :
-                                            lawyer.status === 'REJECTED' ? 'bg-red-50 text-red-700 border border-red-100' :
-                                                'bg-amber-50 text-amber-700 border border-amber-100'
+                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${lawyer.lawyerProfile?.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' :
+                                                lawyer.lawyerProfile?.status === 'REJECTED' ? 'bg-red-50 text-red-700 border border-red-100' :
+                                                    lawyer.lawyerProfile?.status === 'PENDING_REVIEW' ? 'bg-amber-50 text-amber-700 border border-amber-100' :
+                                                        'bg-gray-50 text-gray-700 border border-gray-100'
                                             }`}>
-                                            {lawyer.status.charAt(0) + lawyer.status.slice(1).toLowerCase()}
+                                            {(lawyer.lawyerProfile?.status || lawyer.status).replace('_', ' ').toLowerCase().replace(/\b\w/g, (c: string) => c.toUpperCase())}
                                         </span>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-500">
@@ -134,7 +141,7 @@ export default function LawyersManagement() {
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            {lawyer.status === 'PENDING' && (
+                                            {(lawyer.lawyerProfile?.status === 'PENDING_REVIEW' || lawyer.lawyerProfile?.status === 'REJECTED') && (
                                                 <>
                                                     <button
                                                         onClick={() => handleApprove(lawyer.id)}
@@ -143,22 +150,15 @@ export default function LawyersManagement() {
                                                     >
                                                         <ShieldCheck size={18} />
                                                     </button>
-                                                    <button
-                                                        onClick={() => handleReject(lawyer.id)}
-                                                        className="p-2 text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
-                                                        title="Reject"
-                                                    >
-                                                        <ShieldClose size={18} />
-                                                    </button>
                                                 </>
                                             )}
-                                            {lawyer.status === 'REJECTED' && (
+                                            {lawyer.lawyerProfile?.status === 'PENDING_REVIEW' && (
                                                 <button
-                                                    onClick={() => handleApprove(lawyer.id)}
-                                                    className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
-                                                    title="Approve"
+                                                    onClick={() => handleReject(lawyer.id)}
+                                                    className="p-2 text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
+                                                    title="Reject"
                                                 >
-                                                    <ShieldCheck size={18} />
+                                                    <ShieldClose size={18} />
                                                 </button>
                                             )}
 

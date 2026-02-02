@@ -1,5 +1,6 @@
 // Server Entry Point - Trigger Reload
 import express from 'express';
+import path from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
@@ -34,6 +35,9 @@ app.use('/api/stripe', stripeRoutes);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static files
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Test database connection
 async function testDatabaseConnection() {

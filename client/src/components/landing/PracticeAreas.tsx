@@ -52,11 +52,11 @@ export default function PracticeAreas() {
                     transition={{ duration: 0.5, delay: 0.3 }}
                     className="bg-[#e2e8f0]/40 border border-gray-100 rounded-[2.5rem] p-10 group cursor-pointer h-full flex flex-col items-center justify-center text-center hover:bg-[#e2e8f0]/60 transition-all"
                 >
-                    <Link href="/lawyers-directory" className="flex flex-col items-center gap-6">
+                    <Link href="/resources/practice-areas" className="flex flex-col items-center gap-6">
                         <div className="w-16 h-16 rounded-full border-2 border-blue-200 flex items-center justify-center text-[#1A2853] group-hover:bg-[#1e3a8a] group-hover:text-white group-hover:border-[#1e3a8a] transition-all duration-300">
                             <ArrowRightIcon className="w-8 h-8" />
                         </div>
-                        <span className="text-sm font-bold text-[#1A2853] tracking-tight font-jost">View Lawyers Directory</span>
+                        <span className="text-sm font-bold text-[#1A2853] tracking-tight font-jost">View All Services</span>
                     </Link>
                 </motion.div>
             </div>

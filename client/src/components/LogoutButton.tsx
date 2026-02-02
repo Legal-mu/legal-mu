@@ -12,11 +12,8 @@ export default function LogoutButton() {
 
   const handleLogout = () => {
     startTransition(async () => {
-      const result = await logoutAction();
-      if (result.success) {
-        clearAuth();
-        router.push('/login');
-      }
+      clearAuth();
+      await logoutAction();
     });
   };
 

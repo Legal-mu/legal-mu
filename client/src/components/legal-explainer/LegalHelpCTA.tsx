@@ -1,4 +1,6 @@
+'use client';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 export default function LegalHelpCTA() {
     return (
@@ -13,9 +15,11 @@ export default function LegalHelpCTA() {
                     </p>
                 </div>
 
-                <button className="flex-shrink-0 bg-[#1A2853] text-white px-10 py-5 rounded-2xl flex items-center gap-4 group hover:bg-[#1A2853]/90 transition-all shadow-xl">
-                    <span className="text-[18px] font-bold">Find a Lawyer</span>
-                    <ArrowRightIcon className="w-6 h-6 transition-transform group-hover:translate-x-1" />
+                <button className="flex-shrink-0 bg-[#1A2853] text-white px-8 py-5 rounded-2xl flex items-center gap-8 group hover:bg-[#1A2853]/90 transition-all shadow-xl">
+                    <Link href="/lawyers-directory" className="flex items-center gap-4">
+                        <span className="text-[18px] font-bold">Find a Lawyer</span>
+                        <ArrowRightIcon className="w-6 h-6 transition-transform group-hover:translate-x-1" />
+                    </Link>
                 </button>
             </div>
 

@@ -21,7 +21,7 @@ export default function BlogSection() {
                         Latest Legal <span className="text-[#1A2853]">Insights</span>
                     </h2>
                 </motion.div>
-                <Link href="/resources" className="text-[#1A2853] font-bold flex items-center gap-2 hover:gap-3 transition-all font-jost">
+                <Link href="/resources/articles-blogs" className="text-[#1A2853] font-bold flex items-center gap-2 hover:gap-3 transition-all font-jost">
                     View All Insights <ArrowRightIcon className="w-5 h-5" />
                 </Link>
             </div>
