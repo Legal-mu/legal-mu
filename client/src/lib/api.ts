@@ -243,6 +243,7 @@ export const api = {
     title: string;
     registrationNumber: string;
     firmName: string;
+    legalCategory: string;
   }) {
     return fetchAPI<ApiResponse>('/api/lawyers/profile/professional-identity', {
       method: 'PATCH',
@@ -263,20 +264,25 @@ export const api = {
     });
   },
 
-  async updatePracticeDetails(data: {
-    practiceAreas: string[];
-    admissionYear: number;
-    experienceYears: number;
-    languages: string[];
-  }) {
-    return fetchAPI<ApiResponse>('/api/lawyers/profile/practice-details', {
+  async updatePracticeDetails(formData: FormData) {
+    // Now uses FormData to support CV upload
+    const url = `${API_URL}/api/lawyers/profile/practice-details`;
+    const response = await fetch(url, {
       method: 'PATCH',
-      body: JSON.stringify(data),
+      body: formData,
+      credentials: 'include',
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to update practice details');
+    }
+
+    return response.json();
   },
 
   async updateBiography(formData: FormData) {
-    // Biography update uses multipart/form-data for file upload
+    // Biography update uses multipart/form-data for headshot upload
     const url = `${API_URL}/api/lawyers/profile/biography`;
     const response = await fetch(url, {
       method: 'PATCH',
@@ -297,11 +303,39 @@ export const api = {
     linkedinUrl?: string;
     twitterUrl?: string;
     youtubeUrl?: string;
+    showGoogleReviews: boolean;
+    googleBusinessProfileUrl?: string;
   }) {
     return fetchAPI<ApiResponse>('/api/lawyers/profile/social-media', {
       method: 'PATCH',
       body: JSON.stringify(data),
     });
+  },
+
+  async updateCaseStories(data: {
+    clientTestimonials: { text: string; initials: string }[];
+    featuredSuccessStories: string;
+  }) {
+    return fetchAPI<ApiResponse>('/api/lawyers/profile/case-stories', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updateVerificationTools(formData: FormData) {
+    const url = `${API_URL}/api/lawyers/profile/verification-tools`;
+    const response = await fetch(url, {
+      method: 'PATCH',
+      body: formData,
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to update verification tools');
+    }
+
+    return response.json();
   },
 
   async submitProfileForReview() {

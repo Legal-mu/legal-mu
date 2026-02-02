@@ -30,10 +30,61 @@ export enum UserRole {
   CLIENT = 'CLIENT',
 }
 
-export enum UserStatus {
-  PENDING = 'PENDING',
-  APPROVED = 'APPROVED',
-  REJECTED = 'REJECTED',
+export enum LegalCategory {
+  SENIOR_COUNSEL_SILK = 'SENIOR_COUNSEL_SILK',
+  LEADING_LAW_FIRM = 'LEADING_LAW_FIRM',
+  INTERNATIONAL_CHAMBERS = 'INTERNATIONAL_CHAMBERS',
+  NOTARIAL_STUDY = 'NOTARIAL_STUDY',
+}
+
+export interface WorkExperience {
+  role: string;
+  firm: string;
+  years: string;
+}
+
+export interface ClientTestimonial {
+  text: string;
+  initials: string;
+}
+
+export interface LawyerProfile {
+  id: string;
+  userId: string;
+  fullLegalName?: string;
+  title?: string;
+  registrationNumber?: string;
+  firmName?: string;
+  legalCategory?: LegalCategory;
+  address?: string;
+  city?: string;
+  postal_code?: string;
+  country?: string;
+  phoneNumber?: string;
+  practiceAreas: string[];
+  admissionYear?: number;
+  experienceYears?: number;
+  languages: string[];
+  workExperience?: WorkExperience[];
+  cvUrl?: string;
+  biography?: string;
+  extendedBiography?: string;
+  headshotUrl?: string;
+  websiteUrl?: string;
+  linkedinUrl?: string;
+  twitterUrl?: string;
+  youtubeUrl?: string;
+  showGoogleReviews: boolean;
+  googleBusinessProfileUrl?: string;
+  clientTestimonials?: ClientTestimonial[];
+  featuredSuccessStories?: string;
+  verifiedBadges: string[];
+  clientDataUploadEnabled: boolean;
+  clientUploadNotificationEmail?: string;
+  authorizedFileTypes: string[];
+  status: string;
+  completionPercentage: number;
+  completedSteps?: string[];
 }
 
 export interface User {
@@ -46,7 +97,7 @@ export interface User {
   dateOfBirth?: Date | null;
   isActive?: boolean;
   createdAt?: string;
-  lawyerProfile?: any;
+  lawyerProfile?: LawyerProfile;
 }
 
 // Auth types
