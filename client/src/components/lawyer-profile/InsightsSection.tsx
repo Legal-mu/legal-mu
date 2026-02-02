@@ -3,7 +3,11 @@
 import Image from 'next/image';
 import { DocumentTextIcon, PlayCircleIcon } from '@heroicons/react/24/outline';
 
-export default function InsightsSection() {
+interface InsightsSectionProps {
+    lawyer: any;
+}
+
+export default function InsightsSection({ lawyer }: InsightsSectionProps) {
     const publications = [
         {
             id: 1,
