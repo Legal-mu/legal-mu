@@ -14,6 +14,8 @@ export default function SocialMediaPage() {
         linkedinUrl: '',
         twitterUrl: '',
         youtubeUrl: '',
+        showGoogleReviews: false,
+        googleBusinessProfileUrl: '',
     });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -30,6 +32,8 @@ export default function SocialMediaPage() {
                         linkedinUrl: res.data.linkedinUrl || '',
                         twitterUrl: res.data.twitterUrl || '',
                         youtubeUrl: res.data.youtubeUrl || '',
+                        showGoogleReviews: res.data.showGoogleReviews || false,
+                        googleBusinessProfileUrl: res.data.googleBusinessProfileUrl || '',
                     });
                 }
             } catch (err) {
@@ -58,7 +62,7 @@ export default function SocialMediaPage() {
             if (res.success) {
                 setSuccess(true);
                 setTimeout(() => {
-                    router.push('/lawyer/dashboard');
+                    router.push('/lawyer/dashboard/case-stories');
                 }, 1500);
             } else {
                 setError(res.message || 'Failed to save.');
@@ -128,6 +132,42 @@ export default function SocialMediaPage() {
                         onChange={handleChange}
                         placeholder="https://youtube.com/@channel"
                     />
+
+                    {/* Google Reviews Integration */}
+                    <div className="pt-6 border-t border-slate-100">
+                        <div className="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 className="text-sm font-bold text-[#1E3A5F]">Google Reviews Integration</h3>
+                                <p className="text-xs text-[#64748B]">Display your Google Business reviews directly on your profile.</p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setFormData({ ...formData, showGoogleReviews: !formData.showGoogleReviews })}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${formData.showGoogleReviews ? 'bg-[#1E3A5F]' : 'bg-slate-200'
+                                    }`}
+                            >
+                                <span
+                                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${formData.showGoogleReviews ? 'translate-x-6' : 'translate-x-1'
+                                        }`}
+                                />
+                            </button>
+                        </div>
+
+                        {formData.showGoogleReviews && (
+                            <div className="animate-in fade-in slide-in-from-top-1 duration-200">
+                                <DashboardInput
+                                    label="Google Business Profile URL"
+                                    name="googleBusinessProfileUrl"
+                                    type="url"
+                                    value={formData.googleBusinessProfileUrl}
+                                    onChange={handleChange}
+                                    placeholder="https://g.page/r/your-profile"
+                                    helperText="We'll use this link to fetch and display your reviews."
+                                    required={formData.showGoogleReviews}
+                                />
+                            </div>
+                        )}
+                    </div>
 
                     <div className="pt-4 border-t border-slate-100">
                         <button

@@ -9,6 +9,8 @@ import {
     Briefcase,
     FileText,
     Share2,
+    MessageSquare,
+    ShieldCheck,
     LogOut,
     CheckCircle2,
     Circle
@@ -62,6 +64,18 @@ export default function DashboardSidebar({ completedSteps = [] }: SidebarProps) 
             href: '/lawyer/dashboard/social-media',
             icon: Share2,
             id: 'social-media'
+        },
+        {
+            name: 'Case Stories',
+            href: '/lawyer/dashboard/case-stories',
+            icon: MessageSquare,
+            id: 'case-stories'
+        },
+        {
+            name: 'Verification & Tools',
+            href: '/lawyer/dashboard/verification-tools',
+            icon: ShieldCheck,
+            id: 'verification-tools'
         },
     ];
 

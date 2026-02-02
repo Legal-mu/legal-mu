@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../db/prisma';
-import { UserRole, LawyerProfileStatus, ProfessionalTitle } from '../generated/prisma';
+import { UserRole, LawyerProfileStatus, ProfessionalTitle, LegalCategory } from '../generated/prisma';
 import { AppError } from '../middleware/errorHandler';
 
 // Extended request type for authenticated users
@@ -18,13 +18,13 @@ interface AuthenticatedRequest extends Request {
 const calculateCompletion = (profile: any) => {
     const requiredFields = [
         // Step 1
-        'fullLegalName', 'title', 'registrationNumber', 'firmName',
+        'fullLegalName', 'title', 'registrationNumber', 'firmName', 'legalCategory',
         // Step 2
         'address', 'city', 'postal_code', 'country', 'phoneNumber',
         // Step 3
-        'practiceAreas', 'admissionYear', 'experienceYears', 'languages',
+        'practiceAreas', 'admissionYear', 'experienceYears', 'languages', 'workExperience', 'cvUrl',
         // Step 4
-        'headshotUrl', 'biography'
+        'headshotUrl', 'biography', 'extendedBiography'
     ];
 
     let completedFields = 0;
@@ -44,15 +44,29 @@ const calculateCompletion = (profile: any) => {
 
     const percentage = Math.round((completedFields / requiredFields.length) * 100);
 
-    // Track completed steps (rough logic)
+    // Track completed steps
     const completedSteps = [];
-    if (profile.fullLegalName && profile.title && profile.registrationNumber && profile.firmName) completedSteps.push('professional-identity');
-    if (profile.address && profile.city && profile.postal_code && profile.country && profile.phoneNumber) completedSteps.push('contact-information');
-    if (profile.practiceAreas?.length > 0 && profile.admissionYear && profile.experienceYears !== null && profile.languages?.length > 0) completedSteps.push('practice-details');
-    if (profile.headshotUrl && profile.biography) completedSteps.push('biography');
-
-    // Step 5 is optional, but let's say it's "done" if any field is filled or just always "available"
-    if (profile.websiteUrl || profile.linkedinUrl || profile.twitterUrl || profile.youtubeUrl) completedSteps.push('social-media');
+    if (profile.fullLegalName && profile.title && profile.registrationNumber && profile.firmName && profile.legalCategory) {
+        completedSteps.push('professional-identity');
+    }
+    if (profile.address && profile.city && profile.postal_code && profile.country && profile.phoneNumber) {
+        completedSteps.push('contact-information');
+    }
+    if (profile.practiceAreas?.length > 0 && profile.admissionYear && profile.experienceYears !== null && profile.languages?.length > 0 && profile.workExperience && profile.cvUrl) {
+        completedSteps.push('practice-details');
+    }
+    if (profile.headshotUrl && profile.biography && profile.extendedBiography) {
+        completedSteps.push('biography');
+    }
+    if (profile.websiteUrl || profile.linkedinUrl || profile.twitterUrl || profile.youtubeUrl || profile.googleBusinessProfileUrl) {
+        completedSteps.push('social-media');
+    }
+    if (profile.clientTestimonials || profile.featuredSuccessStories) {
+        completedSteps.push('case-stories');
+    }
+    if (profile.clientUploadNotificationEmail) {
+        completedSteps.push('verification-tools');
+    }
 
     return {
         percentage,
@@ -120,9 +134,9 @@ export const getProfileStatus = async (req: AuthenticatedRequest, res: Response,
 export const updateProfessionalIdentity = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
         const userId = req.user?.userId;
-        const { fullLegalName, title, registrationNumber, firmName } = req.body;
+        const { fullLegalName, title, registrationNumber, firmName, legalCategory } = req.body;
 
-        if (!fullLegalName || !title || !registrationNumber) {
+        if (!fullLegalName || !title || !registrationNumber || !legalCategory) {
             throw new AppError('All required Step 1 fields must be filled', 400);
         }
 
@@ -142,7 +156,8 @@ export const updateProfessionalIdentity = async (req: AuthenticatedRequest, res:
                 fullLegalName,
                 title: title as ProfessionalTitle,
                 registrationNumber,
-                firmName
+                firmName,
+                legalCategory: legalCategory as any // Prisma enum
             }
         });
 
@@ -207,26 +222,71 @@ export const updateContactInformation = async (req: AuthenticatedRequest, res: R
 export const updatePracticeDetails = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
         const userId = req.user?.userId;
-        const { practiceAreas, admissionYear, experienceYears, languages } = req.body;
+        const { practiceAreas, admissionYear, experienceYears, languages, workExperience } = req.body;
+        const file = req.file;
 
-        if (!practiceAreas || practiceAreas.length === 0 || !admissionYear || experienceYears === undefined || !languages || languages.length === 0) {
-            throw new AppError('All Step 3 fields are required', 400);
+        // admissionYear, experienceYears, practiceAreas, languages are expected as JSON strings if coming from form-data
+        const parsedAdmissionYear = typeof admissionYear === 'string' ? parseInt(admissionYear) : admissionYear;
+        const parsedExperienceYears = typeof experienceYears === 'string' ? parseInt(experienceYears) : experienceYears;
+
+        let parsedWorkExperience = workExperience;
+        if (typeof workExperience === 'string') {
+            try {
+                parsedWorkExperience = JSON.parse(workExperience);
+            } catch (e) {
+                throw new AppError('Invalid work experience format', 400);
+            }
         }
 
-        if (admissionYear < 1950 || admissionYear > new Date().getFullYear()) {
+        let parsedPracticeAreas = practiceAreas;
+        if (typeof practiceAreas === 'string') {
+            try {
+                parsedPracticeAreas = JSON.parse(practiceAreas);
+            } catch (e) {
+                throw new AppError('Invalid practice areas format', 400);
+            }
+        }
+
+        let parsedLanguages = languages;
+        if (typeof languages === 'string') {
+            try {
+                parsedLanguages = JSON.parse(languages);
+            } catch (e) {
+                throw new AppError('Invalid languages format', 400);
+            }
+        }
+
+        if (!parsedPracticeAreas || !Array.isArray(parsedPracticeAreas) || parsedPracticeAreas.length === 0 ||
+            !parsedAdmissionYear || isNaN(parsedAdmissionYear) ||
+            parsedExperienceYears === undefined || isNaN(parsedExperienceYears) ||
+            !parsedLanguages || !Array.isArray(parsedLanguages) || parsedLanguages.length === 0 ||
+            !parsedWorkExperience) {
+            throw new AppError('All Step 3 fields are required and must be valid', 400);
+        }
+
+        if (parsedAdmissionYear < 1950 || parsedAdmissionYear > new Date().getFullYear()) {
             throw new AppError('Invalid admission year', 400);
         }
 
-        if (experienceYears < 0) throw new AppError('Experience years must be positive', 400);
-        if (languages.length > 10) throw new AppError('Max 10 languages allowed', 400);
+        let cvUrl = undefined;
+        if (file) {
+            cvUrl = `/uploads/cvs/${file.filename}`;
+        }
+
+        const currentProfile = await prisma.lawyerProfile.findUnique({ where: { userId } });
+        if (!cvUrl && !currentProfile?.cvUrl) {
+            throw new AppError('CV / Firm Brochure upload is required', 400);
+        }
 
         const profile = await prisma.lawyerProfile.update({
             where: { userId },
             data: {
-                practiceAreas, // Assuming array as per requirement "Areas of Practice (single select)" - wait, if single select, why array? I'll allow array for future-proofing or if one area is selected it's [area].
-                admissionYear,
-                experienceYears,
-                languages
+                practiceAreas: parsedPracticeAreas,
+                admissionYear: parsedAdmissionYear,
+                experienceYears: parsedExperienceYears,
+                languages: parsedLanguages,
+                workExperience: parsedWorkExperience,
+                ...(cvUrl && { cvUrl })
             }
         });
 
@@ -252,22 +312,22 @@ export const updatePracticeDetails = async (req: AuthenticatedRequest, res: Resp
 export const updateBiography = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
         const userId = req.user?.userId;
-        const { biography } = req.body;
-
-        // File upload handled by middleware (e.g. multer)
-        // For now I'll assume req.file contains the headshot
+        const { biography, extendedBiography } = req.body;
         const file = req.file;
 
-        if (!biography) throw new AppError('Biography is required', 400);
+        if (!biography || !extendedBiography) {
+            throw new AppError('Biography and Extended Biography are required', 400);
+        }
 
-        // Validation for bio word count (max 100 words)
-        const wordCount = biography.trim().split(/\s+/).length;
-        if (wordCount > 100) throw new AppError('Biography must not exceed 100 words', 400);
+        // Validation for bio word count
+        const bioWordCount = biography.trim().split(/\s+/).length;
+        if (bioWordCount > 100) throw new AppError('Short Biography must not exceed 100 words', 400);
+
+        const extBioWordCount = extendedBiography.trim().split(/\s+/).length;
+        if (extBioWordCount > 300) throw new AppError('Extended Biography must not exceed 300 words', 400);
 
         let headshotUrl = undefined;
         if (file) {
-            // In a real app, upload to S3/Cloudinary.
-            // For local development, we'll use the local path.
             headshotUrl = `/uploads/headshots/${file.filename}`;
         }
 
@@ -280,6 +340,7 @@ export const updateBiography = async (req: AuthenticatedRequest, res: Response, 
             where: { userId },
             data: {
                 biography,
+                extendedBiography,
                 ...(headshotUrl && { headshotUrl })
             }
         });
@@ -306,7 +367,7 @@ export const updateBiography = async (req: AuthenticatedRequest, res: Response, 
 export const updateSocialMedia = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
         const userId = req.user?.userId;
-        const { websiteUrl, linkedinUrl, twitterUrl, youtubeUrl } = req.body;
+        const { websiteUrl, linkedinUrl, twitterUrl, youtubeUrl, showGoogleReviews, googleBusinessProfileUrl } = req.body;
 
         // Optional fields, so no required validation except format if provided
         const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
@@ -315,6 +376,7 @@ export const updateSocialMedia = async (req: AuthenticatedRequest, res: Response
         if (linkedinUrl && !urlRegex.test(linkedinUrl)) throw new AppError('Invalid LinkedIn URL', 400);
         if (twitterUrl && !urlRegex.test(twitterUrl)) throw new AppError('Invalid Twitter URL', 400);
         if (youtubeUrl && !urlRegex.test(youtubeUrl)) throw new AppError('Invalid YouTube URL', 400);
+        if (googleBusinessProfileUrl && !urlRegex.test(googleBusinessProfileUrl)) throw new AppError('Invalid Google Business Profile URL', 400);
 
         const profile = await prisma.lawyerProfile.update({
             where: { userId },
@@ -322,7 +384,9 @@ export const updateSocialMedia = async (req: AuthenticatedRequest, res: Response
                 websiteUrl,
                 linkedinUrl,
                 twitterUrl,
-                youtubeUrl
+                youtubeUrl,
+                showGoogleReviews: showGoogleReviews === true || showGoogleReviews === 'true',
+                googleBusinessProfileUrl
             }
         });
 
@@ -334,7 +398,104 @@ export const updateSocialMedia = async (req: AuthenticatedRequest, res: Response
 
         res.json({
             success: true,
-            message: 'Social media updated successfully',
+            message: 'Social media and reviews settings updated successfully',
+            data: { status: profile.status, completionPercentage: percentage }
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * @desc Step 6: Client Testimonials & Success Stories
+ */
+export const updateCaseStories = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.user?.userId;
+        const { clientTestimonials, featuredSuccessStories } = req.body;
+
+        let parsedTestimonials = clientTestimonials;
+        if (typeof clientTestimonials === 'string') {
+            try {
+                parsedTestimonials = JSON.parse(clientTestimonials);
+            } catch (e) {
+                throw new AppError('Invalid testimonials format', 400);
+            }
+        }
+
+        const profile = await prisma.lawyerProfile.update({
+            where: { userId },
+            data: {
+                clientTestimonials: parsedTestimonials,
+                featuredSuccessStories
+            }
+        });
+
+        const { percentage } = calculateCompletion(profile);
+        await prisma.lawyerProfile.update({
+            where: { userId },
+            data: { completionPercentage: percentage }
+        });
+
+        res.json({
+            success: true,
+            message: 'Case stories and testimonials updated successfully',
+            data: { status: profile.status, completionPercentage: percentage }
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * @desc Step 7: Verification & Tools
+ */
+export const updateVerificationTools = async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.user?.userId;
+        const { clientDataUploadEnabled, clientUploadNotificationEmail, authorizedFileTypes, existingBadges } = req.body;
+        const files = req.files as Express.Multer.File[];
+
+        let badgeUrls: string[] = [];
+        if (files && files.length > 0) {
+            badgeUrls = files.map(file => `/uploads/verification/${file.filename}`);
+        }
+
+        let badgesToKeep: string[] = [];
+        if (existingBadges) {
+            try {
+                badgesToKeep = typeof existingBadges === 'string' ? JSON.parse(existingBadges) : existingBadges;
+            } catch (e) {
+                // If it's not JSON, maybe it's a single string or already an array
+                badgesToKeep = Array.isArray(existingBadges) ? existingBadges : [existingBadges];
+            }
+        } else {
+            // Default to current badges if existingBadges not provided in request
+            const currentProfile = await prisma.lawyerProfile.findUnique({ where: { userId } });
+            badgesToKeep = currentProfile?.verifiedBadges || [];
+        }
+
+        const updatedBadges = [...badgesToKeep, ...badgeUrls];
+
+        const profile = await prisma.lawyerProfile.update({
+            where: { userId },
+            data: {
+                clientDataUploadEnabled: clientDataUploadEnabled === true || clientDataUploadEnabled === 'true',
+                clientUploadNotificationEmail,
+                authorizedFileTypes: (typeof authorizedFileTypes === 'string' ? JSON.parse(authorizedFileTypes) : authorizedFileTypes),
+                verifiedBadges: updatedBadges
+            }
+        });
+
+        const { percentage } = calculateCompletion(profile);
+        await prisma.lawyerProfile.update({
+            where: { userId },
+            data: { completionPercentage: percentage }
+        });
+
+        res.json({
+            success: true,
+            message: 'Verification and tools updated successfully',
             data: { status: profile.status, completionPercentage: percentage }
         });
     } catch (error) {

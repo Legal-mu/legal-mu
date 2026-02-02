@@ -12,6 +12,7 @@ export default function BiographyPage() {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [biography, setBiography] = useState('');
+    const [extendedBiography, setExtendedBiography] = useState('');
     const [headshot, setHeadshot] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
@@ -25,6 +26,7 @@ export default function BiographyPage() {
                 const res = await api.getLawyerProfile();
                 if (res.success && res.data) {
                     setBiography(res.data.biography || '');
+                    setExtendedBiography(res.data.extendedBiography || '');
                     if (res.data.headshotUrl) {
                         // Prepend API URL if it's a relative path
                         const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
@@ -67,9 +69,15 @@ export default function BiographyPage() {
             return;
         }
 
-        const wordCount = biography.trim().split(/\s+/).length;
+        const wordCount = biography.trim().split(/\s+/).filter(Boolean).length;
         if (wordCount > 100) {
-            setError('Biography must not exceed 100 words.');
+            setError('Short biography must not exceed 100 words.');
+            return;
+        }
+
+        const extendedWordCount = extendedBiography.trim().split(/\s+/).filter(Boolean).length;
+        if (extendedWordCount > 300) {
+            setError('Extended biography must not exceed 300 words.');
             return;
         }
 
@@ -84,6 +92,7 @@ export default function BiographyPage() {
         try {
             const formData = new FormData();
             formData.append('biography', biography);
+            formData.append('extendedBiography', extendedBiography);
             if (headshot) {
                 formData.append('headshot', headshot);
             }
@@ -106,6 +115,7 @@ export default function BiographyPage() {
     };
 
     const wordCount = biography.trim().split(/\s+/).filter(Boolean).length;
+    const extendedWordCount = extendedBiography.trim().split(/\s+/).filter(Boolean).length;
 
     return (
         <DashboardLayout title="Step 4: Biography & Headshot">
@@ -179,20 +189,39 @@ export default function BiographyPage() {
                     {/* Biography */}
                     <div className="flex flex-col gap-2">
                         <div className="flex justify-between items-end">
-                            <label className="text-sm font-bold text-[#1E3A5F]">Professional Biography <span className="text-rose-500 ml-1">*</span></label>
+                            <label className="text-sm font-bold text-[#1E3A5F]">Professional Biography (Short) <span className="text-rose-500 ml-1">*</span></label>
                             <span className={`text-[11px] font-bold ${wordCount > 100 ? 'text-rose-500' : 'text-slate-400'}`}>
                                 {wordCount}/100 words
                             </span>
                         </div>
                         <textarea
                             value={biography}
-                            onChange={handleBioChange}
-                            rows={6}
-                            placeholder="Tell clients about your experience, achievements, and why they should choose you..."
+                            onChange={(e) => { setBiography(e.target.value); setSuccess(false); setError(''); }}
+                            rows={4}
+                            placeholder="A brief summary for search results and previews..."
                             className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/20 focus:border-[#1E3A5F] transition-all placeholder:text-slate-400 resize-none"
                             required
                         />
                         <p className="text-[11px] text-slate-400">Keep it concise and professional. Best for quick reading.</p>
+                    </div>
+
+                    {/* Extended Biography */}
+                    <div className="flex flex-col gap-2">
+                        <div className="flex justify-between items-end">
+                            <label className="text-sm font-bold text-[#1E3A5F]">Detailed Experience & Biography <span className="text-rose-500 ml-1">*</span></label>
+                            <span className={`text-[11px] font-bold ${extendedWordCount > 300 ? 'text-rose-500' : 'text-slate-400'}`}>
+                                {extendedWordCount}/300 words
+                            </span>
+                        </div>
+                        <textarea
+                            value={extendedBiography}
+                            onChange={(e) => { setExtendedBiography(e.target.value); setSuccess(false); setError(''); }}
+                            rows={8}
+                            placeholder="Provide a more detailed background of your legal career, notable cases, and philosophy..."
+                            className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/20 focus:border-[#1E3A5F] transition-all placeholder:text-slate-400 resize-none"
+                            required
+                        />
+                        <p className="text-[11px] text-slate-400">This will be shown on your full profile page. Share your expertise in detail.</p>
                     </div>
 
                     <div className="pt-4 border-t border-slate-100">

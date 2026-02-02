@@ -14,6 +14,7 @@ export default function ProfessionalIdentityPage() {
         title: '',
         registrationNumber: '',
         firmName: '',
+        legalCategory: '',
     });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -30,6 +31,7 @@ export default function ProfessionalIdentityPage() {
                         title: res.data.title || '',
                         registrationNumber: res.data.registrationNumber || '',
                         firmName: res.data.firmName || '',
+                        legalCategory: res.data.legalCategory || '',
                     });
                 }
             } catch (err) {
@@ -58,6 +60,7 @@ export default function ProfessionalIdentityPage() {
                 title: formData.title,
                 registrationNumber: formData.registrationNumber,
                 firmName: formData.firmName,
+                legalCategory: formData.legalCategory,
             });
 
             if (res.success) {
@@ -139,6 +142,24 @@ export default function ProfessionalIdentityPage() {
                             onChange={handleChange}
                             placeholder="e.g. Apex Chambers"
                         />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-bold text-[#1E3A5F]">Legal Category <span className="text-rose-500 ml-1">*</span></label>
+                        <select
+                            name="legalCategory"
+                            value={formData.legalCategory}
+                            onChange={handleChange}
+                            required
+                            className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1E3A5F]/20 focus:border-[#1E3A5F] transition-all"
+                        >
+                            <option value="">Select Category</option>
+                            <option value="SENIOR_COUNSEL_SILK">Senior Counsel / Silk</option>
+                            <option value="LEADING_LAW_FIRM">Leading Law Firm</option>
+                            <option value="INTERNATIONAL_CHAMBERS">International Chambers</option>
+                            <option value="NOTARIAL_STUDY">Notarial Study</option>
+                        </select>
+                        <p className="text-xs text-[#64748B]">Select the category that best describes your practice/firm.</p>
                     </div>
 
                     <div className="pt-4">
