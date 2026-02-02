@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import Stripe from 'stripe';
 import prisma from '../db/prisma';
 import { AppError } from '../middleware/errorHandler';
+import { UserStatus, LawyerProfileStatus } from '../generated/prisma';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
     apiVersion: '2023-10-16' as any,
@@ -132,7 +133,7 @@ async function handleInvoicePaid(invoice: any) {
                 stripeSubscriptionId: subscriptionId,
                 subscriptionPlanId: planId,
                 subscriptionStatus: 'active',
-                status: 'APPROVED',
+                status: UserStatus.APPROVED,
             },
         });
 
@@ -144,7 +145,7 @@ async function handleInvoicePaid(invoice: any) {
         if (user?.lawyerProfile) {
             await prisma.lawyerProfile.update({
                 where: { id: user.lawyerProfile.id },
-                data: { is_profile_complete: true }
+                data: { status: LawyerProfileStatus.APPROVED }
             });
         }
     }
