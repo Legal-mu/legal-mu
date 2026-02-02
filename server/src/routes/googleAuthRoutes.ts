@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import passport from '../config/passport';
 import { generateToken } from '../utils/jwt';
-import { User } from '../generated/prisma/client';
+import { User } from '../generated/prisma';
 
 const router = Router();
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000';

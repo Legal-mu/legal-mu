@@ -11,7 +11,7 @@ import type { NextRequest } from 'next/server';
 const publicRoutes = ['/login', '/register', '/forgot-password', '/', '/api-test', '/lawyers-directory', '/community', '/resources'];
 
 // Protected routes that require authentication
-const protectedRoutes = ['/dashboard', '/admin', '/lawyer', '/client'];
+const protectedRoutes = ['/dashboard', '/admin', '/client'];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

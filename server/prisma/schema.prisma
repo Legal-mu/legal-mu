@@ -21,9 +21,13 @@ model User {
   createdAt     DateTime       @default(now()) @map("created_at")
   updatedAt     DateTime       @updatedAt @map("updated_at")
   avatar        String?
-  googleId      String?        @unique @map("google_id")
-  status        UserStatus     @default(APPROVED)
-  lawyerProfile LawyerProfile?
+  googleId             String?        @unique @map("google_id")
+  status               UserStatus     @default(APPROVED)
+  stripeCustomerId     String?        @unique @map("stripe_customer_id")
+  stripeSubscriptionId String?        @unique @map("stripe_subscription_id")
+  subscriptionStatus   String?        @map("subscription_status")
+  subscriptionPlanId   String?        @map("subscription_plan_id")
+  lawyerProfile        LawyerProfile?
 
   // Admin relations
   reviewedProfiles LawyerProfile[] @relation("AdminReviews")
