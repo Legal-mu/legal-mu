@@ -51,6 +51,7 @@ router.get(
 /**
  * Profile Completion Routes
  */
+router.get('/profile', authenticate, authorize(UserRole.LAWYER), profileController.getProfile);
 router.get('/profile/status', authenticate, authorize(UserRole.LAWYER), profileController.getProfileStatus);
 router.patch('/profile/professional-identity', authenticate, authorize(UserRole.LAWYER), profileController.updateProfessionalIdentity);
 router.patch('/profile/contact-information', authenticate, authorize(UserRole.LAWYER), profileController.updateContactInformation);

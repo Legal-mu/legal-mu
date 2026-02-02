@@ -55,6 +55,7 @@ export interface RegisterRequest {
   lastName: string;
   email: string;
   password: string;
+  role: UserRole;
   dateOfBirth?: string;
   areaOfLaw?: string;
   category?: string;
@@ -77,6 +78,7 @@ export interface ResetPasswordRequest {
 export interface AuthResponse {
   user: User;
   token: string;
+  profile_status?: string | null;
 }
 
 // Auth context type
