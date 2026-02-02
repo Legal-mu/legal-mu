@@ -11,7 +11,7 @@ export default function PracticeAreaHeader() {
                 <div className="flex-shrink-0">
                     <Link href="/">
                         <Image
-                            src="/logo.png"
+                            src="/logo.svg"
                             alt="Legal.mu Logo"
                             width={180}
                             height={50}

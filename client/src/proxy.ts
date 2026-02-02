@@ -8,10 +8,10 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // Public routes that don't require authentication
-const publicRoutes = ['/login', '/register', '/forgot-password', '/', '/api-test'];
+const publicRoutes = ['/login', '/register', '/forgot-password', '/', '/api-test', '/lawyer-profile', '/lawyers-directory'];
 
 // Protected routes that require authentication
-const protectedRoutes = ['/dashboard', '/admin', '/lawyer', '/client'];
+const protectedRoutes = ['/dashboard', '/admin', '/client'];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

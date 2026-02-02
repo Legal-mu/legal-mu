@@ -51,7 +51,7 @@ export default function RegisterStep2() {
             <nav className="bg-white px-4 md:px-8 py-5 flex justify-between items-center">
                 <Link href="/" className="flex items-center">
                     <img
-                        src="/images/legalmu-logo.png"
+                        src="/logo.svg"
                         alt="LEGAL.MU - Access to justice"
                         className="h-10 w-auto"
                     />

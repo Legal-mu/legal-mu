@@ -10,6 +10,7 @@ import protectedRoutes from './routes/index';
 import adminRoutes from './routes/adminRoutes';
 import lawyerRoutes from './routes/lawyerRoutes';
 import userRoutes from './routes/userRoutes';
+import stripeRoutes from './routes/stripeRoutes';
 import { errorHandler } from './middleware/errorHandler';
 
 // Load environment variables
@@ -25,6 +26,12 @@ app.use(cors({
   credentials: true, // Allow cookies
 }));
 app.use(cookieParser());
+
+
+
+// Stripe routes need to be BEFORE express.json() for webhooks to get raw body
+app.use('/api/stripe', stripeRoutes);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

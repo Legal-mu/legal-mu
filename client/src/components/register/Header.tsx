@@ -13,7 +13,7 @@ export default function Header({ activeLink = 'for-lawyers' }: HeaderProps) {
                 {/* Logo */}
                 <Link href="/" className="flex items-center">
                     <img
-                        src="/images/legalmu-logo.png"
+                        src="/logo.svg"
                         alt="LEGAL.MU - Access to justice"
                         className="h-10 w-auto"
                     />
