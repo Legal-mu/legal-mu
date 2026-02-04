@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import api from '@/lib/api';
+import { api } from '@/lib/api';
 import {
     MagnifyingGlassIcon,
     ChevronDownIcon,
