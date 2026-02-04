@@ -55,14 +55,18 @@ export default function LawyersDirectoryPage() {
     const [total, setTotal] = useState(0);
     const limit = 6;
 
-    // Filter state
+    // Filter state (applied filters that trigger API calls)
     const [searchTerm, setSearchTerm] = useState('');
     const [location, setLocation] = useState('');
     const [practiceArea, setPracticeArea] = useState('');
     const [experienceYears, setExperienceYears] = useState('');
     const [sortBy, setSortBy] = useState('createdAt');
 
-    // Selected filters for checkboxes
+    // Pending filters (not yet applied, only used for UI state)
+    const [pendingPracticeArea, setPendingPracticeArea] = useState('');
+    const [pendingExperienceYears, setPendingExperienceYears] = useState('');
+
+    // Selected filters for checkboxes (UI state only)
     const [selectedPracticeAreas, setSelectedPracticeAreas] = useState<string[]>([]);
     const [selectedExperience, setSelectedExperience] = useState('');
 
@@ -108,8 +112,10 @@ export default function LawyersDirectoryPage() {
     };
 
     const handleApplyFilters = () => {
+        // Apply pending filters to actual filter state
+        setPracticeArea(pendingPracticeArea);
+        setExperienceYears(pendingExperienceYears);
         setCurrentPage(1); // Reset to first page on filter
-        fetchLawyers();
     };
 
     const handleClearFilters = () => {
@@ -117,6 +123,8 @@ export default function LawyersDirectoryPage() {
         setLocation('');
         setPracticeArea('');
         setExperienceYears('');
+        setPendingPracticeArea('');
+        setPendingExperienceYears('');
         setSelectedPracticeAreas([]);
         setSelectedExperience('');
         setCurrentPage(1);
@@ -125,20 +133,20 @@ export default function LawyersDirectoryPage() {
     const togglePracticeArea = (area: string) => {
         if (selectedPracticeAreas.includes(area)) {
             setSelectedPracticeAreas(selectedPracticeAreas.filter(a => a !== area));
-            setPracticeArea('');
+            setPendingPracticeArea('');
         } else {
             setSelectedPracticeAreas([area]); // Single selection for now
-            setPracticeArea(area);
+            setPendingPracticeArea(area);
         }
     };
 
     const handleExperienceChange = (exp: string) => {
         setSelectedExperience(exp);
         if (exp === 'Any') {
-            setExperienceYears('');
+            setPendingExperienceYears('');
         } else {
             const years = parseInt(exp.replace('+', '').replace(' years', ''));
-            setExperienceYears(years.toString());
+            setPendingExperienceYears(years.toString());
         }
     };
 
@@ -340,7 +348,7 @@ export default function LawyersDirectoryPage() {
                                                 </div>
                                                 <div>
                                                     <h3 className="text-lg font-bold text-[#1A2542] mb-0.5 font-jost">
-                                                        {lawyer.firstName} {lawyer.lastName}
+                                                        {lawyer.lawyerProfile?.fullLegalName || `${lawyer.firstName} ${lawyer.lastName}`}
                                                     </h3>
                                                     <p className="text-xs font-semibold text-gray-400 mb-1.5 font-jost">
                                                         {lawyer.lawyerProfile?.title || 'Attorney'}
@@ -430,8 +438,8 @@ export default function LawyersDirectoryPage() {
                                                     key={i}
                                                     onClick={() => setCurrentPage(pageNum)}
                                                     className={`w-10 h-10 rounded-lg font-bold text-sm transition-all font-jost ${currentPage === pageNum
-                                                            ? 'bg-[#111827] text-white shadow-md'
-                                                            : 'bg-white border border-gray-200 text-[#1A2542] hover:bg-gray-50'
+                                                        ? 'bg-[#111827] text-white shadow-md'
+                                                        : 'bg-white border border-gray-200 text-[#1A2542] hover:bg-gray-50'
                                                         }`}
                                                 >
                                                     {pageNum}
