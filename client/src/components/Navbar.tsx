@@ -20,7 +20,7 @@ export default function Navbar() {
                     <div className="flex items-center gap-20 border border-[#1A2542] rounded-[1.75rem] px-10 py-3 bg-white/50 backdrop-blur-md shadow-sm">
                         <Link
                             href="/"
-                            className={`px-4 py-2 text-sm font-bold transition-all rounded-lg ${pathname === '/'
+                            className={`px-4 py-2 text-sm font-bold transition-all rounded-[1.5rem] ${pathname === '/'
                                 ? 'bg-[#E2E8F0] text-[#1A2853]'
                                 : 'text-[#64748b] hover:text-[#1A2853] hover:bg-[#E2E8F0]'
                                 }`}
@@ -29,7 +29,7 @@ export default function Navbar() {
                         </Link>
                         <Link
                             href="/lawyers-directory"
-                            className={`px-4 py-2 text-sm font-bold transition-all rounded-lg ${pathname === '/lawyers-directory'
+                            className={`px-4 py-2 text-sm font-bold transition-all rounded-[1.5rem] ${pathname === '/lawyers-directory'
                                 ? 'bg-[#E2E8F0] text-[#1A2853]'
                                 : 'text-[#64748b] hover:text-[#1A2853] hover:bg-[#E2E8F0]'
                                 }`}
@@ -38,7 +38,7 @@ export default function Navbar() {
                         </Link>
                         <Link
                             href="/community"
-                            className={`px-4 py-2 text-sm font-bold transition-all rounded-lg ${pathname === '/community'
+                            className={`px-4 py-2 text-sm font-bold transition-all rounded-[1.5rem] ${pathname === '/community'
                                 ? 'bg-[#E2E8F0] text-[#1A2853]'
                                 : 'text-[#64748b] hover:text-[#1A2853] hover:bg-[#E2E8F0]'
                                 }`}
@@ -48,7 +48,7 @@ export default function Navbar() {
                         <div className="relative group">
                             <Link
                                 href="/resources"
-                                className={`px-4 py-2 text-sm font-bold transition-all flex items-center gap-2 rounded-lg ${pathname.startsWith('/resources')
+                                className={`px-4 py-2 text-sm font-bold transition-all flex items-center gap-2 rounded-[1.5rem] ${pathname.startsWith('/resources')
                                     ? 'bg-[#E2E8F0] text-[#1A2853]'
                                     : 'text-[#64748b] hover:text-[#1A2853] hover:bg-[#E2E8F0]'
                                     }`}
@@ -69,7 +69,7 @@ export default function Navbar() {
                                 <div className="bg-white text-[#1A2853] rounded-xl py-2 min-w-[240px] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden ml-10">
                                     <Link
                                         href="/resources/practice-areas"
-                                        className={`flex items-center justify-between px-5 py-3 mx-2 my-1 rounded-lg transition-colors text-sm font-bold group/item ${pathname === '/resources/practice-areas'
+                                        className={`flex items-center justify-between px-5 py-3 mx-2 my-1 rounded-[1.5rem] transition-colors text-sm font-bold group/item ${pathname === '/resources/practice-areas'
                                             ? 'bg-[#E2E8F0] text-[#1A2853]'
                                             : 'hover:bg-[#E2E8F0] text-[#1A2853]'
                                             }`}
@@ -81,7 +81,7 @@ export default function Navbar() {
                                     </Link>
                                     <Link
                                         href="/resources/articles-blogs"
-                                        className={`block px-5 py-3 mx-2 my-1 rounded-lg transition-colors text-sm font-medium ${pathname === '/resources/articles-blogs'
+                                        className={`block px-5 py-3 mx-2 my-1 rounded-[1.5rem] transition-colors text-sm font-medium ${pathname === '/resources/articles-blogs'
                                             ? 'bg-[#E2E8F0] text-[#1A2853] font-bold'
                                             : 'hover:bg-[#E2E8F0] text-[#1A2853]'
                                             }`}
@@ -90,7 +90,7 @@ export default function Navbar() {
                                     </Link>
                                     <Link
                                         href="/resources/videos-explainers"
-                                        className={`block px-5 py-3 mx-2 my-1 rounded-lg transition-colors text-sm font-medium ${pathname === '/resources/videos-explainers'
+                                        className={`block px-5 py-3 mx-2 my-1 rounded-[1.5rem] transition-colors text-sm font-medium ${pathname === '/resources/videos-explainers'
                                             ? 'bg-[#E2E8F0] text-[#1A2853] font-bold'
                                             : 'hover:bg-[#E2E8F0] text-[#1A2853]'
                                             }`}
@@ -99,7 +99,7 @@ export default function Navbar() {
                                     </Link>
                                     <Link
                                         href="/resources/qa-tool"
-                                        className={`block px-5 py-3 mx-2 my-1 rounded-lg transition-colors text-sm font-medium ${pathname === '/resources/qa-tool'
+                                        className={`block px-5 py-3 mx-2 my-1 rounded-[1.5rem] transition-colors text-sm font-medium ${pathname === '/resources/qa-tool'
                                             ? 'bg-[#E2E8F0] text-[#1A2853] font-bold'
                                             : 'hover:bg-[#E2E8F0] text-[#1A2853]'
                                             }`}
