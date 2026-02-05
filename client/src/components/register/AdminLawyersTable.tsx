@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import type { User } from '../types';
-import { UserStatus } from '../types';
-import { formatDate } from '../lib/utils';
-import { updateLawyerStatusAction } from '../app/actions/admin';
+import type { User } from '@/types';
+import { UserStatus } from '@/types';
+import { formatDate } from '@/lib/utils';
+import { updateLawyerStatusAction } from '@/app/actions/admin';
 
 interface AdminLawyersTableProps {
     lawyers: User[];

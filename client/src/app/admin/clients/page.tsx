@@ -6,12 +6,12 @@ import { User } from '@/types';
 import EditUserModal from '../components/EditUserModal';
 import {
     Search,
-    Filter,
     Trash2,
     Mail,
     Calendar,
     Edit
 } from 'lucide-react';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 export default function ClientsManagement() {
     const { data: clients, isLoading } = useClients();
@@ -19,6 +19,23 @@ export default function ClientsManagement() {
     const [searchTerm, setSearchTerm] = useState('');
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+    // Confirmation Modal State
+    const [confirmConfig, setConfirmConfig] = useState<{
+        isOpen: boolean;
+        title: string;
+        message: string;
+        onConfirm: () => void;
+        variant: 'primary' | 'danger';
+        confirmText: string;
+    }>({
+        isOpen: false,
+        title: '',
+        message: '',
+        onConfirm: () => { },
+        variant: 'primary',
+        confirmText: 'Confirm'
+    });
 
     const filteredClients = clients?.filter((client: any) =>
         `${client.firstName} ${client.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -31,9 +48,14 @@ export default function ClientsManagement() {
     };
 
     const handleDelete = (id: string) => {
-        if (confirm('Are you sure you want to delete this client?')) {
-            deleteUser.mutate(id);
-        }
+        setConfirmConfig({
+            isOpen: true,
+            title: 'Delete Client',
+            message: 'Are you sure you want to delete this client? This action cannot be undone.',
+            onConfirm: () => deleteUser.mutate(id),
+            variant: 'danger',
+            confirmText: 'Delete Client'
+        });
     };
 
     return (
@@ -138,6 +160,16 @@ export default function ClientsManagement() {
                 user={editingUser}
                 isOpen={isEditModalOpen}
                 onClose={() => setIsEditModalOpen(false)}
+            />
+
+            <ConfirmationModal
+                isOpen={confirmConfig.isOpen}
+                onClose={() => setConfirmConfig({ ...confirmConfig, isOpen: false })}
+                onConfirm={confirmConfig.onConfirm}
+                title={confirmConfig.title}
+                message={confirmConfig.message}
+                confirmText={confirmConfig.confirmText}
+                variant={confirmConfig.variant}
             />
         </div>
     );
