@@ -26,7 +26,7 @@ export default function Register() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -167,24 +167,33 @@ export default function Register() {
               <h2 className="text-[28px] font-extrabold text-[#0F172A]">Create Your Account</h2>
             </div>
 
-            {/* Role Toggle */}
-            <div className="flex bg-[#F5F5F5] p-1.5 rounded-2xl mb-8">
-              <button
-                type="button"
-                onClick={() => handleRoleToggle(UserRole.LAWYER)}
-                className={`flex-1 py-3 px-4 rounded-xl text-[15px] font-semibold transition-all ${isLawyer ? 'bg-white text-[#1E3A5F] shadow-sm' : 'text-[#64748B]'
-                  }`}
+            {/* Role Dropdown */}
+            <div className="mb-8">
+              <label
+                htmlFor="role"
+                className="block text-[#0F172A] font-medium mb-3"
+                style={{ fontSize: '18px' }}
               >
-                As a Lawyer
-              </button>
-              <button
-                type="button"
-                onClick={() => handleRoleToggle(UserRole.CLIENT)}
-                className={`flex-1 py-3 px-4 rounded-xl text-[15px] font-semibold transition-all ${!isLawyer ? 'bg-white text-[#1E3A5F] shadow-sm' : 'text-[#64748B]'
-                  }`}
-              >
-                As a Client
-              </button>
+                Join as
+              </label>
+              <div className="relative">
+                <select
+                  id="role"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleChange}
+                  className="w-full px-4 py-4 bg-white border border-slate-200 rounded-xl text-[15px] text-[#0F172A] font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#1E3A5F] focus:border-transparent transition-all"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
+                    backgroundPosition: 'right 1rem center',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '1.5em 1.5em'
+                  }}
+                >
+                  <option value={UserRole.LAWYER}>Lawyer / Attorney</option>
+                  <option value={UserRole.CLIENT}>Client / Individual</option>
+                </select>
+              </div>
             </div>
 
             <p className="text-[#111827] text-[20px] leading-[130%] mb-9 font-light">

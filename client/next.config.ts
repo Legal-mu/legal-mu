@@ -15,7 +15,15 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '5001',
+        pathname: '/uploads/**',
+      },
     ],
+    // Use unoptimized images in development to bypass localhost restrictions
+    unoptimized: process.env.NODE_ENV === 'development',
   },
 };
 

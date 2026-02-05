@@ -3,7 +3,11 @@
 import { StarIcon, ChatBubbleLeftRightIcon, CheckBadgeIcon } from '@heroicons/react/24/solid';
 import { StarIcon as StarIconOutline, ChevronDownIcon } from '@heroicons/react/24/outline';
 
-export default function ReviewSection() {
+interface ReviewSectionProps {
+    lawyer: any;
+}
+
+export default function ReviewSection({ lawyer }: ReviewSectionProps) {
     const ratings = [
         { stars: 5, percentage: 85, color: 'bg-green-500' },
         { stars: 4, percentage: 10, color: 'bg-blue-900' },

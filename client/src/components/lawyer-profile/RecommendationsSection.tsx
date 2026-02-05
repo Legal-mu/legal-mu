@@ -3,7 +3,11 @@
 import Image from 'next/image';
 import { StarIcon } from '@heroicons/react/24/solid';
 
-export default function RecommendationsSection() {
+interface RecommendationsSectionProps {
+    lawyer: any;
+}
+
+export default function RecommendationsSection({ lawyer }: RecommendationsSectionProps) {
     const lawyers = [
         { id: 1, name: 'Faysal', specialty: 'Criminal Law', rating: '4.8', reviews: '94', image: '/lawyer-placeholder.png' },
         { id: 2, name: 'Faysal', specialty: 'Criminal Law', rating: '4.8', reviews: '94', image: '/lawyer-placeholder.png' },

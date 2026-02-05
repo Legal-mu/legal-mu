@@ -168,6 +168,51 @@ export const api = {
   },
 
   /**
+   * Get approved lawyers with pagination, search, and filters (public)
+   */
+  async getApprovedLawyers(params?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    location?: string;
+    practiceArea?: string;
+    experienceYears?: number;
+    minRating?: number;
+    sortBy?: string;
+  }) {
+    const queryParams = new URLSearchParams();
+    if (params?.page) queryParams.append('page', params.page.toString());
+    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    if (params?.search) queryParams.append('search', params.search);
+    if (params?.location) queryParams.append('location', params.location);
+    if (params?.practiceArea) queryParams.append('practiceArea', params.practiceArea);
+    if (params?.experienceYears) queryParams.append('experienceYears', params.experienceYears.toString());
+    if (params?.minRating) queryParams.append('minRating', params.minRating.toString());
+    if (params?.sortBy) queryParams.append('sortBy', params.sortBy);
+
+    const queryString = queryParams.toString();
+    const endpoint = queryString ? `/api/lawyers?${queryString}` : '/api/lawyers';
+
+    return fetchAPI<ApiResponse<{
+      lawyers: any[];
+      pagination: {
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+      };
+    }>>(endpoint);
+  },
+
+  /**
+   * Get a single lawyer by ID (public)
+   */
+  async getLawyerById(id: string) {
+    return fetchAPI<ApiResponse<any>>(`/api/lawyers/${id}`);
+  },
+
+
+  /**
    * Get all clients (admin only)
    */
   async getClients() {

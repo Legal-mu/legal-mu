@@ -30,6 +30,12 @@ export enum UserRole {
   CLIENT = 'CLIENT',
 }
 
+export enum UserStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+}
+
 export enum LegalCategory {
   SENIOR_COUNSEL_SILK = 'SENIOR_COUNSEL_SILK',
   LEADING_LAW_FIRM = 'LEADING_LAW_FIRM',

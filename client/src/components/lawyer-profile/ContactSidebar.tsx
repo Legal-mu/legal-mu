@@ -3,7 +3,14 @@
 import Image from 'next/image';
 import { EnvelopeIcon, PhoneIcon, GlobeAltIcon, MapPinIcon } from '@heroicons/react/24/outline';
 
-export default function ContactSidebar() {
+interface ContactSidebarProps {
+    lawyer: any;
+}
+
+export default function ContactSidebar({ lawyer }: ContactSidebarProps) {
+    const profile = lawyer?.lawyerProfile;
+    const firstName = lawyer?.firstName || 'Lawyer';
+
     return (
         <div className="space-y-6">
             {/* Contact Info Card */}
@@ -12,29 +19,42 @@ export default function ContactSidebar() {
 
                 <button className="w-full py-4 bg-[#1A2853] text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#2A3B73] transition-all shadow-md shadow-blue-900/10">
                     <EnvelopeIcon className="w-5 h-5" />
-                    Contact Kim
+                    Contact {firstName}
                 </button>
 
                 <div className="space-y-6">
-                    <div className="flex items-start gap-4">
-                        <div className="p-2 bg-[#F1F5F9] rounded-lg">
-                            <PhoneIcon className="w-5 h-5 text-[#64748B]" />
+                    {profile?.phoneNumber && (
+                        <div className="flex items-start gap-4">
+                            <div className="p-2 bg-[#F1F5F9] rounded-lg">
+                                <PhoneIcon className="w-5 h-5 text-[#64748B]" />
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest">Phone</p>
+                                <p className="text-[#1A2853] font-semibold text-lg hover:text-blue-600 transition-colors cursor-pointer">
+                                    {profile.phoneNumber}
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <p className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest">Phone</p>
-                            <p className="text-[#1A2853] font-semibold text-lg hover:text-blue-600 transition-colors cursor-pointer">+230 555 1234</p>
-                        </div>
-                    </div>
+                    )}
 
-                    <div className="flex items-start gap-4">
-                        <div className="p-2 bg-[#F1F5F9] rounded-lg">
-                            <GlobeAltIcon className="w-5 h-5 text-[#64748B]" />
+                    {profile?.websiteUrl && (
+                        <div className="flex items-start gap-4">
+                            <div className="p-2 bg-[#F1F5F9] rounded-lg">
+                                <GlobeAltIcon className="w-5 h-5 text-[#64748B]" />
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest">Website</p>
+                                <a
+                                    href={profile.websiteUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[#1A2853] font-semibold text-lg hover:text-blue-600 transition-colors cursor-pointer break-all"
+                                >
+                                    {profile.websiteUrl.replace(/^https?:\/\//, '')}
+                                </a>
+                            </div>
                         </div>
-                        <div>
-                            <p className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest">Website</p>
-                            <p className="text-[#1A2853] font-semibold text-lg hover:text-blue-600 transition-colors cursor-pointer">www.binladen-law.co</p>
-                        </div>
-                    </div>
+                    )}
 
                     <div className="flex items-start gap-4">
                         <div className="p-2 bg-[#F1F5F9] rounded-lg">
@@ -42,18 +62,30 @@ export default function ContactSidebar() {
                         </div>
                         <div>
                             <p className="text-[10px] font-bold text-[#64748B] uppercase tracking-widest">Address</p>
-                            <p className="text-[#1A2853] font-semibold text-lg leading-tight">Port Louis, Mauritius</p>
+                            <p className="text-[#1A2853] font-semibold text-lg leading-tight">
+                                {profile?.address || profile?.city || 'Mauritius'}
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
-                    <span className="text-sm font-medium text-[#64748B]">Social Profiles</span>
-                    <div className="flex gap-4">
-                        <LinkIcon icon="linkedin" />
-                        <LinkIcon icon="x" />
+                {(profile?.linkedinUrl || profile?.twitterUrl) && (
+                    <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
+                        <span className="text-sm font-medium text-[#64748B]">Social Profiles</span>
+                        <div className="flex gap-4">
+                            {profile?.linkedinUrl && (
+                                <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                                    <LinkIcon icon="linkedin" />
+                                </a>
+                            )}
+                            {profile?.twitterUrl && (
+                                <a href={profile.twitterUrl} target="_blank" rel="noopener noreferrer">
+                                    <LinkIcon icon="x" />
+                                </a>
+                            )}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
 
             {/* Map Card */}
