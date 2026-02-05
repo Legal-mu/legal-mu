@@ -23,6 +23,7 @@ const jost = Jost({
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isPending, startTransition] = useTransition();
@@ -46,6 +47,7 @@ function LoginForm() {
       const formData = new FormData();
       formData.append('email', email);
       formData.append('password', password);
+      // Handle rememberMe if supported by backend, otherwise just local state
 
       const result = await loginAction(formData);
 
@@ -72,178 +74,189 @@ function LoginForm() {
   return (
     <div className={`min-h-screen bg-[#f6f8ff] flex flex-col ${jost.className}`}>
       {/* Header */}
-      <header className="w-full bg-white py-3 px-12 md:px-16 flex justify-between items-center border-b border-gray-100">
+      <header className="w-full bg-white py-4 px-8 md:px-20 flex justify-between items-center shadow-sm z-20 sticky top-0">
         <div className="flex items-center gap-2">
           <Link href="/">
             <Image
               src="/legal-mu-logo.webp"
               alt="LEGAL.MU"
-              width={150}
+              width={160}
               height={70}
-              className="h-12 w-auto cursor-pointer"
+              className="h-14 w-auto cursor-pointer"
             />
           </Link>
         </div>
-        <div className="text-sm">
-          <span className="text-gray-400">Don't have an account? </span>
-          <Link href="/register" className="font-bold text-[#1A2853] hover:underline ml-1">
+        <div className="flex items-center gap-4">
+          <Link
+            href="/login"
+            className="px-6 py-2.5 bg-[#1A2853] text-white rounded-[12px] font-medium hover:bg-[#111827] transition-colors"
+          >
+            Login
+          </Link>
+          <Link
+            href="/register"
+            className="text-[#1A2853] font-medium hover:text-[#111827] transition-colors"
+          >
             Register
           </Link>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow flex items-center justify-center p-4 md:p-6">
+      <main className="flex-grow flex items-center justify-center p-4 md:p-8 bg-[#f6f8ff]">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col md:flex-row max-w-4xl w-full m-auto shadow-2xl rounded-[2rem] overflow-hidden bg-white"
+          className="flex flex-col md:flex-row max-w-4xl w-full m-auto shadow-2xl rounded-[2rem] overflow-hidden bg-white min-h-[650px]"
         >
-          {/* Left Column - Form */}
-          <div className="flex-[1.2] p-8 md:p-10 lg:p-12 flex flex-col justify-center bg-white">
+          {/* Left Column - Marketing Content (Dark) */}
+          <div className="hidden md:flex w-full md:w-1/2 relative bg-[#1A2853] min-h-[600px]">
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0">
+              {/* Use the same hero bg but maybe darker or different positioning if needed */}
+              <Image
+                src="/left-side.jpg"
+                alt="Branding"
+                fill
+                className="object-cover opacity-70"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#1A2853] via-[#1A2853]/80 to-[#1A2853]/50 opacity-70"></div>
+            </div>
+
+            {/* Content overlay */}
+            <div className="relative z-10 w-full h-full p-12 flex flex-col justify-end text-white pb-24">
+              <h2 className="text-4xl font-bold mb-4 leading-tight tracking-tight">
+                Securing Your Legal <br /> Future
+              </h2>
+              <p className="text-gray-300 text-lg max-w-md leading-relaxed">
+                Access your legal dashboard and secure your legal navigation with ease
+              </p>
+              {/* Decorative elements or graphical placeholder typically go here */}
+            </div>
+          </div>
+
+          {/* Right Column - Form */}
+          <div className="w-full md:w-1/2 p-8 md:p-12 lg:p-14 flex flex-col justify-center bg-white">
             <div className="max-w-md mx-auto w-full">
-              <h1 className="text-3xl font-extrabold text-[#111827] mb-2 tracking-tight">Welcome Back</h1>
-              <p className="text-gray-400 mb-6 text-lg font-medium leading-tight">
-                Sign in to your account and manage your cases securely.
+              <h1 className="text-4xl font-bold text-[#111827] mb-2 tracking-tight">Welcome Back!</h1>
+              <p className="mb-8 text-20px font-normal text-[#1A2853]">
+                Access your professional legal portal
               </p>
 
-              <form className="space-y-4" onSubmit={handleSubmit}>
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 {error && (
-                  <div className="rounded-md bg-red-50 p-4 mb-4">
-                    <div className="flex">
-                      <div className="ml-3">
-                        <h3 className="text-sm font-medium text-red-800">{error}</h3>
-                      </div>
-                    </div>
+                  <div className="rounded-md bg-red-50 p-4">
+                    <h3 className="text-sm font-medium text-red-800">{error}</h3>
                   </div>
                 )}
 
                 {/* Email Address */}
                 <div>
-                  <label className="block text-sm font-bold text-[#1A2853] mb-2 ml-1">Email Address</label>
+                  <label className="block text-md font-bold text-[#1A2853] mb-2 ml-1">Email Address</label>
                   <div className="relative">
                     <input
                       type="email"
-                      placeholder="eg. messi@example.com"
+                      placeholder="messi@barca.com"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full bg-[#F3F4F6] border-[#1E293B] rounded-lg py-3 px-6 focus:outline-none focus:ring-2 focus:ring-[#1E293B] transition-all pr-14 text-sm text-[#111827]"
+                      className="w-full bg-[#F5F5F7] border border-transparent focus:bg-white focus:border-[#1A2853]/20 rounded-xl py-4 px-6 focus:outline-none focus:ring-4 focus:ring-[#1A2853]/5 transition-all outline-none text-[#111827] placeholder-gray-400"
                     />
-                    <EnvelopeIcon className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                    <EnvelopeIcon className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
                   </div>
                 </div>
 
                 {/* Password */}
                 <div>
-                  <div className="flex justify-between items-center mb-2 ml-1">
-                    <label className="block text-sm font-bold text-[#1A2853]">Password</label>
-                    <Link href="/forgot-password" className="text-xs font-bold text-[#1A2853] hover:text-[#111827]">
-                      Forgot Password?
-                    </Link>
-                  </div>
+                  <label className="block text-md font-bold text-[#1A2853] mb-2 ml-1">Password</label>
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
-                      placeholder="xxxxxxxxx"
+                      placeholder="xxxxxxxx"
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-[#F3F4F6] border-[#1E293B] rounded-lg py-3 px-6 focus:outline-none focus:ring-2 focus:ring-[#1E293B] transition-all pr-14 text-sm text-[#111827]"
+                      className="w-full bg-[#F5F5F7] border border-transparent focus:bg-white focus:border-[#1A2853]/20 rounded-xl py-4 px-6 focus:outline-none focus:ring-4 focus:ring-[#1A2853]/5 transition-all outline-none text-[#111827] placeholder-gray-400"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                      className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none p-1"
                     >
                       {showPassword ? <EyeSlashIcon className="w-5 h-5" /> : <EyeIcon className="w-5 h-5" />}
                     </button>
                   </div>
                 </div>
 
+                {/* Remember Me & Forgot Password */}
+                <div className="flex justify-between items-center">
+                  <label className="flex items-center space-x-2 cursor-pointer group">
+                    <div className="relative flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                        className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 shadow-sm transition-all checked:border-[#1A2853] checked:bg-[#1A2853] hover:border-[#1A2853]"
+                      />
+                      <svg
+                        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        width="12"
+                        height="12"
+                      >
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                    <span className="text-sm font-medium text-gray-500 group-hover:text-gray-700">Remember me</span>
+                  </label>
+
+                  <Link href="/forgot-password" className="text-sm font-bold text-[#1A2853] hover:underline">
+                    Forgot Password?
+                  </Link>
+                </div>
+
                 {/* Login Button */}
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="w-full bg-[#1A2853] hover:bg-[#111827] text-white font-bold py-3 rounded-lg transition-all shadow-lg text-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-[#1A2853] hover:bg-[#111827] text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-[#1A2853]/20 text-lg tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isPending ? 'Signing in...' : 'Sign In'}
+                  {isPending ? 'Logging In...' : 'Login'}
                 </button>
 
                 {/* Divider */}
-                <div className="relative py-1">
+                <div className="relative py-2">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-100"></div>
+                    <div className="w-full border-t border-gray-200"></div>
                   </div>
                   <div className="relative flex justify-center text-xs">
-                    <span className="bg-white px-4 text-gray-400 font-bold uppercase tracking-tight text-[10px]">or sign in with</span>
+                    <span className="bg-white px-4 text-gray-400 font-medium uppercase tracking-wider">or continue with</span>
                   </div>
                 </div>
 
                 {/* Google Button */}
                 <div className="w-full">
-                  <GoogleLoginButton />
+                  {/* We wrap custom styling around the button or ensure the component itself is styled nicely. 
+                       Assuming GoogleLoginButton handles its own internal structure, usually it's best to wrap it if needed.
+                   */}
+                  <div className="[&>button]:w-full [&>button]:justify-center [&>button]:py-3 [&>button]:rounded-xl [&>button]:shadow-sm [&>button]:border [&>button]:border-gray-200 [&>button]:hover:bg-gray-50">
+                    <GoogleLoginButton />
+                  </div>
                 </div>
+
+                <div className="text-center pt-4">
+                  <span className="text-sm text-gray-500">Don't have an account? </span>
+                  <Link href="/register" className="text-sm font-bold text-[#1A2853] hover:underline">Register</Link>
+                </div>
+
               </form>
-            </div>
-          </div>
-
-          {/* Right Column - Marketing Content */}
-          <div className="hidden md:flex flex-1 relative bg-[#121E3E]">
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0">
-              <Image
-                src="/legal_hero_bg.png"
-                alt="Branding"
-                fill
-                className="object-cover opacity-30"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#121E3E]/30 via-[#121E3E]/60 to-[#121E3E]/90"></div>
-            </div>
-
-            {/* Marketing Content */}
-            <div className="relative z-10 w-full h-full p-6 lg:p-8 flex flex-col justify-center text-white">
-              <div className="max-w-2xl mt-auto mb-2">
-                <h2 className="text-3xl lg:text-3xl font-semibold mb-4 leading-[1.1] tracking-tight">
-                  Trusted by 10,000+ Clients
-                </h2>
-                <p className="text-gray-300 text-sm lg:text-base mb-6 leading-relaxed font-small ">
-                  Join the fastest growing legal network in Mauritius. Find the right legal expert for your needs in minutes.
-                </p>
-
-                {/* Testimonial Card */}
-                <motion.div
-                  whileHover={{ scale: 1.01 }}
-                  className="bg-white/10 backdrop-blur-6xl max-h-[600px] rounded-[2.5rem] p-4 lg:p-6 border border-white/20 shadow-2xl relative overflow-hidden mb-6"
-                >
-                  {/* Stars */}
-                  <div className="flex gap-1 mb-2 text-[#FFC107]">
-                    {[...Array(4)].map((_, i) => (
-                      <span key={i} className="text-xl">★</span>
-                    ))}
-                    <span className="text-xl text-white opacity-40">★</span>
-                  </div>
-                  <p className="text-gray-100 text-lg lg:text-base font-medium mb-4 leading-relaxed">
-                    “Legal.mu made finding a corporate lawyer incredibly simple. The platform is intuitive and secure.”
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/20 shadow-lg">
-                      <Image
-                        src="/avatar1.png"
-                        alt="User"
-                        width={40}
-                        height={40}
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-extrabold text-[#F9FAFB] text-xs">Bin Salman.</p>
-                      <p className="text-[10px] text-gray-400 font-medium tracking-tight">Small Business Owner</p>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
             </div>
           </div>
         </motion.div>
@@ -255,7 +268,7 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <Suspense fallback={
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-[#F8F9FD]">
         <div className="text-center">
           <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#1A2542] border-r-transparent"></div>
           <p className="mt-4 text-gray-600">Loading...</p>
