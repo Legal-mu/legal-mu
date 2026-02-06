@@ -103,6 +103,8 @@ export interface User {
   dateOfBirth?: Date | null;
   isActive?: boolean;
   createdAt?: string;
+  areaOfLaw?: string;
+  category?: string;
   lawyerProfile?: LawyerProfile;
 }
 

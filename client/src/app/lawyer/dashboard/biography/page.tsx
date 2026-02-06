@@ -6,6 +6,7 @@ import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { Save, AlertCircle, Upload, User, X } from 'lucide-react';
 import Image from 'next/image';
+import { getMediaUrl } from '@/lib/utils';
 
 export default function BiographyPage() {
     const router = useRouter();
@@ -28,9 +29,7 @@ export default function BiographyPage() {
                     setBiography(res.data.biography || '');
                     setExtendedBiography(res.data.extendedBiography || '');
                     if (res.data.headshotUrl) {
-                        // Prepend API URL if it's a relative path
-                        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
-                        setPreviewUrl(res.data.headshotUrl.startsWith('http') ? res.data.headshotUrl : `${baseUrl}${res.data.headshotUrl}`);
+                        setPreviewUrl(getMediaUrl(res.data.headshotUrl));
                     }
                 }
             } catch (err) {

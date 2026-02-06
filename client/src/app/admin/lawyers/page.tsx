@@ -22,15 +22,35 @@ import {
 } from 'lucide-react';
 import { UserStatus, User } from '@/types';
 import EditUserModal from '../components/EditUserModal';
+import ConfirmationModal from '../components/ConfirmationModal';
+import { getMediaUrl } from '@/lib/utils';
 
 export default function LawyersManagement() {
     const { data: lawyers, isLoading } = useLawyers();
     const approveLawyer = useApproveLawyer();
     const rejectLawyer = useRejectLawyer();
     const deleteUser = useDeleteUser();
+
     const [searchTerm, setSearchTerm] = useState('');
     const [editingUser, setEditingUser] = useState<User | null>(null);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+    // Confirmation Modal State
+    const [confirmConfig, setConfirmConfig] = useState<{
+        isOpen: boolean;
+        title: string;
+        message: string;
+        onConfirm: () => void;
+        variant: 'primary' | 'danger' | 'success' | 'warning';
+        confirmText: string;
+    }>({
+        isOpen: false,
+        title: '',
+        message: '',
+        onConfirm: () => { },
+        variant: 'primary',
+        confirmText: 'Confirm'
+    });
 
     const filteredLawyers = lawyers?.filter((lawyer: any) =>
         `${lawyer.firstName} ${lawyer.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -38,9 +58,14 @@ export default function LawyersManagement() {
     );
 
     const handleApprove = (id: string) => {
-        if (confirm('Are you sure you want to approve this lawyer?')) {
-            approveLawyer.mutate(id);
-        }
+        setConfirmConfig({
+            isOpen: true,
+            title: 'Approve Lawyer',
+            message: 'Are you sure you want to approve this lawyer profile? They will be notified and listed in the directory.',
+            onConfirm: () => approveLawyer.mutate(id),
+            variant: 'success',
+            confirmText: 'Approve Lawyer'
+        });
     };
 
     const handleReject = (id: string) => {
@@ -56,9 +81,14 @@ export default function LawyersManagement() {
     };
 
     const handleDelete = (id: string) => {
-        if (confirm('Are you sure you want to delete this lawyer? This action cannot be undone.')) {
-            deleteUser.mutate(id);
-        }
+        setConfirmConfig({
+            isOpen: true,
+            title: 'Delete Lawyer',
+            message: 'Are you sure you want to delete this lawyer? This action cannot be undone and all associated data will be lost.',
+            onConfirm: () => deleteUser.mutate(id),
+            variant: 'danger',
+            confirmText: 'Delete Permanently'
+        });
     };
 
     return (
@@ -118,8 +148,12 @@ export default function LawyersManagement() {
                                 <tr key={lawyer.id} className="hover:bg-gray-50 transition-colors group">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-[#1e3a8a] font-bold border border-blue-100">
-                                                {lawyer.firstName[0]}{lawyer.lastName[0]}
+                                            <div className="w-10 h-10 rounded-full overflow-hidden bg-blue-50 flex items-center justify-center text-[#1e3a8a] font-bold border border-blue-100 flex-shrink-0">
+                                                {lawyer.lawyerProfile?.headshotUrl ? (
+                                                    <img src={getMediaUrl(lawyer.lawyerProfile.headshotUrl)} alt="" className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <span>{lawyer.firstName[0]}{lawyer.lastName[0]}</span>
+                                                )}
                                             </div>
                                             <div>
                                                 <div className="font-semibold text-gray-800">{lawyer.firstName} {lawyer.lastName}</div>
@@ -129,9 +163,9 @@ export default function LawyersManagement() {
                                     </td>
                                     <td className="px-6 py-4">
                                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${lawyer.lawyerProfile?.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' :
-                                                lawyer.lawyerProfile?.status === 'REJECTED' ? 'bg-red-50 text-red-700 border border-red-100' :
-                                                    lawyer.lawyerProfile?.status === 'PENDING_REVIEW' ? 'bg-amber-50 text-amber-700 border border-amber-100' :
-                                                        'bg-gray-50 text-gray-700 border border-gray-100'
+                                            lawyer.lawyerProfile?.status === 'REJECTED' ? 'bg-red-50 text-red-700 border border-red-100' :
+                                                lawyer.lawyerProfile?.status === 'PENDING_REVIEW' ? 'bg-amber-50 text-amber-700 border border-amber-100' :
+                                                    'bg-gray-50 text-gray-700 border border-gray-100'
                                             }`}>
                                             {(lawyer.lawyerProfile?.status || lawyer.status).replace('_', ' ').toLowerCase().replace(/\b\w/g, (c: string) => c.toUpperCase())}
                                         </span>
@@ -189,6 +223,16 @@ export default function LawyersManagement() {
                 user={editingUser}
                 isOpen={isEditModalOpen}
                 onClose={() => setIsEditModalOpen(false)}
+            />
+
+            <ConfirmationModal
+                isOpen={confirmConfig.isOpen}
+                onClose={() => setConfirmConfig({ ...confirmConfig, isOpen: false })}
+                onConfirm={confirmConfig.onConfirm}
+                title={confirmConfig.title}
+                message={confirmConfig.message}
+                confirmText={confirmConfig.confirmText}
+                variant={confirmConfig.variant}
             />
         </div>
     );

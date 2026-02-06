@@ -39,3 +39,7 @@ export async function approveLawyerAction(id: string) {
 export async function rejectLawyerAction(id: string) {
     return updateUserAction(id, { status: 'REJECTED' as any });
 }
+
+export async function updateLawyerStatusAction(id: string, status: 'APPROVED' | 'REJECTED') {
+    return status === 'APPROVED' ? approveLawyerAction(id) : rejectLawyerAction(id);
+}

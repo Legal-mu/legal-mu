@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '../hooks/useAuth';
 import { UserRole } from '../types';
 import { logoutAction } from '../app/actions/auth';
+import { getMediaUrl } from '@/lib/utils';
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -164,7 +165,7 @@ export default function Navbar() {
                                 <div className="w-10 h-10 rounded-full bg-[#1A2853] text-white flex items-center justify-center font-bold border-2 border-transparent group-hover:border-white/20 shadow-md overflow-hidden transition-all duration-200 ring-2 ring-transparent group-hover:ring-[#1A2853]/10">
                                     {user?.lawyerProfile?.headshotUrl ? (
                                         <Image
-                                            src={user.lawyerProfile.headshotUrl}
+                                            src={getMediaUrl(user.lawyerProfile.headshotUrl)}
                                             alt="Profile"
                                             width={40}
                                             height={40}
