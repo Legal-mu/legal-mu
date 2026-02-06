@@ -14,6 +14,7 @@ import type {
   ForgotPasswordRequest,
   ResetPasswordRequest,
 } from '../types/auth';
+import { sendResetPasswordEmail } from '../services/emailService';
 
 /**
  * Register new user
@@ -227,11 +228,13 @@ export async function forgotPassword(
       },
     });
 
-    // TODO: Send email with reset token
-    // For now, we'll return the token in development
-    // In production, send email instead
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Reset token (dev only):', resetToken);
+    // Send email with reset token
+    try {
+      await sendResetPasswordEmail(user.email, resetToken);
+    } catch (emailError) {
+      console.error('Failed to send reset email:', emailError);
+      // We still return success to the user to prevent enumeration, but log the error
+      // In a production system, you might want to alert admins or have a retry mechanism
     }
 
     res.json({

@@ -210,3 +210,42 @@ export async function forgotPasswordAction(
   }
 }
 
+/**
+ * Server Action: Reset Password
+ */
+export async function resetPasswordAction(
+  formData: FormData
+): Promise<ActionResult> {
+  const token = formData.get('token') as string;
+  const newPassword = formData.get('newPassword') as string;
+
+  try {
+    const response = await fetch(`${API_URL}/api/auth/reset-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token, newPassword }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      return {
+        success: false,
+        message: data.message || 'Failed to reset password',
+      };
+    }
+
+    return {
+      success: true,
+      message: 'Password reset successfully',
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : 'Request failed',
+    };
+  }
+}
+
