@@ -29,12 +29,17 @@ export default function EditUserModal({ user, isOpen, onClose }: EditUserModalPr
                 email: user.email,
                 status: user.status,
             });
-            const profile = user.lawyerProfile || {};
-            setLawyerProfile(profile);
 
-            // Initialize array fields
-            setPracticeAreasStr((profile.practiceAreas || []).join(', '));
-            setLanguagesStr((profile.languages || []).join(', '));
+            if (user.lawyerProfile) {
+                setLawyerProfile(user.lawyerProfile);
+                // Initialize array fields
+                setPracticeAreasStr((user.lawyerProfile.practiceAreas || []).join(', '));
+                setLanguagesStr((user.lawyerProfile.languages || []).join(', '));
+            } else {
+                setLawyerProfile({});
+                setPracticeAreasStr('');
+                setLanguagesStr('');
+            }
         }
     }, [user]);
 
