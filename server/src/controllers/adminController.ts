@@ -5,7 +5,7 @@
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../db/prisma';
 import { AppError } from '../middleware/errorHandler';
-import { UserRole, UserStatus, ProfessionalTitle, LawyerProfileStatus } from '../generated/prisma';
+import { UserRole, UserStatus, ProfessionalTitle, LawyerProfileStatus } from '@prisma/client';
 import { comparePassword, hashPassword } from '../utils/password';
 
 /**

@@ -5,7 +5,7 @@
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../db/prisma';
 import { AppError } from '../middleware/errorHandler';
-import { UserRole, ProfessionalTitle } from '../generated/prisma';
+import { UserRole, ProfessionalTitle } from '@prisma/client';
 
 /**
  * Get current user profile

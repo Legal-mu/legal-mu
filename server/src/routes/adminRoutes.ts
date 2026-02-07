@@ -4,7 +4,7 @@
 
 import { Router } from 'express';
 import { authenticate, authorize } from '../middleware/auth';
-import { UserRole } from '../generated/prisma';
+import { UserRole } from '@prisma/client';
 import {
     getAllLawyers,
     getAllClients,

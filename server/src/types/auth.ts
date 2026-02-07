@@ -3,7 +3,7 @@
  */
 
 // Import UserRole from Prisma generated types
-import { UserRole, UserStatus, LawyerProfileStatus, ProfessionalTitle } from '../generated/prisma';
+import { UserRole, UserStatus, LawyerProfileStatus, ProfessionalTitle } from '@prisma/client';
 export { UserRole, UserStatus, LawyerProfileStatus, ProfessionalTitle };
 
 export interface RegisterRequest {

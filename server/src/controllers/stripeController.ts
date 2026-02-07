@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import Stripe from 'stripe';
 import prisma from '../db/prisma';
 import { AppError } from '../middleware/errorHandler';
-import { UserStatus, LawyerProfileStatus } from '../generated/prisma';
+import { UserStatus, LawyerProfileStatus } from '@prisma/client';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
     apiVersion: '2023-10-16' as any,

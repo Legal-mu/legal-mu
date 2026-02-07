@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import prisma from '../db/prisma';
-import { UserRole, LawyerProfileStatus, ProfessionalTitle, LegalCategory } from '../generated/prisma';
+import { UserRole, LawyerProfileStatus, ProfessionalTitle, LegalCategory } from '@prisma/client';
 import { AppError } from '../middleware/errorHandler';
 
 // Extended request type for authenticated users
