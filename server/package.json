@@ -5,11 +5,14 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
+    "dev:staging": "dotenv -e .env.staging -- nodemon src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:staging": "dotenv -e .env.staging -- prisma migrate deploy",
     "prisma:studio": "prisma studio",
+    "prisma:studio:staging": "dotenv -e .env.staging -- prisma studio",
     "prisma:seed": "prisma db seed"
   },
   "prisma": {
@@ -44,6 +47,7 @@
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.17",
     "@types/pg": "^8.15.6",
+    "dotenv-cli": "^11.0.0",
     "nodemon": "^3.1.11",
     "prisma": "^7.1.0",
     "ts-node": "^10.9.2",

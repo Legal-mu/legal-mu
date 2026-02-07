@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import type { User } from '../types';
-import { UserStatus } from '../types';
-import { formatDate } from '../lib/utils';
-import { updateLawyerStatusAction } from '../app/actions/admin';
+import type { User } from '@/types';
+import { UserStatus } from '@/types';
+import { formatDate } from '@/lib/utils';
+import { updateLawyerStatusAction } from '@/app/actions/admin';
 
 interface AdminLawyersTableProps {
     lawyers: User[];
@@ -80,8 +80,8 @@ export default function AdminLawyersTable({ lawyers: initialLawyers }: AdminLawy
                                         {lawyer.firstName} {lawyer.lastName}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{lawyer.email}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{lawyer.category || '—'}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{lawyer.areaOfLaw || '—'}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{lawyer.lawyerProfile?.legalCategory || '—'}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{lawyer.lawyerProfile?.practiceAreas?.join(', ') || '—'}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusBadgeClass(lawyer.status)}`}>
                                             {lawyer.status || 'UNKNOWN'}

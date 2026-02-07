@@ -29,12 +29,12 @@ export default function EditUserModal({ user, isOpen, onClose }: EditUserModalPr
                 email: user.email,
                 status: user.status,
             });
-            const profile = user.lawyerProfile || {};
-            setLawyerProfile(profile);
+            const profile = user.lawyerProfile;
+            setLawyerProfile(profile || {});
 
             // Initialize array fields
-            setPracticeAreasStr((profile.practiceAreas || []).join(', '));
-            setLanguagesStr((profile.languages || []).join(', '));
+            setPracticeAreasStr((profile?.practiceAreas || []).join(', '));
+            setLanguagesStr((profile?.languages || []).join(', '));
         }
     }, [user]);
 
