@@ -57,7 +57,7 @@ export async function getAllClients(req: Request, res: Response, next: NextFunct
  */
 export async function getUserById(req: Request, res: Response, next: NextFunction) {
     try {
-        const { id } = req.params;
+        const id = req.params.id as string;
 
         const user = await prisma.user.findUnique({
             where: { id },
@@ -84,7 +84,7 @@ export async function getUserById(req: Request, res: Response, next: NextFunctio
  */
 export async function updateUser(req: Request, res: Response, next: NextFunction) {
     try {
-        const { id } = req.params;
+        const id = req.params.id as string;
         const {
             firstName, lastName, email, role, status, isActive,
             // Lawyer profile fields
@@ -168,7 +168,7 @@ export async function updateUser(req: Request, res: Response, next: NextFunction
  */
 export async function deleteUser(req: Request, res: Response, next: NextFunction) {
     try {
-        const { id } = req.params;
+        const id = req.params.id as string;
 
         // Check if user exists
         const user = await prisma.user.findUnique({ where: { id } });
@@ -279,7 +279,7 @@ export async function getPendingLawyers(req: Request, res: Response, next: NextF
  */
 export async function approveLawyer(req: Request, res: Response, next: NextFunction) {
     try {
-        const { id: userId } = req.params;
+        const userId = req.params.id as string;
         const adminId = req.user?.userId;
 
         console.log(`Approving lawyer. UserID: ${userId}, AdminID: ${adminId}`);
@@ -316,7 +316,7 @@ export async function approveLawyer(req: Request, res: Response, next: NextFunct
  */
 export async function rejectLawyer(req: Request, res: Response, next: NextFunction) {
     try {
-        const { id: userId } = req.params;
+        const userId = req.params.id as string;
         const { reason } = req.body;
         const adminId = req.user?.userId;
 
